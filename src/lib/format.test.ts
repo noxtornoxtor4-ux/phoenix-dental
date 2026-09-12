@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test'
-import { formatDuration, formatNumber, formatTime } from './format'
+import { formatDateTime, formatDuration, formatNumber, formatTime } from './format'
 
 const units = { hour: 'ч', minute: 'мин' }
 /** Expected values are written with regular spaces for readability. */
@@ -21,5 +21,13 @@ describe('format', () => {
 
   test('formats time with leading zeros', () => {
     expect(formatTime(new Date(2026, 8, 15, 9, 5))).toBe('09:05')
+  })
+
+  test('formats date and time with language labels', () => {
+    const labels = {
+      months: Array.from({ length: 12 }, (_, index) => (index === 8 ? 'сентября' : '')),
+      formatDate: (day: number, month: string) => `${day} ${month}`,
+    }
+    expect(formatDateTime(new Date(2026, 8, 15, 14, 0), labels)).toBe('15 сентября, 14:00')
   })
 })

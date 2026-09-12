@@ -1,5 +1,6 @@
 import type { ServiceId } from '../data/services'
 import type { ToothKind } from '../data/teeth'
+import type { SlotStatus } from '../lib/slots'
 
 export type Lang = 'ru' | 'ky' | 'en'
 
@@ -65,8 +66,11 @@ export interface Dictionary {
     perVisit: string
     dateTitle: string
     timeTitle: string
-    today: string
-    tomorrow: string
+    prevMonth: string
+    nextMonth: string
+    customTime: string
+    chosen: string
+    timeErrors: Record<Exclude<SlotStatus, 'available'>, (open: string, close: string) => string>
     confirmNote: string
     nameLabel: string
     namePlaceholder: string
@@ -87,6 +91,8 @@ export interface Dictionary {
   services: Record<ServiceId, ServiceText>
   units: { hour: string; minute: string }
   months: string[]
+  /** Month names for calendar headers. */
+  monthsNominative: string[]
   weekdaysShort: string[]
   formatDate: (day: number, month: string) => string
   message: { greeting: string; service: string; price: string; dateTime: string; patient: string }
@@ -173,8 +179,16 @@ const ru: Dictionary = {
     perVisit: 'за визит',
     dateTitle: 'Выберите дату',
     timeTitle: 'Свободное время',
-    today: 'Сегодня',
-    tomorrow: 'Завтра',
+    prevMonth: 'Предыдущий месяц',
+    nextMonth: 'Следующий месяц',
+    customTime: 'Или укажите удобное время',
+    chosen: 'Вы выбрали',
+    timeErrors: {
+      dayOff: () => 'В этот день клиника не работает — выберите другую дату',
+      closed: (open, close) => `Клиника принимает с ${open} до ${close}`,
+      tooSoon: () => 'Это время уже недоступно — выберите позже',
+      tooLate: (_open, close) => `Приём не успеет завершиться до ${close} — выберите время раньше`,
+    },
     confirmNote: 'Администратор подтвердит время в WhatsApp',
     nameLabel: 'Ваше имя',
     namePlaceholder: 'Например, Айгерим',
@@ -221,6 +235,20 @@ const ru: Dictionary = {
     'октября',
     'ноября',
     'декабря',
+  ],
+  monthsNominative: [
+    'Январь',
+    'Февраль',
+    'Март',
+    'Апрель',
+    'Май',
+    'Июнь',
+    'Июль',
+    'Август',
+    'Сентябрь',
+    'Октябрь',
+    'Ноябрь',
+    'Декабрь',
   ],
   weekdaysShort: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
   formatDate: (day, month) => `${day} ${month}`,
@@ -322,8 +350,16 @@ const ky: Dictionary = {
     perVisit: 'бир визит үчүн',
     dateTitle: 'Күндү тандаңыз',
     timeTitle: 'Бош убакыт',
-    today: 'Бүгүн',
-    tomorrow: 'Эртең',
+    prevMonth: 'Мурунку ай',
+    nextMonth: 'Кийинки ай',
+    customTime: 'Же өзүңүзгө ыңгайлуу убакытты жазыңыз',
+    chosen: 'Сиз тандадыңыз',
+    timeErrors: {
+      dayOff: () => 'Бул күнү клиника иштебейт — башка күндү тандаңыз',
+      closed: (open, close) => `Клиниканын иш убактысы: ${open}–${close}`,
+      tooSoon: () => 'Бул убакыт жеткиликсиз — кечирээк убакытты тандаңыз',
+      tooLate: (_open, close) => `Кабыл алуу саат ${close} чейин бүтпөй калат — эртерээк убакытты тандаңыз`,
+    },
     confirmNote: 'Администратор убакытты WhatsApp аркылуу ырастайт',
     nameLabel: 'Атыңыз',
     namePlaceholder: 'Мисалы, Айгерим',
@@ -370,6 +406,20 @@ const ky: Dictionary = {
     'октябрь',
     'ноябрь',
     'декабрь',
+  ],
+  monthsNominative: [
+    'Январь',
+    'Февраль',
+    'Март',
+    'Апрель',
+    'Май',
+    'Июнь',
+    'Июль',
+    'Август',
+    'Сентябрь',
+    'Октябрь',
+    'Ноябрь',
+    'Декабрь',
   ],
   weekdaysShort: ['Жк', 'Дш', 'Шш', 'Шр', 'Бш', 'Жм', 'Иш'],
   formatDate: (day, month) => `${day}-${month}`,
@@ -471,8 +521,16 @@ const en: Dictionary = {
     perVisit: 'per visit',
     dateTitle: 'Choose a date',
     timeTitle: 'Available time',
-    today: 'Today',
-    tomorrow: 'Tomorrow',
+    prevMonth: 'Previous month',
+    nextMonth: 'Next month',
+    customTime: 'Or enter a time that suits you',
+    chosen: 'Your choice',
+    timeErrors: {
+      dayOff: () => 'The clinic is closed on this day — pick another date',
+      closed: (open, close) => `Opening hours: ${open}–${close}`,
+      tooSoon: () => 'This time is no longer available — pick a later one',
+      tooLate: (_open, close) => `The visit would run past ${close} — pick an earlier time`,
+    },
     confirmNote: 'The front desk will confirm the time in WhatsApp',
     nameLabel: 'Your name',
     namePlaceholder: 'e.g. Aigerim',
@@ -507,6 +565,20 @@ const en: Dictionary = {
   },
   units: { hour: 'h', minute: 'min' },
   months: [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ],
+  monthsNominative: [
     'January',
     'February',
     'March',

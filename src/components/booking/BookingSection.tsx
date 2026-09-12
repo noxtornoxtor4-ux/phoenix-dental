@@ -4,7 +4,7 @@ import { clinic } from '../../config/clinic'
 import type { ServiceId } from '../../data/services'
 import { useI18n } from '../../i18n/useI18n'
 import { buildEstimate, describeEstimate, type BookingSelection } from '../../lib/booking'
-import { formatDuration, formatNumber, formatTime } from '../../lib/format'
+import { formatDateTime, formatDuration, formatNumber } from '../../lib/format'
 import { isValidLocalDigits, toInternational } from '../../lib/phone'
 import { buildBookingMessage, createWhatsappUrl } from '../../lib/whatsapp'
 import { SectionHeading } from '../ui/SectionHeading'
@@ -65,7 +65,7 @@ export function BookingSection() {
 
   const price = t.booking.priceFrom(formatNumber(estimate.priceFrom))
   const duration = formatDuration(estimate.durationMinutes, t.units)
-  const dateTime = slot ? `${t.formatDate(slot.getDate(), t.months[slot.getMonth()])}, ${formatTime(slot)}` : ''
+  const dateTime = slot ? formatDateTime(slot, t) : ''
   const serviceText = describeEstimate(estimate, {
     tooth: t.toothLabel,
     problems: t.problems,

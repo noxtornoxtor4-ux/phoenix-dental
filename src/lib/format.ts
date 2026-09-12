@@ -24,6 +24,16 @@ export function formatTime(date: Date): string {
   return `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`
 }
 
+export interface DateLabels {
+  months: string[]
+  formatDate: (day: number, month: string) => string
+}
+
+/** "15 сентября, 14:00" in the wording of the given language. */
+export function formatDateTime(date: Date, labels: DateLabels): string {
+  return `${labels.formatDate(date.getDate(), labels.months[date.getMonth()])}, ${formatTime(date)}`
+}
+
 export function isSameDay(a: Date, b: Date): boolean {
   return (
     a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate()

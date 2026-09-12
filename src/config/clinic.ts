@@ -21,7 +21,8 @@ export const clinic = {
     leadMinutes: 60,
     /** Longer treatment plans are split into several visits. */
     maxVisitMinutes: 180,
-    daysShown: 12,
+    /** How many days ahead the calendar allows booking. */
+    horizonDays: 60,
   },
   maps: {
     query: 'Каракол, улица Токтогула, 263',
