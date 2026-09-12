@@ -1,32 +1,52 @@
-# React + TypeScript + Vite
+# PHOENIX — стоматология в Караколе
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+PWA-приложение стоматологического центра «PHOENIX» (г. Каракол, ул. Токтогула, 263).
 
-Currently, two official plugins are available:
+## Возможности
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Установка на телефон (PWA)** — Web App Manifest + Service Worker, баннер «Установите приложение» и кнопка в шапке. На Android/Chrome вызывается системный диалог, на iOS показывается инструкция «На экран „Домой“».
+- **Интерактивная схема зубов** — 32 зуба по нумерации FDI (11–48), выбор проблемы для каждого зуба, цветная подсветка, мгновенный расчёт стоимости и времени приёма.
+- **Онлайн-запись в 3 шага** — зуб/услуга → дата и время → контакты; заявка открывается в WhatsApp готовым сообщением.
+- **SOS «Острая боль»** — фиксированная кнопка, сразу открывает WhatsApp дежурного врача с пометкой «СРОЧНО».
+- **До / после** — слайдер сравнения для чистки и отбеливания.
+- **Локация** — адрес, режим работы, маршрут в Google Maps и 2GIS, звонок.
+- **Языки** — RU / KG / EN.
 
-## React Compiler
+## Стек
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+React 19, TypeScript, Vite 8, Tailwind CSS 4, Lucide Icons, vite-plugin-pwa (Workbox). Пакетный менеджер — **bun**.
 
-## Expanding the Oxlint configuration
+## Команды
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```bash
+bun install
+bun run dev        # дев-сервер
+bun run build      # typecheck + production-сборка в dist/
+bun run preview    # просмотр сборки (Service Worker работает только здесь)
+bun run test       # unit-тесты (bun test)
+bun run lint       # oxlint
+bun run generate-pwa-assets  # пересоздать иконки из public/favicon.svg
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+## Настройка перед запуском
+
+| Что | Где |
+| --- | --- |
+| Номера WhatsApp (ресепшн и дежурный врач), телефон | `src/config/clinic.ts` |
+| Режим работы, шаг слотов, длительность визита | `src/config/clinic.ts` |
+| Цены «от» и длительность услуг | `src/data/services.ts` |
+| Тексты на трёх языках | `src/i18n/translations.ts` |
+
+> Номера телефонов в `clinic.ts` — заглушки `+996 700 000 000`, их нужно заменить на реальные.
+
+## Структура
+
+```
+src/
+  config/clinic.ts        контакты, график, правила записи
+  data/                   услуги и зубы (FDI)
+  lib/                    чистая логика: смета, слоты, телефон, WhatsApp, раскладка челюсти (+ тесты)
+  i18n/                   словари и провайдер языка
+  pwa/                    перехват beforeinstallprompt и состояние установки
+  components/             Header, Hero, BookingSection, LocationSection, SosDock…
+```
