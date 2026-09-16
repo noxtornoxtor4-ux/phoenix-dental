@@ -1,4 +1,5 @@
 import { isSupabaseConfigured, supabaseConfig } from '../config/supabase'
+import type { PriceOverride } from '../data/services'
 
 export interface LeadRequest {
   kind: 'booking' | 'sos'
@@ -41,4 +42,27 @@ export function submitLead(lead: LeadRequest, config = supabaseConfig, fetchImpl
     },
     body: JSON.stringify(body),
   }).catch(() => undefined)
+}
+
+/** Prices of the site calculator services from the CRM price list; null when unavailable. */
+export async function fetchSitePrices(
+  codes: readonly string[],
+  config = supabaseConfig,
+  fetchImpl: (input: string, init: RequestInit) => Promise<Response> = fetch,
+): Promise<PriceOverride[] | null> {
+  if (!config.url || !config.anonKey) return null
+  const params = new URLSearchParams({
+    select: 'code,price,duration_minutes',
+    code: `in.(${codes.join(',')})`,
+    active: 'eq.true',
+  })
+  try {
+    const response = await fetchImpl(`${config.url}/rest/v1/services?${params}`, {
+      headers: { apikey: config.anonKey, Authorization: `Bearer ${config.anonKey}` },
+    })
+    if (!response.ok) return null
+    return (await response.json()) as PriceOverride[]
+  } catch {
+    return null
+  }
 }

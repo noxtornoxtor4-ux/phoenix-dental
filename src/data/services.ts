@@ -30,3 +30,25 @@ export const toothProblems: ServiceId[] = ['therapy', 'pain', 'hygiene', 'prosth
 
 /** Services available in the list mode of the booking wizard. */
 export const listServices: ServiceId[] = ['therapy', 'xray', 'hygiene', 'prosthetics', 'implant']
+
+export type ServiceCatalog = Record<ServiceId, Service>
+
+export interface PriceOverride {
+  code: string
+  price: number
+  duration_minutes: number
+}
+
+/** Applies prices and durations from the CRM price list to the site catalog. Unknown codes are ignored. */
+export function applyPriceOverrides(base: ServiceCatalog, overrides: PriceOverride[]): ServiceCatalog {
+  const catalog = { ...base }
+  for (const row of overrides) {
+    if (!(row.code in catalog)) continue
+    const id = row.code as ServiceId
+    const price = Number(row.price)
+    const duration = Number(row.duration_minutes)
+    if (!Number.isFinite(price) || price < 0 || !Number.isFinite(duration) || duration <= 0) continue
+    catalog[id] = { ...catalog[id], priceFrom: price, durationMinutes: duration }
+  }
+  return catalog
+}

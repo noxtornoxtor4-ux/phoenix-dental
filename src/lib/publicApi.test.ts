@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test'
-import { submitLead } from './publicApi'
+import { fetchSitePrices, submitLead } from './publicApi'
 
 const config = { url: 'https://demo.supabase.co', anonKey: 'anon-key' }
 
@@ -48,5 +48,26 @@ describe('submitLead', () => {
     expect(() =>
       submitLead({ kind: 'sos', lang: 'ky' }, config, () => Promise.reject(new Error('offline'))),
     ).not.toThrow()
+  })
+})
+
+describe('fetchSitePrices', () => {
+  test('requests active services by code', async () => {
+    let requested = ''
+    const rows = await fetchSitePrices(['therapy', 'xray'], config, async (url) => {
+      requested = url
+      return new Response(JSON.stringify([{ code: 'therapy', price: 1800, duration_minutes: 45 }]))
+    })
+    const url = new URL(requested)
+    expect(url.pathname).toBe('/rest/v1/services')
+    expect(url.searchParams.get('code')).toBe('in.(therapy,xray)')
+    expect(url.searchParams.get('active')).toBe('eq.true')
+    expect(rows).toEqual([{ code: 'therapy', price: 1800, duration_minutes: 45 }])
+  })
+
+  test('returns null on errors', async () => {
+    expect(await fetchSitePrices(['therapy'], config, async () => new Response('', { status: 500 }))).toBeNull()
+    expect(await fetchSitePrices(['therapy'], config, () => Promise.reject(new Error('offline')))).toBeNull()
+    expect(await fetchSitePrices(['therapy'], { url: '', anonKey: '' })).toBeNull()
   })
 })

@@ -1,7 +1,8 @@
 import { Check } from 'lucide-react'
-import { listServices, services, type ServiceId } from '../../data/services'
+import { listServices, type ServiceId } from '../../data/services'
 import { useI18n } from '../../i18n/useI18n'
 import { formatNumber } from '../../lib/format'
+import { useServiceCatalog } from '../../pricing/ServiceCatalogContext'
 import { serviceIcons } from './serviceIcons'
 
 interface ServiceListProps {
@@ -11,6 +12,7 @@ interface ServiceListProps {
 
 export function ServiceList({ selected, onToggle }: ServiceListProps) {
   const { t } = useI18n()
+  const services = useServiceCatalog()
 
   return (
     <div className="grid gap-2 sm:grid-cols-2">

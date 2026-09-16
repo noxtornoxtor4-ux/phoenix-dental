@@ -5,6 +5,7 @@ import { Hero } from './components/hero/Hero'
 import { InstallGuide } from './components/InstallGuide'
 import { LocationSection } from './components/LocationSection'
 import { SosDock } from './components/SosDock'
+import { ServiceCatalogProvider } from './pricing/ServiceCatalogProvider'
 
 export default function App() {
   return (
@@ -18,7 +19,9 @@ export default function App() {
       <Header />
       <main>
         <Hero />
-        <BookingSection />
+        <ServiceCatalogProvider>
+          <BookingSection />
+        </ServiceCatalogProvider>
         <LocationSection />
       </main>
       <Footer />

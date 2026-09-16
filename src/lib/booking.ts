@@ -1,4 +1,4 @@
-import { serviceOrder, services, type ServiceId } from '../data/services'
+import { serviceOrder, services, type ServiceCatalog, type ServiceId } from '../data/services'
 
 /** Tooth number (FDI) → problem attached to it. */
 export type ToothSelection = Record<number, ServiceId>
@@ -29,7 +29,7 @@ function teethWith(selection: BookingSelection, serviceId: ServiceId): number[] 
     .sort((a, b) => a - b)
 }
 
-export function buildEstimate(selection: BookingSelection): Estimate {
+export function buildEstimate(selection: BookingSelection, catalog: ServiceCatalog = services): Estimate {
   const lines: EstimateLine[] = []
 
   for (const serviceId of serviceOrder) {
@@ -37,7 +37,7 @@ export function buildEstimate(selection: BookingSelection): Estimate {
     const listed = selection.services.includes(serviceId)
     if (teeth.length === 0 && !listed) continue
 
-    const service = services[serviceId]
+    const service = catalog[serviceId]
     const units = service.scope === 'tooth' ? Math.max(teeth.length, 1) : 1
     lines.push({
       serviceId,

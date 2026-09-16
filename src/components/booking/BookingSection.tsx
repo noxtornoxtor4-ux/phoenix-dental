@@ -8,6 +8,7 @@ import { buildEstimate, describeEstimate, type BookingSelection, type SelectionL
 import { formatDateTime, formatDuration, formatNumber } from '../../lib/format'
 import { isValidLocalDigits, toE164, toInternational } from '../../lib/phone'
 import { submitLead } from '../../lib/publicApi'
+import { useServiceCatalog } from '../../pricing/ServiceCatalogContext'
 import { buildBookingMessage, createWhatsappUrl } from '../../lib/whatsapp'
 import { SectionHeading } from '../ui/SectionHeading'
 import { EstimatePanel } from './EstimatePanel'
@@ -34,6 +35,7 @@ function selectionLabels(dictionary: Dictionary): SelectionLabels {
 
 export function BookingSection() {
   const { t, lang } = useI18n()
+  const catalog = useServiceCatalog()
   const cardRef = useRef<HTMLDivElement>(null)
   const [step, setStep] = useState(0)
   const [mode, setMode] = useState<PickMode>('chart')
@@ -43,7 +45,7 @@ export function BookingSection() {
   const [phoneDigits, setPhoneDigits] = useState('')
   const [showErrors, setShowErrors] = useState(false)
 
-  const estimate = useMemo(() => buildEstimate(selection), [selection])
+  const estimate = useMemo(() => buildEstimate(selection, catalog), [selection, catalog])
   const visitMinutes = Math.min(estimate.durationMinutes, clinic.booking.maxVisitMinutes)
   const canContinue = step === 0 ? estimate.lines.length > 0 : step === 1 ? slot !== null : true
 

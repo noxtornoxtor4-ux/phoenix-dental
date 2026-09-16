@@ -1,7 +1,8 @@
-import { services, toothProblems, type ServiceId } from '../../data/services'
+import { toothProblems, type ServiceId } from '../../data/services'
 import { getToothKind } from '../../data/teeth'
 import { useI18n } from '../../i18n/useI18n'
 import { formatNumber } from '../../lib/format'
+import { useServiceCatalog } from '../../pricing/ServiceCatalogContext'
 import { Sheet } from '../ui/Sheet'
 import { serviceIcons } from './serviceIcons'
 
@@ -14,6 +15,7 @@ interface ToothProblemSheetProps {
 
 export function ToothProblemSheet({ tooth, current, onSelect, onClose }: ToothProblemSheetProps) {
   const { t } = useI18n()
+  const services = useServiceCatalog()
 
   return (
     <Sheet
