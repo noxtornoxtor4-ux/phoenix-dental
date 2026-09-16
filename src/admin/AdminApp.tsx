@@ -9,6 +9,7 @@ import { AdminLayout } from './layout/AdminLayout'
 import { isSupabaseConfigured } from './lib/supabase'
 import { DashboardPage } from './pages/DashboardPage'
 import { FinancePage } from './pages/finance/FinancePage'
+import { LeadsPage } from './pages/leads/LeadsPage'
 import { PatientPage } from './pages/patients/PatientPage'
 import { PatientsPage } from './pages/patients/PatientsPage'
 import { SchedulePage } from './pages/schedule/SchedulePage'
@@ -43,6 +44,7 @@ function Gate() {
         <Route path="patients" element={<PatientsPage />} />
         <Route path="patients/:id" element={<PatientPage />} />
         <Route element={<RequireAdmin />}>
+          <Route path="leads" element={<LeadsPage />} />
           <Route path="finance" element={<FinancePage />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />

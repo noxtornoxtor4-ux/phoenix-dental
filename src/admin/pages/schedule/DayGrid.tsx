@@ -1,7 +1,8 @@
-import { useEffect, useState, type MouseEvent } from 'react'
+import type { MouseEvent } from 'react'
 import { clinic } from '../../../config/clinic'
 import type { AppointmentWithPatient } from '../../api/appointments'
 import { isSameDay } from '../../../lib/format'
+import { useNow } from '../../lib/useNow'
 import { assignLanes, gridBounds, minutesSinceMidnight, parseClock, snapMinutes } from '../../lib/scheduleLayout'
 import type { Staff } from '../../types'
 import { cardClass } from '../../ui/primitives'
@@ -16,15 +17,6 @@ interface DayGridProps {
   appointments: AppointmentWithPatient[]
   onSlotClick: (start: Date, doctorId: string) => void
   onAppointmentClick: (appointment: AppointmentWithPatient) => void
-}
-
-function useNow() {
-  const [now, setNow] = useState(() => new Date())
-  useEffect(() => {
-    const timer = setInterval(() => setNow(new Date()), 60_000)
-    return () => clearInterval(timer)
-  }, [])
-  return now
 }
 
 export function DayGrid({ day, doctors, appointments, onSlotClick, onAppointmentClick }: DayGridProps) {

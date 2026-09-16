@@ -1,10 +1,11 @@
 import { CalendarDays, Siren } from 'lucide-react'
 import { clinic } from '../config/clinic'
 import { useI18n } from '../i18n/useI18n'
+import { submitLead } from '../lib/publicApi'
 import { buildSosMessage, createWhatsappUrl } from '../lib/whatsapp'
 
 function SosLink({ className }: { className: string }) {
-  const { t } = useI18n()
+  const { t, lang } = useI18n()
   const href = createWhatsappUrl(clinic.sosWhatsapp, buildSosMessage({ title: t.sos.title, body: t.sos.body }))
 
   return (
@@ -13,6 +14,7 @@ function SosLink({ className }: { className: string }) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={t.sos.aria}
+      onClick={() => submitLead({ kind: 'sos', lang })}
       className={`flex animate-sos-pulse items-center justify-center gap-2 rounded-full bg-sos font-bold text-white shadow-sos transition active:scale-95 ${className}`}
     >
       <Siren className="size-5" />

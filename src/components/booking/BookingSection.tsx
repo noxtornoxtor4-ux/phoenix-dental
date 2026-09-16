@@ -2,10 +2,12 @@ import { ChevronLeft, ChevronRight, ListChecks, MessageCircle, RotateCcw, ScanLi
 import { useMemo, useRef, useState } from 'react'
 import { clinic } from '../../config/clinic'
 import type { ServiceId } from '../../data/services'
+import { dictionaries, type Dictionary } from '../../i18n/translations'
 import { useI18n } from '../../i18n/useI18n'
-import { buildEstimate, describeEstimate, type BookingSelection } from '../../lib/booking'
+import { buildEstimate, describeEstimate, type BookingSelection, type SelectionLabels } from '../../lib/booking'
 import { formatDateTime, formatDuration, formatNumber } from '../../lib/format'
-import { isValidLocalDigits, toInternational } from '../../lib/phone'
+import { isValidLocalDigits, toE164, toInternational } from '../../lib/phone'
+import { submitLead } from '../../lib/publicApi'
 import { buildBookingMessage, createWhatsappUrl } from '../../lib/whatsapp'
 import { SectionHeading } from '../ui/SectionHeading'
 import { EstimatePanel } from './EstimatePanel'
@@ -20,8 +22,18 @@ type PickMode = 'chart' | 'list'
 const emptySelection: BookingSelection = { teeth: {}, services: [] }
 const LAST_STEP = 2
 
+function selectionLabels(dictionary: Dictionary): SelectionLabels {
+  return {
+    tooth: dictionary.toothLabel,
+    problems: dictionary.problems,
+    services: Object.fromEntries(
+      Object.entries(dictionary.services).map(([id, service]) => [id, service.name]),
+    ) as Record<ServiceId, string>,
+  }
+}
+
 export function BookingSection() {
-  const { t } = useI18n()
+  const { t, lang } = useI18n()
   const cardRef = useRef<HTMLDivElement>(null)
   const [step, setStep] = useState(0)
   const [mode, setMode] = useState<PickMode>('chart')
@@ -66,13 +78,7 @@ export function BookingSection() {
   const price = t.booking.priceFrom(formatNumber(estimate.priceFrom))
   const duration = formatDuration(estimate.durationMinutes, t.units)
   const dateTime = slot ? formatDateTime(slot, t) : ''
-  const serviceText = describeEstimate(estimate, {
-    tooth: t.toothLabel,
-    problems: t.problems,
-    services: Object.fromEntries(
-      Object.entries(t.services).map(([id, service]) => [id, service.name]),
-    ) as Record<ServiceId, string>,
-  })
+  const serviceText = describeEstimate(estimate, selectionLabels(t))
 
   const submit = () => {
     if (!slot || name.trim() === '' || !isValidLocalDigits(phoneDigits)) {
@@ -85,6 +91,16 @@ export function BookingSection() {
       dateTime,
       name: name.trim(),
       phone: toInternational(phoneDigits),
+    })
+    submitLead({
+      kind: 'booking',
+      name: name.trim(),
+      phone: toE164(phoneDigits),
+      // Staff read requests in Russian regardless of the visitor's language.
+      summary: describeEstimate(estimate, selectionLabels(dictionaries.ru)),
+      estimate: estimate.priceFrom,
+      preferredAt: slot.toISOString(),
+      lang,
     })
     window.open(createWhatsappUrl(clinic.whatsapp, text), '_blank', 'noopener,noreferrer')
   }

@@ -1,7 +1,9 @@
 import { Ellipsis, LogOut } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import { NavLink, Outlet } from 'react-router'
+import { useLeadCounts } from '../api/leads'
 import { useAuth } from '../auth/useAuth'
+import { useRealtimeInvalidation } from '../lib/useRealtimeInvalidation'
 import { roleLabels } from '../labels'
 import { Modal } from '../ui/Modal'
 import { navigation, type NavItem } from './navigation'
@@ -17,7 +19,16 @@ function initials(name: string) {
   )
 }
 
-function SidebarLink({ item, onNavigate }: { item: NavItem; onNavigate?: () => void }) {
+function CountBadge({ count }: { count: number | undefined }) {
+  if (!count) return null
+  return (
+    <span className="grid h-5 min-w-5 place-items-center rounded-full bg-sos px-1.5 text-[11px] font-bold text-white tabular-nums">
+      {count > 99 ? '99+' : count}
+    </span>
+  )
+}
+
+function SidebarLink({ item, badge, onNavigate }: { item: NavItem; badge?: number; onNavigate?: () => void }) {
   const Icon = item.icon
   return (
     <NavLink
@@ -31,7 +42,8 @@ function SidebarLink({ item, onNavigate }: { item: NavItem; onNavigate?: () => v
       }
     >
       <Icon className="size-5 shrink-0" />
-      <span className="truncate">{item.label}</span>
+      <span className="flex-1 truncate">{item.label}</span>
+      <CountBadge count={badge} />
     </NavLink>
   )
 }
@@ -65,6 +77,9 @@ function UserCard({ action }: { action?: ReactNode }) {
 export function AdminLayout() {
   const { isAdmin, signOut } = useAuth()
   const [moreOpen, setMoreOpen] = useState(false)
+  const leadCounts = useLeadCounts(isAdmin)
+  useRealtimeInvalidation('leads', ['leads'], isAdmin)
+  const badgeFor = (item: NavItem) => (item.badge === 'newLeads' ? leadCounts.data?.new : undefined)
 
   const items = navigation.filter((item) => !item.adminOnly || isAdmin)
   const primary = items.filter((item) => item.primary).slice(0, 4)
@@ -92,7 +107,7 @@ export function AdminLayout() {
         </NavLink>
         <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-3">
           {items.map((item) => (
-            <SidebarLink key={item.to} item={item} />
+            <SidebarLink key={item.to} item={item} badge={badgeFor(item)} />
           ))}
         </nav>
         <div className="border-t border-white/5 p-4">
@@ -127,7 +142,12 @@ export function AdminLayout() {
                   }`
                 }
               >
-                <Icon className="size-5" />
+                <span className="relative">
+                  <Icon className="size-5" />
+                  <span className="absolute -top-2 -right-3">
+                    <CountBadge count={badgeFor(item)} />
+                  </span>
+                </span>
                 {item.label}
               </NavLink>
             )
@@ -148,7 +168,7 @@ export function AdminLayout() {
       <Modal open={moreOpen} onClose={() => setMoreOpen(false)} title="Меню">
         <div className="space-y-1">
           {secondary.map((item) => (
-            <SidebarLink key={item.to} item={item} onNavigate={() => setMoreOpen(false)} />
+            <SidebarLink key={item.to} item={item} badge={badgeFor(item)} onNavigate={() => setMoreOpen(false)} />
           ))}
         </div>
         <div className="mt-4 border-t border-white/10 pt-4">

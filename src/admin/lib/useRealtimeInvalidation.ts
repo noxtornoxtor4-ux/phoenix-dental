@@ -3,11 +3,12 @@ import { useEffect } from 'react'
 import { supabase } from './supabase'
 
 /** Refetches queries under `queryKey` whenever rows of `table` change (RLS still applies). */
-export function useRealtimeInvalidation(table: string, queryKey: readonly unknown[]) {
+export function useRealtimeInvalidation(table: string, queryKey: readonly unknown[], enabled = true) {
   const queryClient = useQueryClient()
   const key = JSON.stringify(queryKey)
 
   useEffect(() => {
+    if (!enabled) return
     const channel = supabase
       .channel(`realtime:${table}:${key}`)
       .on('postgres_changes', { event: '*', schema: 'public', table }, () => {
@@ -17,5 +18,5 @@ export function useRealtimeInvalidation(table: string, queryKey: readonly unknow
     return () => {
       supabase.removeChannel(channel)
     }
-  }, [table, key, queryClient])
+  }, [table, key, queryClient, enabled])
 }
