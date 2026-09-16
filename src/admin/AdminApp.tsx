@@ -10,6 +10,7 @@ import { isSupabaseConfigured } from './lib/supabase'
 import { DashboardPage } from './pages/DashboardPage'
 import { PatientPage } from './pages/patients/PatientPage'
 import { PatientsPage } from './pages/patients/PatientsPage'
+import { SchedulePage } from './pages/schedule/SchedulePage'
 import { FullScreenSpinner } from './ui/primitives'
 import { ToastProvider } from './ui/toast'
 
@@ -37,6 +38,7 @@ function Gate() {
     <Routes>
       <Route element={<AdminLayout />}>
         <Route index element={<DashboardPage />} />
+        <Route path="schedule" element={<SchedulePage />} />
         <Route path="patients" element={<PatientsPage />} />
         <Route path="patients/:id" element={<PatientPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />

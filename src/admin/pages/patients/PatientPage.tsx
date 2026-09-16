@@ -1,4 +1,4 @@
-import { ArrowLeft, ClipboardList, MessageCircle, Pencil, Phone, ScanLine, Trash, TriangleAlert } from 'lucide-react'
+import { ArrowLeft, CalendarDays, ClipboardList, MessageCircle, Pencil, Phone, ScanLine, Trash, TriangleAlert } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router'
 import { formatPhone } from '../../../lib/phone'
@@ -18,6 +18,7 @@ import { DentalFormula } from './DentalFormula'
 import { PatientFormModal } from './PatientFormModal'
 import { TreatmentFormModal } from './TreatmentFormModal'
 import { TreatmentsTab } from './TreatmentsTab'
+import { VisitsTab } from './VisitsTab'
 
 interface PatientTab {
   id: string
@@ -28,6 +29,7 @@ interface PatientTab {
 const tabs: PatientTab[] = [
   { id: 'formula', label: 'Зубная формула', icon: ScanLine },
   { id: 'treatments', label: 'Лечение', icon: ClipboardList },
+  { id: 'visits', label: 'Визиты', icon: CalendarDays },
 ]
 
 function InfoItem({ label, children }: { label: string; children: ReactNode }) {
@@ -156,7 +158,9 @@ function PatientCard({ patient }: { patient: Patient }) {
         ))}
       </div>
 
-      {treatments.isPending ? (
+      {activeTab === 'visits' ? (
+        <VisitsTab patient={patient} />
+      ) : treatments.isPending ? (
         <LoadingBlock />
       ) : treatments.isError ? (
         <ErrorState error={treatments.error} onRetry={() => treatments.refetch()} />

@@ -28,7 +28,12 @@ export function Sheet({ open, onClose, title, closeLabel, size = 'md', children 
     <dialog
       ref={dialogRef}
       aria-labelledby={titleId}
-      onClose={onClose}
+      // Only user intent closes the sheet (Escape, backdrop, close button). Listening to the
+      // native "close" event would also fire when the parent hides the sheet programmatically.
+      onCancel={(event) => {
+        event.preventDefault()
+        onClose()
+      }}
       onClick={(event) => {
         if (event.target === event.currentTarget) onClose()
       }}
