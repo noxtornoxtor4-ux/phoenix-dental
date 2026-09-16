@@ -1,4 +1,4 @@
-import { CalendarDays, LayoutDashboard, Users, type LucideIcon } from 'lucide-react'
+import { CalendarDays, LayoutDashboard, Users, Wallet, type LucideIcon } from 'lucide-react'
 
 export interface NavItem {
   to: string
@@ -13,4 +13,5 @@ export const navigation: NavItem[] = [
   { to: '/', label: 'Главная', icon: LayoutDashboard, primary: true },
   { to: '/schedule', label: 'Расписание', icon: CalendarDays, primary: true },
   { to: '/patients', label: 'Пациенты', icon: Users, primary: true },
+  { to: '/finance', label: 'Финансы', icon: Wallet, adminOnly: true },
 ]

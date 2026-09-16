@@ -1,4 +1,4 @@
-import { ArrowLeft, CalendarDays, ClipboardList, MessageCircle, Pencil, Phone, ScanLine, Trash, TriangleAlert } from 'lucide-react'
+import { ArrowLeft, Banknote, CalendarDays, ClipboardList, MessageCircle, Pencil, Phone, ScanLine, Trash, TriangleAlert } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import { Link, useNavigate, useParams, useSearchParams } from 'react-router'
 import { formatPhone } from '../../../lib/phone'
@@ -18,18 +18,21 @@ import { DentalFormula } from './DentalFormula'
 import { PatientFormModal } from './PatientFormModal'
 import { TreatmentFormModal } from './TreatmentFormModal'
 import { TreatmentsTab } from './TreatmentsTab'
+import { PaymentsTab } from './PaymentsTab'
 import { VisitsTab } from './VisitsTab'
 
 interface PatientTab {
   id: string
   label: string
   icon: typeof ScanLine
+  adminOnly?: boolean
 }
 
 const tabs: PatientTab[] = [
   { id: 'formula', label: 'Зубная формула', icon: ScanLine },
   { id: 'treatments', label: 'Лечение', icon: ClipboardList },
   { id: 'visits', label: 'Визиты', icon: CalendarDays },
+  { id: 'payments', label: 'Оплаты', icon: Banknote, adminOnly: true },
 ]
 
 function InfoItem({ label, children }: { label: string; children: ReactNode }) {
@@ -77,7 +80,8 @@ function PatientCard({ patient }: { patient: Patient }) {
   const [deleting, setDeleting] = useState(false)
   const [treatmentTooth, setTreatmentTooth] = useState<number | null | undefined>(undefined)
 
-  const activeTab = tabs.find((tab) => tab.id === searchParams.get('tab'))?.id ?? tabs[0].id
+  const visibleTabs = tabs.filter((tab) => !tab.adminOnly || isAdmin)
+  const activeTab = visibleTabs.find((tab) => tab.id === searchParams.get('tab'))?.id ?? visibleTabs[0].id
   const doctor = patient.doctor_id ? staffById.get(patient.doctor_id) : undefined
 
   return (
@@ -141,7 +145,7 @@ function PatientCard({ patient }: { patient: Patient }) {
       </section>
 
       <div role="tablist" className="flex gap-1 overflow-x-auto rounded-2xl bg-white/5 p-1 [scrollbar-width:none]">
-        {tabs.map(({ id, label, icon: Icon }) => (
+        {visibleTabs.map(({ id, label, icon: Icon }) => (
           <button
             key={id}
             type="button"
@@ -158,7 +162,9 @@ function PatientCard({ patient }: { patient: Patient }) {
         ))}
       </div>
 
-      {activeTab === 'visits' ? (
+      {activeTab === 'payments' ? (
+        <PaymentsTab patient={patient} />
+      ) : activeTab === 'visits' ? (
         <VisitsTab patient={patient} />
       ) : treatments.isPending ? (
         <LoadingBlock />
