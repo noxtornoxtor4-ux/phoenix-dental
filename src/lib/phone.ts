@@ -24,3 +24,15 @@ export function isValidLocalDigits(digits: string): boolean {
 export function toInternational(digits: string): string {
   return `+${KG_COUNTRY_CODE} ${formatLocalDigits(digits)}`
 }
+
+/** "700123456" → "+996700123456", the format phones are stored in. */
+export function toE164(digits: string): string {
+  return `+${KG_COUNTRY_CODE}${digits}`
+}
+
+/** "+996700123456" → "+996 700 123 456"; other formats are returned unchanged. */
+export function formatPhone(value: string | null | undefined): string {
+  if (!value) return ''
+  const match = new RegExp(`^\\+${KG_COUNTRY_CODE}(\\d{${LOCAL_LENGTH}})$`).exec(value)
+  return match ? toInternational(match[1]) : value
+}

@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'bun:test'
-import { formatLocalDigits, isValidLocalDigits, toInternational, toLocalDigits } from './phone'
+import { formatLocalDigits, formatPhone, isValidLocalDigits, toE164, toInternational, toLocalDigits } from './phone'
 
 describe('phone', () => {
   test('extracts local digits from different input styles', () => {
@@ -17,5 +17,12 @@ describe('phone', () => {
   test('validates a complete number', () => {
     expect(isValidLocalDigits('700123456')).toBe(true)
     expect(isValidLocalDigits('70012345')).toBe(false)
+  })
+
+  test('stores numbers in E.164 and formats them back', () => {
+    expect(toE164('700123456')).toBe('+996700123456')
+    expect(formatPhone('+996700123456')).toBe('+996 700 123 456')
+    expect(formatPhone('+77011234567')).toBe('+77011234567')
+    expect(formatPhone(null)).toBe('')
   })
 })

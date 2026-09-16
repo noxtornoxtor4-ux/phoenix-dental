@@ -1,4 +1,4 @@
-import { LayoutDashboard, type LucideIcon } from 'lucide-react'
+import { LayoutDashboard, Users, type LucideIcon } from 'lucide-react'
 
 export interface NavItem {
   to: string
@@ -9,4 +9,7 @@ export interface NavItem {
   primary?: boolean
 }
 
-export const navigation: NavItem[] = [{ to: '/', label: 'Главная', icon: LayoutDashboard, primary: true }]
+export const navigation: NavItem[] = [
+  { to: '/', label: 'Главная', icon: LayoutDashboard, primary: true },
+  { to: '/patients', label: 'Пациенты', icon: Users, primary: true },
+]
