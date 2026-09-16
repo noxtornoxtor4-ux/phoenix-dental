@@ -30,6 +30,7 @@ export type InventoryReason = 'purchase' | 'usage' | 'writeoff' | 'correction'
 export interface Staff {
   id: string
   full_name: string
+  email: string | null
   role: StaffRole
   specialty: string | null
   phone: string | null

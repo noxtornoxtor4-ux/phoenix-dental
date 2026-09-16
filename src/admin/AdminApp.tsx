@@ -11,6 +11,7 @@ import { DashboardPage } from './pages/DashboardPage'
 import { FinancePage } from './pages/finance/FinancePage'
 import { LeadsPage } from './pages/leads/LeadsPage'
 import { PricesPage } from './pages/prices/PricesPage'
+import { StaffPage } from './pages/staff/StaffPage'
 import { PatientPage } from './pages/patients/PatientPage'
 import { PatientsPage } from './pages/patients/PatientsPage'
 import { SchedulePage } from './pages/schedule/SchedulePage'
@@ -48,6 +49,7 @@ function Gate() {
           <Route path="leads" element={<LeadsPage />} />
           <Route path="finance" element={<FinancePage />} />
           <Route path="prices" element={<PricesPage />} />
+          <Route path="staff" element={<StaffPage />} />
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>

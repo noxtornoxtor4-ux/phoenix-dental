@@ -1,6 +1,7 @@
 import { Save } from 'lucide-react'
 import { useState, type FormEvent } from 'react'
-import { useChairs, useSaveAppointment, type AppointmentWithPatient } from '../../api/appointments'
+import { useSaveAppointment, type AppointmentWithPatient } from '../../api/appointments'
+import { useChairs } from '../../api/chairs'
 import { useStaff } from '../../api/staff'
 import { useAuth } from '../../auth/useAuth'
 import { fromDateTimeInputs, toDateInput, toTimeInput } from '../../lib/dates'

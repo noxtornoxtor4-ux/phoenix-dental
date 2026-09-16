@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase, unwrap } from '../lib/supabase'
-import type { Appointment, AppointmentStatus, Chair, Patient } from '../types'
+import type { Appointment, AppointmentStatus, Patient } from '../types'
 
 export type AppointmentWithPatient = Appointment & {
   patient: Pick<Patient, 'id' | 'full_name' | 'phone' | 'allergies'> | null
@@ -80,12 +80,5 @@ export function useDeleteAppointment() {
       unwrap(await supabase.from('appointments').delete().eq('id', id))
     },
     onSuccess: invalidate,
-  })
-}
-
-export function useChairs() {
-  return useQuery({
-    queryKey: ['chairs'],
-    queryFn: async () => unwrap(await supabase.from('chairs').select('*').order('sort').order('name')) as Chair[],
   })
 }

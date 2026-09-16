@@ -1,10 +1,14 @@
 import { PGlite } from '@electric-sql/pglite'
 import { btree_gist } from '@electric-sql/pglite/contrib/btree_gist'
 import { beforeAll, describe, expect, test } from 'bun:test'
-import { readFileSync } from 'node:fs'
+import { readdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 
-const migration = readFileSync(join(import.meta.dir, '../migrations/0001_crm.sql'), 'utf8')
+const migrationsDir = join(import.meta.dir, '../migrations')
+const migrations = readdirSync(migrationsDir)
+  .filter((file) => file.endsWith('.sql'))
+  .sort()
+  .map((file) => readFileSync(join(migrationsDir, file), 'utf8'))
 
 // Minimal stand-in for the pieces of Supabase the migration relies on.
 const supabaseStub = `
@@ -55,7 +59,7 @@ async function signUp(id: string, name: string) {
 beforeAll(async () => {
   db = await PGlite.create({ extensions: { btree_gist } })
   await db.exec(supabaseStub)
-  await db.exec(migration)
+  for (const migration of migrations) await db.exec(migration)
 }, 60_000)
 
 describe('staff onboarding', () => {
@@ -68,13 +72,13 @@ describe('staff onboarding', () => {
     await signUp(OTHER_DOCTOR, 'Other')
 
     await asSuperuser()
-    const staff = await rows<{ id: string; role: string; active: boolean; full_name: string }>(
-      'select id, role, active, full_name from public.staff order by id',
+    const staff = await rows<{ id: string; role: string; active: boolean; full_name: string; email: string }>(
+      'select id, role, active, full_name, email from public.staff order by id',
     )
     expect(staff).toEqual([
-      { id: ADMIN, role: 'admin', active: true, full_name: 'Admin' },
-      { id: DOCTOR, role: 'doctor', active: false, full_name: 'Doctor' },
-      { id: OTHER_DOCTOR, role: 'doctor', active: false, full_name: 'Other' },
+      { id: ADMIN, role: 'admin', active: true, full_name: 'Admin', email: 'Admin@phoenix.test' },
+      { id: DOCTOR, role: 'doctor', active: false, full_name: 'Doctor', email: 'Doctor@phoenix.test' },
+      { id: OTHER_DOCTOR, role: 'doctor', active: false, full_name: 'Other', email: 'Other@phoenix.test' },
     ])
   })
 
@@ -99,6 +103,14 @@ describe('staff onboarding', () => {
     await expect(db.query(`update public.staff set active = false where id = $1`, [ADMIN])).rejects.toThrow(
       /active administrator/,
     )
+  })
+})
+
+describe('staff email', () => {
+  test('follows email changes of the auth user', async () => {
+    await asSuperuser()
+    await db.query("update auth.users set email = 'doctor@new.test' where id = $1", [DOCTOR])
+    expect((await rows<{ email: string }>('select email from public.staff where id = $1', [DOCTOR]))[0].email).toBe('doctor@new.test')
   })
 })
 
