@@ -5,9 +5,10 @@ import { findPatientsByPhone } from './patients'
 
 export const leadStatusOrder: LeadStatus[] = ['new', 'contacted', 'booked', 'rejected']
 
-export function useLeads(status: LeadStatus | 'all') {
+export function useLeads(status: LeadStatus | 'all', enabled = true) {
   return useQuery({
     queryKey: ['leads', 'list', status],
+    enabled,
     queryFn: async () => {
       let query = supabase.from('leads').select('*').order('created_at', { ascending: false }).limit(200)
       if (status !== 'all') query = query.eq('status', status)

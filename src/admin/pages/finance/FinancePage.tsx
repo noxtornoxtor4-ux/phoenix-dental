@@ -7,8 +7,9 @@ import { useStaffById } from '../../api/staff'
 import { formatDateTime, formatSom } from '../../lib/dates'
 import { summarizeFinance } from '../../lib/finance'
 import { paymentMethods } from '../../labels'
-import type { Patient } from '../../types'
+import type { Patient, PaymentMethod } from '../../types'
 import { Button } from '../../ui/Button'
+import { BarList } from '../../ui/charts/BarList'
 import { ConfirmDialog } from '../../ui/ConfirmDialog'
 import { cardClass, ErrorState, LoadingBlock, PageHeader, StatCard } from '../../ui/primitives'
 import { PaymentFormModal } from './PaymentFormModal'
@@ -76,55 +77,29 @@ export function FinancePage() {
           <div className="grid gap-5 lg:grid-cols-2">
             <section className={`${cardClass} p-5`}>
               <h2 className="mb-4 font-semibold">Касса по способам оплаты</h2>
-              <ul className="space-y-3">
-                {(Object.keys(paymentMethods) as (keyof typeof paymentMethods)[]).map((method) => {
-                  const Icon = methodIcons[method]
-                  const share = summary.received > 0 ? (summary.byMethod[method] / summary.received) * 100 : 0
-                  return (
-                    <li key={method}>
-                      <div className="mb-1.5 flex items-center justify-between text-sm">
-                        <span className="flex items-center gap-2 text-white/70">
-                          <Icon className="size-4" />
-                          {paymentMethods[method]}
-                        </span>
-                        <span className="font-semibold tabular-nums">{formatSom(summary.byMethod[method])}</span>
-                      </div>
-                      <div className="h-2 overflow-hidden rounded-full bg-white/5">
-                        <div className="h-full rounded-full bg-accent" style={{ width: `${share}%` }} />
-                      </div>
-                    </li>
-                  )
-                })}
-              </ul>
+              <BarList
+                items={(Object.keys(paymentMethods) as PaymentMethod[]).map((method) => ({
+                  key: method,
+                  label: paymentMethods[method],
+                  value: summary.byMethod[method],
+                }))}
+                formatValue={formatSom}
+              />
             </section>
 
             <section className={`${cardClass} p-5`}>
               <h2 className="mb-4 font-semibold">Выручка по врачам</h2>
-              {summary.byDoctor.length === 0 ? (
-                <p className="text-sm text-white/45">За период процедур нет</p>
-              ) : (
-                <ul className="space-y-3">
-                  {summary.byDoctor.map((row) => {
-                    const doctor = staffById.get(row.doctorId)
-                    const share = summary.billed > 0 ? (row.total / summary.billed) * 100 : 0
-                    return (
-                      <li key={row.doctorId}>
-                        <div className="mb-1.5 flex items-center justify-between gap-3 text-sm">
-                          <span className="flex min-w-0 items-center gap-2">
-                            <span className="size-2.5 shrink-0 rounded-full" style={{ backgroundColor: doctor?.color ?? '#94A3B8' }} />
-                            <span className="truncate">{doctor?.full_name || 'Врач'}</span>
-                            <span className="text-xs text-white/40">{row.count} проц.</span>
-                          </span>
-                          <span className="font-semibold tabular-nums">{formatSom(row.total)}</span>
-                        </div>
-                        <div className="h-2 overflow-hidden rounded-full bg-white/5">
-                          <div className="h-full rounded-full" style={{ width: `${share}%`, backgroundColor: doctor?.color ?? '#94A3B8' }} />
-                        </div>
-                      </li>
-                    )
-                  })}
-                </ul>
-              )}
+              <BarList
+                items={summary.byDoctor.map((row) => ({
+                  key: row.doctorId,
+                  label: staffById.get(row.doctorId)?.full_name || 'Врач',
+                  dotColor: staffById.get(row.doctorId)?.color,
+                  value: row.total,
+                  hint: `${row.count} проц.`,
+                }))}
+                formatValue={formatSom}
+                empty="За период процедур нет"
+              />
             </section>
           </div>
 

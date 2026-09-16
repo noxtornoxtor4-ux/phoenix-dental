@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import type { Period } from '../lib/finance'
 import { supabase, unwrap } from '../lib/supabase'
 import type { Patient, Payment, PatientBalance, Treatment } from '../types'
@@ -11,6 +11,7 @@ const periodKey = (period: Period) => [period.from.toISOString(), period.to.toIS
 export function usePaymentsInPeriod(period: Period) {
   return useQuery({
     queryKey: ['finance', 'payments', ...periodKey(period)],
+    placeholderData: keepPreviousData,
     queryFn: async () =>
       unwrap(
         await supabase
@@ -26,6 +27,7 @@ export function usePaymentsInPeriod(period: Period) {
 export function useTreatmentsInPeriod(period: Period) {
   return useQuery({
     queryKey: ['finance', 'treatments', ...periodKey(period)],
+    placeholderData: keepPreviousData,
     queryFn: async () =>
       unwrap(
         await supabase

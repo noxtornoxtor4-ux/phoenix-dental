@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { keepPreviousData, useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { supabase, unwrap } from '../lib/supabase'
 import type { Appointment, AppointmentStatus, Patient } from '../types'
 
@@ -16,6 +16,7 @@ const WITH_PATIENT = '*, patient:patients(id, full_name, phone, allergies)'
 export function useAppointments(from: Date, to: Date) {
   return useQuery({
     queryKey: ['appointments', 'range', from.toISOString(), to.toISOString()],
+    placeholderData: keepPreviousData,
     queryFn: async () =>
       unwrap(
         await supabase

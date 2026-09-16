@@ -7,6 +7,7 @@ import { ConfigMissingPage, PendingAccountPage, SetPasswordPage } from './auth/S
 import { useAuth } from './auth/useAuth'
 import { AdminLayout } from './layout/AdminLayout'
 import { isSupabaseConfigured } from './lib/supabase'
+import { AnalyticsPage } from './pages/analytics/AnalyticsPage'
 import { DashboardPage } from './pages/DashboardPage'
 import { FinancePage } from './pages/finance/FinancePage'
 import { InventoryPage } from './pages/inventory/InventoryPage'
@@ -50,6 +51,7 @@ function Gate() {
         <Route element={<RequireAdmin />}>
           <Route path="leads" element={<LeadsPage />} />
           <Route path="finance" element={<FinancePage />} />
+          <Route path="analytics" element={<AnalyticsPage />} />
           <Route path="prices" element={<PricesPage />} />
           <Route path="staff" element={<StaffPage />} />
         </Route>
