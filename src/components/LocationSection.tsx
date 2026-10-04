@@ -55,7 +55,7 @@ export function LocationSection() {
     <section id="location" className="mx-auto max-w-6xl px-4 py-14 md:py-20">
       <SectionHeading eyebrow={t.location.eyebrow} title={t.location.title} />
 
-      <div className="mt-8 grid gap-5 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+      <div className="mt-8 grid items-start gap-5 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
         <div className="glass flex flex-col rounded-[2rem] p-5 sm:p-6">
           <ul className="space-y-4">
             {infoRows.map(({ icon: Icon, title, text }) => (
@@ -129,7 +129,7 @@ export function LocationSection() {
               loading="lazy"
               allowFullScreen
               referrerPolicy="no-referrer-when-downgrade"
-              className="relative size-full min-h-80 rounded-[1.6rem] border-0 [filter:invert(0.92)_hue-rotate(185deg)_saturate(0.6)_sepia(0.35)_brightness(0.92)]"
+              className="relative size-full min-h-72 rounded-[1.6rem] border-0 [filter:invert(0.92)_hue-rotate(185deg)_saturate(0.6)_sepia(0.35)_brightness(0.92)]"
             />
           )}
           <span className="pointer-events-none absolute top-4 left-4 flex items-center gap-2 rounded-full bg-ink-900/85 px-3 py-1.5 text-xs font-semibold backdrop-blur">
@@ -137,6 +137,21 @@ export function LocationSection() {
             PHOENIX
           </span>
         </div>
+
+        {/* Always readable, even if the map tiles never arrive on a slow phone. */}
+        <a
+          href={routeHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="glass flex items-center gap-3 rounded-2xl px-4 py-3 text-sm transition hover:bg-white/10 md:col-start-2"
+        >
+          <MapPin className="size-5 shrink-0 text-accent" />
+          <span className="min-w-0 flex-1 truncate">{t.location.address}</span>
+          <span className="flex shrink-0 items-center gap-1.5 font-semibold text-accent">
+            {t.location.route}
+            <Navigation className="size-4" />
+          </span>
+        </a>
       </div>
     </section>
   )
