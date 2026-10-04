@@ -26,8 +26,11 @@ export const clinic = {
   },
   maps: {
     query: 'Каракол, улица Токтогула, 263',
-    googleRoute: 'https://www.google.com/maps/dir/?api=1&destination=',
-    googleEmbed: 'https://www.google.com/maps?output=embed&q=',
+    /** Geocoded from the address by Yandex Maps. */
+    lat: 42.493663,
+    lon: 78.396146,
+    yandexWidget: 'https://yandex.ru/map-widget/v1/',
+    yandexRoute: 'https://yandex.ru/maps/',
     twoGisSearch: 'https://2gis.kg/karakol/search/',
   },
 } as const

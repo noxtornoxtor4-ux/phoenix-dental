@@ -8,6 +8,10 @@ const allWeekdays = [1, 2, 3, 4, 5, 6, 0]
 export function LocationSection() {
   const { t } = useI18n()
   const query = encodeURIComponent(clinic.maps.query)
+  const { lat, lon } = clinic.maps
+  // The widget takes longitude first; a plain pin keeps the balloon off the map.
+  const mapSrc = `${clinic.maps.yandexWidget}?ll=${lon},${lat}&z=17&l=map&lang=ru_RU&pt=${lon},${lat},pm2rdm`
+  const routeHref = `${clinic.maps.yandexRoute}?rtext=~${lat},${lon}&rtt=auto`
   const { weekdays, open, close } = clinic.hours
 
   // Working days are expected to be a continuous range (e.g. Mon–Sat).
@@ -51,7 +55,7 @@ export function LocationSection() {
 
           <div className="mt-6 grid gap-2 sm:grid-cols-2 md:mt-auto md:pt-6">
             <a
-              href={`${clinic.maps.googleRoute}${query}`}
+              href={routeHref}
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center justify-center gap-2 rounded-full bg-accent px-5 py-4 font-bold text-ink-900 shadow-glow transition hover:bg-accent-300 active:scale-[0.98] sm:col-span-2"
@@ -81,8 +85,9 @@ export function LocationSection() {
         <div className="glass relative min-h-80 overflow-hidden rounded-[2rem] p-1.5">
           <iframe
             title={t.location.mapTitle}
-            src={`${clinic.maps.googleEmbed}${query}`}
+            src={mapSrc}
             loading="lazy"
+            allowFullScreen
             referrerPolicy="no-referrer-when-downgrade"
             className="size-full min-h-80 rounded-[1.6rem] border-0 [filter:invert(0.92)_hue-rotate(185deg)_saturate(0.6)_sepia(0.35)_brightness(0.92)]"
           />
