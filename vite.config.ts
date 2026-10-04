@@ -41,9 +41,19 @@ export default defineConfig({
       workbox: {
         // Fonts are split by unicode subset; cache only the subsets a browser actually requests.
         globPatterns: ['**/*.{js,css,html,svg,png,ico}'],
-        navigateFallback: '/index.html',
         cleanupOutdatedCaches: true,
         runtimeCaching: [
+          {
+            // Pages come from the network so a new build shows up right away;
+            // the cached copy is the offline fallback.
+            urlPattern: ({ request }) => request.mode === 'navigate',
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'pages',
+              networkTimeoutSeconds: 3,
+              expiration: { maxEntries: 20, maxAgeSeconds: 60 * 60 * 24 * 30 },
+            },
+          },
           {
             urlPattern: ({ request }) => request.destination === 'font',
             handler: 'CacheFirst',
