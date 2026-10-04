@@ -107,7 +107,7 @@ function ServiceFormModal({ service, onClose }: { service?: Service; onClose: ()
   const [scope, setScope] = useState<ServiceScope>(service?.scope ?? 'tooth')
   const [price, setPrice] = useState(service ? String(service.price) : '')
   const [duration, setDuration] = useState(service ? String(service.duration_minutes) : '30')
-  const [color, setColor] = useState(service?.color ?? '#00E5FF')
+  const [color, setColor] = useState(service?.color ?? '#DCA457')
   const [sort, setSort] = useState(service ? String(service.sort) : '100')
   const [active, setActive] = useState(service?.active ?? true)
   const [showErrors, setShowErrors] = useState(false)
@@ -185,7 +185,7 @@ function ServiceFormModal({ service, onClose }: { service?: Service; onClose: ()
           <Input type="number" inputMode="numeric" value={sort} onChange={(e) => setSort(e.target.value)} />
         </Field>
         <label className="flex items-center gap-3 text-sm sm:col-span-2">
-          <input type="checkbox" checked={active} onChange={(e) => setActive(e.target.checked)} className="size-5 accent-[#00E5FF]" />
+          <input type="checkbox" checked={active} onChange={(e) => setActive(e.target.checked)} className="size-5 accent-[#DCA457]" />
           Показывать в прайсе{service?.code ? ' и на сайте' : ''}
         </label>
         <div className="sm:col-span-2">

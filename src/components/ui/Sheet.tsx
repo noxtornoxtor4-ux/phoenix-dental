@@ -37,9 +37,9 @@ export function Sheet({ open, onClose, title, closeLabel, size = 'md', children 
       onClick={(event) => {
         if (event.target === event.currentTarget) onClose()
       }}
-      className={`mx-0 mt-auto mb-0 max-h-[90dvh] w-full max-w-none bg-transparent p-0 text-white backdrop:bg-navy-950/70 backdrop:backdrop-blur-sm open:animate-rise sm:m-auto ${widths[size]}`}
+      className={`mx-0 mt-auto mb-0 max-h-[90dvh] w-full max-w-none bg-transparent p-0 text-white backdrop:bg-ink-950/70 backdrop:backdrop-blur-sm open:animate-rise sm:m-auto ${widths[size]}`}
     >
-      <div className="glass max-h-[90dvh] overflow-y-auto overscroll-contain rounded-t-3xl bg-navy-800/90 px-5 pt-3 pb-[calc(1.5rem+env(safe-area-inset-bottom))] sm:rounded-3xl sm:pt-5">
+      <div className="glass max-h-[90dvh] overflow-y-auto overscroll-contain rounded-t-3xl bg-ink-800/90 px-5 pt-3 pb-[calc(1.5rem+env(safe-area-inset-bottom))] sm:rounded-3xl sm:pt-5">
         <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-white/20 sm:hidden" />
         <div className="mb-4 flex items-start justify-between gap-4">
           <h3 id={titleId} className="font-display text-lg font-semibold">

@@ -27,7 +27,7 @@ export function BeforeAfterSlider() {
               aria-pressed={mode === item}
               onClick={() => setMode(item)}
               className={`rounded-full px-3 py-1.5 text-xs font-semibold transition ${
-                mode === item ? 'bg-white text-navy-900' : 'text-white/60 hover:text-white'
+                mode === item ? 'bg-white text-ink-900' : 'text-white/60 hover:text-white'
               }`}
             >
               {t.compare[item]}
@@ -51,10 +51,10 @@ export function BeforeAfterSlider() {
           <SmileIllustration variant="before" mode={mode} className="size-full" />
         </div>
 
-        <span className="absolute top-3 left-3 rounded-full bg-navy-950/60 px-2.5 py-1 text-[11px] font-bold tracking-wider uppercase backdrop-blur">
+        <span className="absolute top-3 left-3 rounded-full bg-ink-950/60 px-2.5 py-1 text-[11px] font-bold tracking-wider uppercase backdrop-blur">
           {t.compare.before}
         </span>
-        <span className="absolute top-3 right-3 rounded-full bg-accent/90 px-2.5 py-1 text-[11px] font-bold tracking-wider text-navy-900 uppercase">
+        <span className="absolute top-3 right-3 rounded-full bg-accent/90 px-2.5 py-1 text-[11px] font-bold tracking-wider text-ink-900 uppercase">
           {t.compare.after}
         </span>
 
@@ -68,10 +68,10 @@ export function BeforeAfterSlider() {
           className="peer sr-only"
         />
         <div
-          className="pointer-events-none absolute inset-y-0 w-0.5 -translate-x-1/2 bg-white shadow-[0_0_16px_rgb(0_229_255/0.9)]"
+          className="pointer-events-none absolute inset-y-0 w-0.5 -translate-x-1/2 bg-white shadow-[0_0_16px_rgb(220_164_87/0.9)]"
           style={{ left: `${position}%` }}
         >
-          <span className="absolute top-1/2 left-1/2 grid size-11 -translate-1/2 place-items-center rounded-full bg-white text-navy-900 shadow-glow transition group-active:scale-110 peer-focus-visible:ring-2">
+          <span className="absolute top-1/2 left-1/2 grid size-11 -translate-1/2 place-items-center rounded-full bg-white text-ink-900 shadow-glow transition group-active:scale-110 peer-focus-visible:ring-2">
             <MoveHorizontal className="size-5" />
           </span>
         </div>

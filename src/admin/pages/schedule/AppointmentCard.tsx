@@ -23,7 +23,7 @@ export function AppointmentCard({ appointment, doctorColor, compact = false, onC
         event.stopPropagation()
         onClick()
       }}
-      className={`group flex size-full min-h-0 flex-col overflow-hidden rounded-xl border-l-4 bg-navy-700/90 px-2.5 py-1.5 text-left text-xs shadow-lg shadow-black/20 transition hover:brightness-125 ${
+      className={`group flex size-full min-h-0 flex-col overflow-hidden rounded-xl border-l-4 bg-ink-700/90 px-2.5 py-1.5 text-left text-xs shadow-lg shadow-black/20 transition hover:brightness-125 ${
         faded ? 'opacity-45' : ''
       }`}
       style={{ borderLeftColor: doctorColor, backgroundImage: `linear-gradient(90deg, ${doctorColor}26, transparent)` }}

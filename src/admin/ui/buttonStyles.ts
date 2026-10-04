@@ -1,5 +1,5 @@
 export const variants = {
-  primary: 'bg-accent font-bold text-navy-900 shadow-glow hover:bg-accent-300 disabled:shadow-none',
+  primary: 'bg-accent font-bold text-ink-900 shadow-glow hover:bg-accent-300 disabled:shadow-none',
   secondary: 'border border-white/10 bg-white/5 font-semibold text-white hover:bg-white/10',
   ghost: 'font-semibold text-white/70 hover:bg-white/10 hover:text-white',
   danger: 'bg-sos/15 font-semibold text-sos hover:bg-sos/25',

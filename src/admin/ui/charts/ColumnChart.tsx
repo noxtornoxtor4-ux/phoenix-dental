@@ -101,7 +101,7 @@ export function ColumnChart({ title, subtitle, data, formatValue, stale = false 
               {activePoint && active !== null && (
                 <div
                   role="status"
-                  className="pointer-events-none absolute -top-2 z-10 -translate-x-1/2 -translate-y-full rounded-xl border border-white/10 bg-navy-900/95 px-3 py-2 text-center whitespace-nowrap shadow-xl"
+                  className="pointer-events-none absolute -top-2 z-10 -translate-x-1/2 -translate-y-full rounded-xl border border-white/10 bg-ink-900/95 px-3 py-2 text-center whitespace-nowrap shadow-xl"
                   style={{ left: `${((active + 0.5) / data.length) * 100}%` }}
                 >
                   <p className="text-sm font-semibold tabular-nums">{formatValue(activePoint.value)}</p>

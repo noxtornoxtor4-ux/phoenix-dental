@@ -51,7 +51,7 @@ function SidebarLink({ item, badge, onNavigate }: { item: NavItem; badge?: numbe
 function Avatar({ name, color }: { name: string; color: string }) {
   return (
     <span
-      className="grid size-9 shrink-0 place-items-center rounded-full text-xs font-bold text-navy-900"
+      className="grid size-9 shrink-0 place-items-center rounded-full text-xs font-bold text-ink-900"
       style={{ backgroundColor: color }}
     >
       {initials(name)}
@@ -98,7 +98,7 @@ export function AdminLayout() {
 
   return (
     <div className="min-h-dvh lg:pl-64">
-      <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 flex-col border-r border-white/5 bg-navy-950/70 backdrop-blur-xl lg:flex">
+      <aside className="fixed inset-y-0 left-0 z-30 hidden w-64 flex-col border-r border-white/5 bg-ink-950/70 backdrop-blur-xl lg:flex">
         <NavLink to="/" className="flex h-16 items-center gap-3 px-5">
           <img src="/favicon.svg" alt="" className="size-9 rounded-xl shadow-glow" />
           <span className="font-display text-sm font-bold tracking-[0.18em]">
@@ -115,7 +115,7 @@ export function AdminLayout() {
         </div>
       </aside>
 
-      <header className="sticky top-0 z-30 flex h-14 items-center gap-3 border-b border-white/5 bg-navy-900/80 px-4 pt-[env(safe-area-inset-top)] backdrop-blur-xl lg:hidden">
+      <header className="sticky top-0 z-30 flex h-14 items-center gap-3 border-b border-white/5 bg-ink-900/80 px-4 pt-[env(safe-area-inset-top)] backdrop-blur-xl lg:hidden">
         <img src="/favicon.svg" alt="" className="size-8 rounded-lg" />
         <span className="flex-1 font-display text-sm font-bold tracking-[0.18em]">
           PHOENIX <span className="text-accent">CRM</span>
@@ -127,7 +127,7 @@ export function AdminLayout() {
         <Outlet />
       </main>
 
-      <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-white/5 bg-navy-900/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl lg:hidden">
+      <nav className="fixed inset-x-0 bottom-0 z-30 border-t border-white/5 bg-ink-900/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl lg:hidden">
         <div className="mx-auto flex max-w-md">
           {primary.map((item) => {
             const Icon = item.icon

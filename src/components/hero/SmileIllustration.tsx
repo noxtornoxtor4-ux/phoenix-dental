@@ -45,23 +45,23 @@ export function SmileIllustration({ variant, mode, className }: SmileIllustratio
   const id = useId()
   const clean = variant === 'after'
   const stained = !clean && mode === 'cleaning'
-  const toothTop = clean ? '#FFFFFF' : mode === 'whitening' ? '#F1DFA8' : '#EAD9A6'
-  const toothBottom = clean ? '#DDEFF6' : mode === 'whitening' ? '#CFAE62' : '#C9A866'
+  const toothTop = clean ? '#FFFFFF' : mode === 'whitening' ? '#EFE4C6' : '#E6DCC4'
+  const toothBottom = clean ? '#DDEFF6' : mode === 'whitening' ? '#C7B183' : '#BCA87D'
 
   return (
     <svg viewBox="0 0 400 260" className={className} role="img" aria-hidden="true">
       <defs>
         <radialGradient id={`${id}-bg`} cx="0.5" cy="0.45" r="0.7">
-          <stop offset="0" stopColor={clean ? '#123B5A' : '#1C2541'} />
-          <stop offset="1" stopColor="#0B132B" />
+          <stop offset="0" stopColor={clean ? '#241c14' : '#1a1611'} />
+          <stop offset="1" stopColor="#0b0a09" />
         </radialGradient>
         <linearGradient id={`${id}-tooth`} x1="0" y1="0" x2="0" y2="1">
           <stop offset="0" stopColor={toothTop} />
           <stop offset="1" stopColor={toothBottom} />
         </linearGradient>
         <linearGradient id={`${id}-lip`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#D9737F" />
-          <stop offset="1" stopColor="#A9485A" />
+          <stop offset="0" stopColor="#C4737A" />
+          <stop offset="1" stopColor="#8E4850" />
         </linearGradient>
         <clipPath id={`${id}-mouth`}>
           <path d={MOUTH} />
@@ -74,10 +74,10 @@ export function SmileIllustration({ variant, mode, className }: SmileIllustratio
       <rect width="400" height="260" fill={`url(#${id}-bg)`} />
 
       <g clipPath={`url(#${id}-mouth)`}>
-        <rect width="400" height="260" fill="#2A0F1D" />
+        <rect width="400" height="260" fill="#231116" />
 
         {/* Lower gum and teeth sit behind the upper row. */}
-        <path d="M40 120 Q200 250 360 120 L360 260 L40 260 Z" fill="#C85D74" transform="translate(0 -14)" />
+        <path d="M40 120 Q200 250 360 120 L360 260 L40 260 Z" fill="#AE5A68" transform="translate(0 -14)" />
         {mirrored(lowerTeeth).map(({ x, tooth: [, width] }) => {
           const top = upperLipY(x) + 64
           return (
@@ -99,7 +99,7 @@ export function SmileIllustration({ variant, mode, className }: SmileIllustratio
           )
         })}
 
-        <path d="M40 120 Q200 20 360 120 L360 0 L40 0 Z" fill="#D46A80" transform="translate(0 14)" />
+        <path d="M40 120 Q200 20 360 120 L360 0 L40 0 Z" fill="#BC6572" transform="translate(0 14)" />
         {mirrored(upperTeeth).map(({ x, tooth: [, width, height] }) => {
           const top = upperLipY(x) + 12
           return (
@@ -145,7 +145,7 @@ export function SmileIllustration({ variant, mode, className }: SmileIllustratio
           <path
             key={`${cx}`}
             d={`M${cx} ${cy - r}Q${cx} ${cy} ${cx + r} ${cy}Q${cx} ${cy} ${cx} ${cy + r}Q${cx} ${cy} ${cx - r} ${cy}Q${cx} ${cy} ${cx} ${cy - r}Z`}
-            fill="#8DF6FF"
+            fill="#EDC182"
           />
         ))}
     </svg>

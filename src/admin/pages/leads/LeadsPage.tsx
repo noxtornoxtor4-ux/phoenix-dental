@@ -55,13 +55,13 @@ export function LeadsPage() {
             aria-pressed={filter === item.id}
             onClick={() => setFilter(item.id)}
             className={`flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold whitespace-nowrap transition ${
-              filter === item.id ? 'bg-accent text-navy-900' : 'text-white/60 hover:text-white'
+              filter === item.id ? 'bg-accent text-ink-900' : 'text-white/60 hover:text-white'
             }`}
           >
             {item.label}
             {item.count !== undefined && item.count > 0 && (
               <span
-                className={`rounded-full px-1.5 text-xs tabular-nums ${filter === item.id ? 'bg-navy-900/20' : 'bg-white/10'}`}
+                className={`rounded-full px-1.5 text-xs tabular-nums ${filter === item.id ? 'bg-ink-900/20' : 'bg-white/10'}`}
               >
                 {item.count}
               </span>

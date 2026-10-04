@@ -33,7 +33,7 @@ export function LocationSection() {
           <ul className="space-y-4">
             {infoRows.map(({ icon: Icon, title, text }) => (
               <li key={title} className="flex gap-4">
-                <span className="grid size-11 shrink-0 place-items-center rounded-2xl bg-accent/10 text-accent">
+                <span className="grid size-11 shrink-0 place-items-center rounded-full bg-accent/10 text-accent">
                   <Icon className="size-5" />
                 </span>
                 <span className="min-w-0 self-center">
@@ -54,7 +54,7 @@ export function LocationSection() {
               href={`${clinic.maps.googleRoute}${query}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 rounded-2xl bg-accent px-5 py-4 font-bold text-navy-900 shadow-glow transition hover:bg-accent-300 active:scale-[0.98] sm:col-span-2"
+              className="flex items-center justify-center gap-2 rounded-full bg-accent px-5 py-4 font-bold text-ink-900 shadow-glow transition hover:bg-accent-300 active:scale-[0.98] sm:col-span-2"
             >
               <Navigation className="size-5" />
               {t.location.route}
@@ -84,9 +84,9 @@ export function LocationSection() {
             src={`${clinic.maps.googleEmbed}${query}`}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            className="size-full min-h-80 rounded-[1.6rem] border-0 [filter:invert(0.92)_hue-rotate(180deg)_saturate(0.85)_brightness(0.95)]"
+            className="size-full min-h-80 rounded-[1.6rem] border-0 [filter:invert(0.92)_hue-rotate(185deg)_saturate(0.6)_sepia(0.35)_brightness(0.92)]"
           />
-          <span className="pointer-events-none absolute top-4 left-4 flex items-center gap-2 rounded-full bg-navy-900/85 px-3 py-1.5 text-xs font-semibold backdrop-blur">
+          <span className="pointer-events-none absolute top-4 left-4 flex items-center gap-2 rounded-full bg-ink-900/85 px-3 py-1.5 text-xs font-semibold backdrop-blur">
             <MapPin className="size-3.5 text-accent" />
             PHOENIX
           </span>

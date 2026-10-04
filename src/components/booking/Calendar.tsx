@@ -84,7 +84,7 @@ export function Calendar({ selected, today, lastDay, isDisabled, onSelect }: Cal
               aria-label={t.formatDate(date.getDate(), t.months[date.getMonth()])}
               onClick={() => onSelect(date)}
               className={`h-11 rounded-xl text-sm font-semibold tabular-nums transition active:scale-95 disabled:cursor-not-allowed disabled:text-white/20 disabled:active:scale-100 ${
-                active ? 'bg-accent text-navy-900 shadow-glow' : 'hover:bg-white/10 disabled:hover:bg-transparent'
+                active ? 'bg-accent text-ink-900 shadow-glow' : 'hover:bg-white/10 disabled:hover:bg-transparent'
               } ${isToday && !active ? 'ring-1 ring-accent/60 ring-inset' : ''}`}
             >
               {date.getDate()}

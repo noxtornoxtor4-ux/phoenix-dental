@@ -91,7 +91,7 @@ export function StatCard({
   label,
   value,
   hint,
-  color = '#00E5FF',
+  color = '#DCA457',
 }: {
   icon: LucideIcon
   label: string

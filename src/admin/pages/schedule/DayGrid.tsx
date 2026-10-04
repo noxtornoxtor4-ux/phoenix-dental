@@ -45,7 +45,7 @@ export function DayGrid({ day, doctors, appointments, onSlotClick, onAppointment
   return (
     <div className={`${cardClass} overflow-x-auto`}>
       <div className="min-w-fit">
-        <div className="sticky top-0 z-10 flex border-b border-white/10 bg-navy-900/95 backdrop-blur">
+        <div className="sticky top-0 z-10 flex border-b border-white/10 bg-ink-900/95 backdrop-blur">
           <div className="w-14 shrink-0" />
           {doctors.map((doctor) => (
             <div key={doctor.id} className="flex min-w-48 flex-1 items-center gap-2 px-3 py-3 text-sm font-semibold">

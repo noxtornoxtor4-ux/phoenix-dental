@@ -27,7 +27,7 @@ export function InstallGuide() {
           const Icon = icons[index]
           return (
             <li key={step} className="flex items-center gap-3">
-              <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-accent/15 text-accent">
+              <span className="grid size-10 shrink-0 place-items-center rounded-full bg-accent/15 text-accent">
                 <Icon className="size-5" />
               </span>
               <span className="text-sm text-white/85">
@@ -42,7 +42,7 @@ export function InstallGuide() {
       <button
         type="button"
         onClick={closeInstallGuide}
-        className="mt-6 w-full rounded-2xl bg-accent py-3.5 font-bold text-navy-900 transition active:scale-[0.98]"
+        className="mt-6 w-full rounded-full bg-accent py-3.5 font-bold text-ink-900 transition active:scale-[0.98]"
       >
         {t.install.gotIt}
       </button>

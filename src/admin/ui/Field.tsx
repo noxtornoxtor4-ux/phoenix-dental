@@ -31,7 +31,7 @@ export function Input({ className = '', ...props }: InputHTMLAttributes<HTMLInpu
 
 export function Select({ className = '', children, ...props }: SelectHTMLAttributes<HTMLSelectElement>) {
   return (
-    <select className={`h-11 ${controlClass} [&>option]:bg-navy-800 ${className}`} {...props}>
+    <select className={`h-11 ${controlClass} [&>option]:bg-ink-800 ${className}`} {...props}>
       {children}
     </select>
   )

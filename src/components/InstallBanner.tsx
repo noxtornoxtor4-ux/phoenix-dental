@@ -34,14 +34,14 @@ export function InstallBanner() {
   return (
     <div className="animate-rise border-t border-white/5 bg-gradient-to-r from-accent/10 via-transparent to-accent/10 md:hidden">
       <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-2">
-        <span className="grid size-9 shrink-0 place-items-center rounded-xl bg-accent/15 text-accent">
+        <span className="grid size-9 shrink-0 place-items-center rounded-full bg-accent/15 text-accent">
           <Smartphone className="size-5" />
         </span>
         <p className="flex-1 text-xs leading-snug text-white/80">{t.install.banner}</p>
         <button
           type="button"
           onClick={requestInstall}
-          className="shrink-0 rounded-full bg-accent px-3.5 py-2 text-xs font-bold text-navy-900 active:scale-95"
+          className="shrink-0 rounded-full bg-accent px-3.5 py-2 text-xs font-bold text-ink-900 active:scale-95"
         >
           {t.install.action}
         </button>

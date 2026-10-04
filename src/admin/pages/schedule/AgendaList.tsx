@@ -47,7 +47,7 @@ export function AgendaList({ from, days, staffById, appointments, onAppointmentC
                   <li key={appointment.id} className="min-h-16">
                     <AppointmentCard
                       appointment={appointment}
-                      doctorColor={doctor?.color ?? '#00E5FF'}
+                      doctorColor={doctor?.color ?? '#DCA457'}
                       onClick={() => onAppointmentClick(appointment)}
                     />
                     {doctor && <p className="mt-1 px-1 text-[11px] text-white/40">{doctor.full_name}</p>}

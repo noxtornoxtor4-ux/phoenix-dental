@@ -30,14 +30,14 @@ export function Hero() {
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <a
             href="#booking"
-            className="flex items-center justify-center gap-2 rounded-2xl bg-accent px-6 py-4 font-bold text-navy-900 shadow-glow transition hover:bg-accent-300 active:scale-[0.98]"
+            className="flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-4 font-bold text-ink-900 shadow-glow transition hover:bg-accent-300 active:scale-[0.98]"
           >
             {t.hero.book}
             <ArrowRight className="size-5" />
           </a>
           <a
             href="#booking"
-            className="glass flex items-center justify-center gap-2 rounded-2xl px-6 py-4 font-semibold transition hover:bg-white/10 active:scale-[0.98]"
+            className="glass flex items-center justify-center gap-2 rounded-full px-6 py-4 font-semibold transition hover:bg-white/10 active:scale-[0.98]"
           >
             <ScanLine className="size-5 text-accent" />
             {t.hero.pickTooth}

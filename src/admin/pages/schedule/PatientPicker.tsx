@@ -55,7 +55,7 @@ export function PatientPicker({ value, onChange, onCreate, invalid = false }: Pa
         />
       </span>
       {showResults && (
-        <div className="mt-2 overflow-hidden rounded-xl border border-white/10 bg-navy-900/80">
+        <div className="mt-2 overflow-hidden rounded-xl border border-white/10 bg-ink-900/80">
           {lookup.isFetching && results.length === 0 ? (
             <div className="grid h-14 place-items-center">
               <Spinner className="size-5" />

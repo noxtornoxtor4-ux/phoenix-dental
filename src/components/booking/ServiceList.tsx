@@ -46,7 +46,7 @@ export function ServiceList({ selected, onToggle }: ServiceListProps) {
             </span>
             <span
               className={`grid size-6 shrink-0 place-items-center rounded-full border transition ${
-                active ? 'border-accent bg-accent text-navy-900' : 'border-white/25'
+                active ? 'border-accent bg-accent text-ink-900' : 'border-white/25'
               }`}
             >
               {active && <Check className="size-4" />}

@@ -132,7 +132,7 @@ export function BookingSection() {
                         aria-pressed={mode === id}
                         onClick={() => setMode(id)}
                         className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-3 py-2.5 text-sm font-semibold whitespace-nowrap transition sm:px-4 ${
-                          mode === id ? 'bg-accent text-navy-900' : 'text-white/60 hover:text-white'
+                          mode === id ? 'bg-accent text-ink-900' : 'text-white/60 hover:text-white'
                         }`}
                       >
                         <Icon className="size-4" />
@@ -175,7 +175,7 @@ export function BookingSection() {
             )}
           </div>
 
-          <div className="sticky bottom-[calc(5.25rem+env(safe-area-inset-bottom))] z-10 mt-6 flex items-center gap-3 rounded-2xl border border-white/10 bg-navy-800/95 p-2.5 backdrop-blur-xl md:static md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none">
+          <div className="sticky bottom-[calc(5.25rem+env(safe-area-inset-bottom))] z-10 mt-6 flex items-center gap-3 rounded-2xl border border-white/10 bg-ink-800/95 p-2.5 backdrop-blur-xl md:static md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none">
             {step > 0 && (
               <button
                 type="button"
@@ -202,7 +202,7 @@ export function BookingSection() {
                   type="button"
                   onClick={() => goTo(step + 1)}
                   disabled={!canContinue}
-                  className="flex h-12 shrink-0 items-center gap-1 rounded-xl bg-accent pr-3 pl-5 font-bold text-navy-900 shadow-glow transition hover:bg-accent-300 active:scale-95 disabled:cursor-not-allowed disabled:opacity-35 disabled:shadow-none"
+                  className="flex h-12 shrink-0 items-center gap-1 rounded-full bg-accent pr-3 pl-5 font-bold text-ink-900 shadow-glow transition hover:bg-accent-300 active:scale-95 disabled:cursor-not-allowed disabled:opacity-35 disabled:shadow-none"
                 >
                   {t.booking.next}
                   <ChevronRight className="size-5" />
@@ -212,7 +212,7 @@ export function BookingSection() {
               <button
                 type="button"
                 onClick={submit}
-                className="flex h-12 min-w-0 flex-1 items-center justify-center gap-2 rounded-xl bg-[#25D366] px-3 text-sm font-bold whitespace-nowrap text-navy-950 shadow-[0_10px_30px_-8px_rgb(37_211_102/0.7)] transition active:scale-[0.98] sm:px-5 sm:text-base md:ml-auto md:flex-none"
+                className="flex h-12 min-w-0 flex-1 items-center justify-center gap-2 rounded-xl bg-[#25D366] px-3 text-sm font-bold whitespace-nowrap text-ink-950 shadow-[0_10px_30px_-8px_rgb(37_211_102/0.7)] transition active:scale-[0.98] sm:px-5 sm:text-base md:ml-auto md:flex-none"
               >
                 <MessageCircle className="size-5" />
                 {t.booking.submit}

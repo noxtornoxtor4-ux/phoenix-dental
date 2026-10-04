@@ -20,9 +20,9 @@ export function Stepper({ steps, current }: StepperProps) {
             <span
               className={`grid size-8 shrink-0 place-items-center rounded-full text-sm font-bold transition ${
                 done
-                  ? 'bg-accent text-navy-900'
+                  ? 'bg-accent text-ink-900'
                   : active
-                    ? 'bg-white text-navy-900 shadow-glow'
+                    ? 'bg-white text-ink-900 shadow-glow'
                     : 'bg-white/10 text-white/50'
               }`}
             >

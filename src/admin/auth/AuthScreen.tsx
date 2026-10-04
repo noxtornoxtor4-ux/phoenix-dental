@@ -13,7 +13,7 @@ export function AuthScreen({ title, subtitle, children }: { title: string; subti
           <p className="mt-4 font-display text-xl font-bold tracking-[0.18em]">PHOENIX</p>
           <p className="text-xs font-semibold tracking-[0.3em] text-accent uppercase">CRM</p>
         </div>
-        <div className="glass rounded-3xl bg-navy-800/60 p-6">
+        <div className="glass rounded-3xl bg-ink-800/60 p-6">
           <h1 className="font-display text-lg font-semibold">{title}</h1>
           {subtitle && <p className="mt-1 text-sm text-white/55">{subtitle}</p>}
           <div className="mt-5">{children}</div>

@@ -74,7 +74,7 @@ export function StepSchedule({ durationMinutes, value, onChange }: StepScheduleP
                   onClick={() => pick(day, slot.time)}
                   className={`h-11 rounded-xl border text-sm font-semibold tabular-nums transition active:scale-95 disabled:cursor-not-allowed disabled:border-transparent disabled:bg-transparent disabled:text-white/20 disabled:line-through ${
                     active
-                      ? 'border-accent bg-accent text-navy-900 shadow-glow'
+                      ? 'border-accent bg-accent text-ink-900 shadow-glow'
                       : 'border-white/10 bg-white/5 hover:border-accent/50'
                   }`}
                 >

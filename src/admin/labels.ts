@@ -23,7 +23,7 @@ export const roleLabels: Record<StaffRole, string> = {
 
 export const appointmentStatuses: Record<AppointmentStatus, Tone> = {
   scheduled: { label: 'Записан', color: '#60A5FA' },
-  confirmed: { label: 'Подтверждён', color: '#00E5FF' },
+  confirmed: { label: 'Подтверждён', color: '#EDC182' },
   arrived: { label: 'Пришёл', color: '#FBBF24' },
   completed: { label: 'Завершён', color: '#34D399' },
   no_show: { label: 'Не пришёл', color: '#F87171' },
@@ -31,7 +31,7 @@ export const appointmentStatuses: Record<AppointmentStatus, Tone> = {
 }
 
 export const leadStatuses: Record<LeadStatus, Tone> = {
-  new: { label: 'Новая', color: '#00E5FF' },
+  new: { label: 'Новая', color: '#DCA457' },
   contacted: { label: 'Связались', color: '#FBBF24' },
   booked: { label: 'Записан', color: '#34D399' },
   rejected: { label: 'Отказ', color: '#94A3B8' },

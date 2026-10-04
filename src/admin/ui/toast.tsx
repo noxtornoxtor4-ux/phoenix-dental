@@ -39,7 +39,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
           <div
             key={toast.id}
             role={toast.tone === 'error' ? 'alert' : 'status'}
-            className="glass flex w-full max-w-sm animate-rise items-center gap-3 rounded-2xl bg-navy-800/95 px-4 py-3 text-sm shadow-2xl shadow-black/50"
+            className="glass flex w-full max-w-sm animate-rise items-center gap-3 rounded-2xl bg-ink-800/95 px-4 py-3 text-sm shadow-2xl shadow-black/50"
           >
             {toast.tone === 'success' ? (
               <CircleCheck className="size-5 shrink-0 text-emerald-400" />

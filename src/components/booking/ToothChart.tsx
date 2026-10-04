@@ -38,12 +38,12 @@ export function ToothChart({ selection, onChange }: ToothChartProps) {
               aria-pressed={activeJaw === jaw}
               onClick={() => setActiveJaw(jaw)}
               className={`flex flex-1 items-center justify-center gap-2 rounded-xl py-2.5 text-sm font-semibold transition ${
-                activeJaw === jaw ? 'bg-white text-navy-900' : 'text-white/60'
+                activeJaw === jaw ? 'bg-white text-ink-900' : 'text-white/60'
               }`}
             >
               {jaw === 'upper' ? t.booking.upperJaw : t.booking.lowerJaw}
               {count > 0 && (
-                <span className="grid size-5 place-items-center rounded-full bg-accent text-[11px] text-navy-900">
+                <span className="grid size-5 place-items-center rounded-full bg-accent text-[11px] text-ink-900">
                   {count}
                 </span>
               )}

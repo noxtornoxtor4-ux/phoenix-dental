@@ -13,7 +13,7 @@ import { PhoneInput } from '../../ui/PhoneInput'
 import { Badge, cardClass, ErrorState, LoadingBlock, PageHeader } from '../../ui/primitives'
 import { useToast } from '../../ui/toastContext'
 
-const palette = ['#00E5FF', '#A78BFA', '#34D399', '#FBBF24', '#F472B6', '#60A5FA', '#FB7185', '#2DD4BF']
+const palette = ['#DCA457', '#A78BFA', '#34D399', '#FBBF24', '#F472B6', '#60A5FA', '#FB7185', '#2DD4BF']
 
 function generatePassword() {
   const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789'
@@ -61,7 +61,7 @@ export function StaffPage() {
           {staff.data.map((member) => (
             <li key={member.id} className={`flex flex-wrap items-center gap-3 px-4 py-3 ${member.active ? '' : 'opacity-60'}`}>
               <span
-                className="grid size-10 shrink-0 place-items-center rounded-full text-sm font-bold text-navy-900"
+                className="grid size-10 shrink-0 place-items-center rounded-full text-sm font-bold text-ink-900"
                 style={{ backgroundColor: member.color }}
               >
                 {(member.full_name || member.email || '?').slice(0, 1).toUpperCase()}
@@ -138,7 +138,7 @@ function ProfileFields({ value, phoneDigits, onChange, onPhoneChange, showErrors
               aria-label={`Цвет ${color}`}
               aria-pressed={value.color === color}
               onClick={() => set('color', color)}
-              className={`size-8 rounded-full transition ${value.color === color ? 'ring-2 ring-white ring-offset-2 ring-offset-navy-800' : ''}`}
+              className={`size-8 rounded-full transition ${value.color === color ? 'ring-2 ring-white ring-offset-2 ring-offset-ink-800' : ''}`}
               style={{ backgroundColor: color }}
             />
           ))}
@@ -308,7 +308,7 @@ function EditStaffModal({ member, onClose }: { member: Staff; onClose: () => voi
             checked={profile.active}
             disabled={isSelf}
             onChange={(e) => setProfile({ ...profile, active: e.target.checked })}
-            className="size-5 accent-[#00E5FF]"
+            className="size-5 accent-[#DCA457]"
           />
           Доступ к CRM {isSelf && <span className="text-white/40">(свой доступ отключить нельзя)</span>}
         </label>

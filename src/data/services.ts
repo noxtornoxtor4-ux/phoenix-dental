@@ -16,7 +16,7 @@ export interface Service {
 export const services: Record<ServiceId, Service> = {
   therapy: { id: 'therapy', scope: 'tooth', priceFrom: 1500, durationMinutes: 45, color: '#FFB020' },
   pain: { id: 'pain', scope: 'tooth', priceFrom: 2000, durationMinutes: 60, color: '#FF3B5C' },
-  hygiene: { id: 'hygiene', scope: 'visit', priceFrom: 2500, durationMinutes: 60, color: '#00E5FF' },
+  hygiene: { id: 'hygiene', scope: 'visit', priceFrom: 2500, durationMinutes: 60, color: '#DCA457' },
   prosthetics: { id: 'prosthetics', scope: 'tooth', priceFrom: 6000, durationMinutes: 60, color: '#A78BFA' },
   implant: { id: 'implant', scope: 'tooth', priceFrom: 35000, durationMinutes: 90, color: '#34D399' },
   xray: { id: 'xray', scope: 'visit', priceFrom: 400, durationMinutes: 10, color: '#60A5FA' },

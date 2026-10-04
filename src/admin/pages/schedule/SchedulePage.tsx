@@ -89,7 +89,7 @@ export function SchedulePage() {
               aria-pressed={view === item}
               onClick={() => setView(item)}
               className={`rounded-lg px-3 py-1.5 text-sm font-semibold transition ${
-                view === item ? 'bg-accent text-navy-900' : 'text-white/60 hover:text-white'
+                view === item ? 'bg-accent text-ink-900' : 'text-white/60 hover:text-white'
               }`}
             >
               {item === 'day' ? 'День' : 'Неделя'}

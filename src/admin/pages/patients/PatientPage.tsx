@@ -153,7 +153,7 @@ function PatientCard({ patient }: { patient: Patient }) {
             aria-selected={activeTab === id}
             onClick={() => setSearchParams({ tab: id }, { replace: true })}
             className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold whitespace-nowrap transition ${
-              activeTab === id ? 'bg-accent text-navy-900' : 'text-white/60 hover:text-white'
+              activeTab === id ? 'bg-accent text-ink-900' : 'text-white/60 hover:text-white'
             }`}
           >
             <Icon className="size-4" />
