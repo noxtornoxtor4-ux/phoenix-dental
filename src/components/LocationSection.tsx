@@ -1,9 +1,11 @@
 import { Clock, MapPin, Navigation, Phone, ScanLine } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { clinic } from '../config/clinic'
 import { useI18n } from '../i18n/useI18n'
 import { SectionHeading } from './ui/SectionHeading'
 
 const allWeekdays = [1, 2, 3, 4, 5, 6, 0]
+const MAP_PROBE_TIMEOUT_MS = 6000
 
 export function LocationSection() {
   const { t } = useI18n()
@@ -13,6 +15,27 @@ export function LocationSection() {
   const mapSrc = `${clinic.maps.yandexWidget}?ll=${lon},${lat}&z=17&l=map&lang=ru_RU&pt=${lon},${lat},pm2rdm`
   const routeHref = `${clinic.maps.yandexRoute}?rtext=~${lat},${lon}&rtt=auto`
   const { weekdays, open, close } = clinic.hours
+
+  // Mobile browsers with tracking protection (and offline visits) block the map widget.
+  // An iframe reports "load" even for an error page, so reachability is probed separately.
+  const [mapBlocked, setMapBlocked] = useState(false)
+  useEffect(() => {
+    const controller = new AbortController()
+    const timer = setTimeout(() => controller.abort(), MAP_PROBE_TIMEOUT_MS)
+    let cancelled = false
+
+    fetch(clinic.maps.yandexWidget, { mode: 'no-cors', signal: controller.signal })
+      .catch(() => {
+        if (!cancelled) setMapBlocked(true)
+      })
+      .finally(() => clearTimeout(timer))
+
+    return () => {
+      cancelled = true
+      clearTimeout(timer)
+      controller.abort()
+    }
+  }, [])
 
   // Working days are expected to be a continuous range (e.g. Mon–Sat).
   const workDays = `${t.weekdaysShort[weekdays[0]]}–${t.weekdaysShort[weekdays[weekdays.length - 1]]}`
@@ -83,14 +106,32 @@ export function LocationSection() {
         </div>
 
         <div className="glass relative min-h-80 overflow-hidden rounded-[2rem] p-1.5">
-          <iframe
-            title={t.location.mapTitle}
-            src={mapSrc}
-            loading="lazy"
-            allowFullScreen
-            referrerPolicy="no-referrer-when-downgrade"
-            className="size-full min-h-80 rounded-[1.6rem] border-0 [filter:invert(0.92)_hue-rotate(185deg)_saturate(0.6)_sepia(0.35)_brightness(0.92)]"
-          />
+          {/* Always under the map: visible while it loads, and instead of it when embeds are blocked. */}
+          <a
+            href={routeHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute inset-1.5 flex flex-col items-center justify-center gap-3 rounded-[1.6rem] bg-[radial-gradient(circle_at_50%_35%,rgb(220_164_87/0.12),transparent_70%)] p-6 text-center"
+          >
+            <span className="grid size-14 place-items-center rounded-full bg-accent/15 text-accent">
+              <MapPin className="size-7" />
+            </span>
+            <span className="font-display text-lg font-semibold">{t.location.address}</span>
+            <span className="flex items-center gap-2 rounded-full bg-accent px-5 py-3 text-sm font-bold text-ink-900">
+              <Navigation className="size-4" />
+              {t.location.route}
+            </span>
+          </a>
+          {!mapBlocked && (
+            <iframe
+              title={t.location.mapTitle}
+              src={mapSrc}
+              loading="lazy"
+              allowFullScreen
+              referrerPolicy="no-referrer-when-downgrade"
+              className="relative size-full min-h-80 rounded-[1.6rem] border-0 [filter:invert(0.92)_hue-rotate(185deg)_saturate(0.6)_sepia(0.35)_brightness(0.92)]"
+            />
+          )}
           <span className="pointer-events-none absolute top-4 left-4 flex items-center gap-2 rounded-full bg-ink-900/85 px-3 py-1.5 text-xs font-semibold backdrop-blur">
             <MapPin className="size-3.5 text-accent" />
             PHOENIX
