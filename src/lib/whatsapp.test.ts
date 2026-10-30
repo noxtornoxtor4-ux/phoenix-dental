@@ -1,34 +1,54 @@
 import { describe, expect, test } from 'bun:test'
 import { buildBookingMessage, buildSosMessage, createWhatsappUrl } from './whatsapp'
 
+const labels = {
+  greeting: 'Здравствуйте! Хочу записаться в клинику PHOENIX (Каракол).',
+  service: 'Услуга',
+  price: 'Ориентир цены',
+  dateTime: 'Дата и время',
+  patient: 'Пациент',
+  visitFirst: 'Первичный пациент',
+  visitReturning: 'Повторный пациент',
+  birth: 'Дата рождения',
+  parent: 'Родитель',
+}
+
+const base = {
+  service: 'Терапия',
+  price: 'от 1 500 сом',
+  dateTime: '15 сентября, 14:00',
+  name: 'Айгерим',
+  phone: '+996 700 123 456',
+}
+
 describe('whatsapp', () => {
-  test('builds the booking message from the template', () => {
-    const message = buildBookingMessage(
-      {
-        greeting: 'Здравствуйте! Хочу записаться в клинику PHOENIX (Каракол).',
-        service: 'Услуга / Зуб',
-        price: 'Ориентир цены',
-        dateTime: 'Дата и время',
-        patient: 'Пациент',
-      },
-      {
-        service: '№36 — Кариес',
-        price: 'от 1 500 сом',
-        dateTime: '15 сентября, 14:00',
-        name: 'Айгерим',
-        phone: '+996 700 123 456',
-      },
-    )
+  test('a returning patient gets a short message', () => {
+    const message = buildBookingMessage(labels, { ...base, visitType: 'returning', birthDate: '', parent: '' })
 
     expect(message).toBe(
       [
         'Здравствуйте! Хочу записаться в клинику PHOENIX (Каракол).',
-        '📌 Услуга / Зуб: №36 — Кариес',
+        '📌 Услуга: Терапия',
         '💰 Ориентир цены: от 1 500 сом',
         '📅 Дата и время: 15 сентября, 14:00',
         '👤 Пациент: Айгерим, +996 700 123 456',
+        '🆕 Повторный пациент',
       ].join('\n'),
     )
+  })
+
+  test('a first visit adds the birth date, a child adds the parent', () => {
+    const message = buildBookingMessage(labels, {
+      ...base,
+      name: 'Нурлан',
+      visitType: 'first',
+      birthDate: '2015-03-02',
+      parent: 'Азамат, +996 555 112 233',
+    })
+
+    expect(message).toContain('🆕 Первичный пациент')
+    expect(message).toContain('🎂 Дата рождения: 2015-03-02')
+    expect(message).toContain('👪 Родитель: Азамат, +996 555 112 233')
   })
 
   test('builds the urgent message', () => {

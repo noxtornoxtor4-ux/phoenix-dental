@@ -1,16 +1,17 @@
-import { ArrowRight, MessageCircle, ScanLine, Sparkles, Wallet } from 'lucide-react'
+import { ArrowRight, Clock, MapPin, MessageCircle, Phone, ScanLine, Sparkles, Wallet } from 'lucide-react'
+import { clinic } from '../../config/clinic'
 import { useI18n } from '../../i18n/useI18n'
-import { BeforeAfterSlider } from './BeforeAfterSlider'
 
 const featureIcons = [ScanLine, Wallet, MessageCircle]
 
 export function Hero() {
   const { t } = useI18n()
+  const { open, close } = clinic.hours
 
   return (
     <section
       id="top"
-      className="mx-auto grid max-w-6xl items-center gap-10 px-4 pt-8 pb-14 md:grid-cols-[1.05fr_1fr] md:gap-12 md:pt-16 md:pb-24"
+      className="mx-auto grid max-w-6xl items-center gap-10 px-4 pt-8 pb-14 md:grid-cols-[1.1fr_0.9fr] md:gap-12 md:pt-16 md:pb-24"
     >
       <div className="animate-rise">
         <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-semibold text-accent">
@@ -36,11 +37,11 @@ export function Hero() {
             <ArrowRight className="size-5" />
           </a>
           <a
-            href="#booking"
+            href={clinic.phoneHref}
             className="glass flex items-center justify-center gap-2 rounded-full px-6 py-4 font-semibold transition hover:bg-white/10 active:scale-[0.98]"
           >
-            <ScanLine className="size-5 text-accent" />
-            {t.hero.pickTooth}
+            <Phone className="size-5 text-accent" />
+            {clinic.phoneDisplay}
           </a>
         </div>
 
@@ -60,9 +61,36 @@ export function Hero() {
         </ul>
       </div>
 
-      <div className="animate-rise [animation-delay:120ms]">
-        <BeforeAfterSlider />
-      </div>
+      <aside className="glass animate-rise rounded-[2rem] p-6 [animation-delay:120ms] sm:p-8">
+        <p className="font-display text-xs font-bold tracking-[0.3em] text-accent uppercase">PHOENIX</p>
+        <p className="mt-2 font-display text-2xl font-bold">{t.location.title}</p>
+
+        <ul className="mt-6 space-y-4 text-sm">
+          <li className="flex gap-3">
+            <MapPin className="mt-0.5 size-5 shrink-0 text-accent" />
+            <span>{t.location.address}</span>
+          </li>
+          <li className="flex gap-3">
+            <Clock className="mt-0.5 size-5 shrink-0 text-accent" />
+            <span>
+              {open}–{close}
+              <span className="block text-white/50">{t.location.hoursTitle}</span>
+            </span>
+          </li>
+          <li className="flex gap-3">
+            <ScanLine className="mt-0.5 size-5 shrink-0 text-accent" />
+            <span>{t.location.xray}</span>
+          </li>
+        </ul>
+
+        <a
+          href="#location"
+          className="mt-7 flex items-center justify-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3.5 text-sm font-semibold transition hover:bg-white/10"
+        >
+          <MapPin className="size-4 text-accent" />
+          {t.location.route}
+        </a>
+      </aside>
     </section>
   )
 }

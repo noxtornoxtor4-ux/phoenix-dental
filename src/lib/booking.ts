@@ -1,17 +1,7 @@
 import { serviceOrder, services, type ServiceCatalog, type ServiceId } from '../data/services'
 
-/** Tooth number (FDI) → problem attached to it. */
-export type ToothSelection = Record<number, ServiceId>
-
-export interface BookingSelection {
-  teeth: ToothSelection
-  services: ServiceId[]
-}
-
 export interface EstimateLine {
   serviceId: ServiceId
-  teeth: number[]
-  units: number
   price: number
   durationMinutes: number
 }
@@ -22,31 +12,15 @@ export interface Estimate {
   durationMinutes: number
 }
 
-function teethWith(selection: BookingSelection, serviceId: ServiceId): number[] {
-  return Object.entries(selection.teeth)
-    .filter(([, problem]) => problem === serviceId)
-    .map(([tooth]) => Number(tooth))
-    .sort((a, b) => a - b)
-}
-
-export function buildEstimate(selection: BookingSelection, catalog: ServiceCatalog = services): Estimate {
-  const lines: EstimateLine[] = []
-
-  for (const serviceId of serviceOrder) {
-    const teeth = teethWith(selection, serviceId)
-    const listed = selection.services.includes(serviceId)
-    if (teeth.length === 0 && !listed) continue
-
-    const service = catalog[serviceId]
-    const units = service.scope === 'tooth' ? Math.max(teeth.length, 1) : 1
-    lines.push({
+/** Indicative price and visit length for the services a visitor picked. */
+export function buildEstimate(selected: readonly ServiceId[], catalog: ServiceCatalog = services): Estimate {
+  const lines: EstimateLine[] = serviceOrder
+    .filter((serviceId) => selected.includes(serviceId))
+    .map((serviceId) => ({
       serviceId,
-      teeth,
-      units,
-      price: service.priceFrom * units,
-      durationMinutes: service.durationMinutes * units,
-    })
-  }
+      price: catalog[serviceId].priceFrom,
+      durationMinutes: catalog[serviceId].durationMinutes,
+    }))
 
   return {
     lines,
@@ -55,19 +29,7 @@ export function buildEstimate(selection: BookingSelection, catalog: ServiceCatal
   }
 }
 
-export interface SelectionLabels {
-  tooth: (toothNumber: number) => string
-  problems: Record<ServiceId, string>
-  services: Record<ServiceId, string>
-}
-
-/** Human readable summary, e.g. "№36, №37 — Кариес; Рентген". */
-export function describeEstimate(estimate: Estimate, labels: SelectionLabels): string {
-  return estimate.lines
-    .map((line) =>
-      line.teeth.length > 0
-        ? `${line.teeth.map(labels.tooth).join(', ')} — ${labels.problems[line.serviceId]}`
-        : labels.services[line.serviceId],
-    )
-    .join('; ')
+/** Human readable summary, e.g. "Терапия; Дентальный рентген". */
+export function describeEstimate(estimate: Estimate, names: Record<ServiceId, string>): string {
+  return estimate.lines.map((line) => names[line.serviceId]).join('; ')
 }

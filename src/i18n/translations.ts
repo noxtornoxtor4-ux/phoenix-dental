@@ -1,5 +1,4 @@
 import type { ServiceId } from '../data/services'
-import type { ToothKind } from '../data/teeth'
 import type { SlotStatus } from '../lib/slots'
 
 export type Lang = 'ru' | 'ky' | 'en'
@@ -32,36 +31,28 @@ export interface Dictionary {
     titleAccent: string
     subtitle: string
     book: string
-    pickTooth: string
     features: string[]
-  }
-  compare: {
-    title: string
-    cleaning: string
-    whitening: string
-    before: string
-    after: string
-    hint: string
-    caption: string
-    sliderLabel: string
   }
   booking: {
     eyebrow: string
     title: string
     subtitle: string
     steps: string[]
-    modeChart: string
-    modeList: string
-    upperJaw: string
-    lowerJaw: string
-    chartHint: string
-    toothTitle: (toothNumber: number) => string
-    toothKinds: Record<ToothKind, string>
-    problemQuestion: string
-    removeTooth: string
-    selected: string
     clear: string
     empty: string
+    visitTitle: string
+    visitFirst: string
+    visitFirstHint: string
+    visitReturning: string
+    visitReturningHint: string
+    birthLabel: string
+    birthError: string
+    parentTitle: string
+    parentNote: string
+    parentNameLabel: string
+    parentPhoneLabel: string
+    parentNameError: string
+    parentPhoneError: string
     perTooth: string
     perVisit: string
     dateTitle: string
@@ -87,7 +78,6 @@ export interface Dictionary {
     visitsNote: string
     disclaimer: string
   }
-  problems: Record<ServiceId, string>
   services: Record<ServiceId, ServiceText>
   units: { hour: string; minute: string }
   months: string[]
@@ -95,8 +85,17 @@ export interface Dictionary {
   monthsNominative: string[]
   weekdaysShort: string[]
   formatDate: (day: number, month: string) => string
-  message: { greeting: string; service: string; price: string; dateTime: string; patient: string }
-  toothLabel: (toothNumber: number) => string
+  message: {
+    greeting: string
+    service: string
+    price: string
+    dateTime: string
+    patient: string
+    visitFirst: string
+    visitReturning: string
+    birth: string
+    parent: string
+  }
   sos: { button: string; title: string; body: string; aria: string }
   location: {
     eyebrow: string
@@ -142,39 +141,31 @@ const ru: Dictionary = {
     titleStart: 'Забота о вашей улыбке',
     titleAccent: 'в Караколе без боли',
     subtitle:
-      'Отметьте беспокоящий зуб на интерактивной схеме — мы сразу покажем ориентировочную стоимость и время приёма.',
+      'Выберите услугу, удобные дату и время — мы сразу покажем ориентировочную стоимость и запишем вас.',
     book: 'Записаться онлайн',
-    pickTooth: 'Выбрать зуб',
     features: ['Дентальный рентген на месте', 'Смета до визита', 'Запись через WhatsApp'],
-  },
-  compare: {
-    title: 'До / после',
-    cleaning: 'Чистка',
-    whitening: 'Отбеливание',
-    before: 'До',
-    after: 'После',
-    hint: 'Потяните ползунок',
-    caption: 'Иллюстрация результата',
-    sliderLabel: 'Сравнение до и после',
   },
   booking: {
     eyebrow: 'Онлайн-запись',
     title: 'Калькулятор и запись',
     subtitle:
-      'Три шага: зуб или услуга, дата и время, контакты. Заявка уйдёт в WhatsApp готовым сообщением.',
-    steps: ['Зуб или услуга', 'Дата и время', 'Контакты'],
-    modeChart: 'Схема зубов',
-    modeList: 'Список услуг',
-    upperJaw: 'Верхняя челюсть',
-    lowerJaw: 'Нижняя челюсть',
-    chartHint: 'Нажмите на зуб, чтобы выбрать проблему',
-    toothTitle: (n) => `Зуб №${n}`,
-    toothKinds: { incisor: 'Резец', canine: 'Клык', premolar: 'Премоляр', molar: 'Моляр' },
-    problemQuestion: 'Что беспокоит?',
-    removeTooth: 'Снять отметку',
-    selected: 'Выбрано',
+      'Три шага: услуга, дата и время, контакты. Заявка уйдёт в WhatsApp готовым сообщением.',
+    steps: ['Услуга', 'Дата и время', 'Контакты'],
     clear: 'Сбросить',
-    empty: 'Выберите зуб на схеме или услугу из списка',
+    empty: 'Выберите услугу из списка',
+    visitTitle: 'Вы у нас впервые?',
+    visitFirst: 'Я впервые',
+    visitFirstHint: 'Заполним карту пациента',
+    visitReturning: 'Я уже был(а)',
+    visitReturningHint: 'Найдём вас по имени и номеру',
+    birthLabel: 'Дата рождения',
+    birthError: 'Укажите дату рождения',
+    parentTitle: 'Родитель или опекун',
+    parentNote: 'Пациенту меньше 18 лет — нужны данные взрослого',
+    parentNameLabel: 'ФИО родителя',
+    parentPhoneLabel: 'Телефон родителя',
+    parentNameError: 'Укажите ФИО родителя',
+    parentPhoneError: 'Введите 9 цифр номера',
     perTooth: 'за зуб',
     perVisit: 'за визит',
     dateTitle: 'Выберите дату',
@@ -204,14 +195,6 @@ const ru: Dictionary = {
     duration: 'Время приёма',
     visitsNote: 'Лечение может занять несколько визитов',
     disclaimer: 'Цены ориентировочные. Точная стоимость — после осмотра врача.',
-  },
-  problems: {
-    therapy: 'Кариес',
-    pain: 'Острая боль',
-    hygiene: 'Чистка',
-    prosthetics: 'Протезирование',
-    implant: 'Имплант',
-    xray: 'Рентген',
   },
   services: {
     therapy: { name: 'Терапия', description: 'Лечение кариеса, пломбы' },
@@ -254,12 +237,15 @@ const ru: Dictionary = {
   formatDate: (day, month) => `${day} ${month}`,
   message: {
     greeting: 'Здравствуйте! Хочу записаться в клинику PHOENIX (Каракол).',
-    service: 'Услуга / Зуб',
+    service: 'Услуга',
     price: 'Ориентир цены',
     dateTime: 'Дата и время',
     patient: 'Пациент',
+    visitFirst: 'Первичный пациент',
+    visitReturning: 'Повторный пациент',
+    birth: 'Дата рождения',
+    parent: 'Родитель',
   },
-  toothLabel: (n) => `№${n}`,
   sos: {
     button: 'Острая боль',
     title: 'СРОЧНО: Острая боль',
@@ -313,39 +299,31 @@ const ky: Dictionary = {
     titleStart: 'Жылмаюуңузга кам көрүү',
     titleAccent: 'Караколдо, оорутпай',
     subtitle:
-      'Тынчсыздандырган тишти интерактивдүү схемадан белгилеңиз — болжолдуу баасын жана кабыл алуу убактысын дароо көрсөтөбүз.',
+      'Кызматты, ыңгайлуу күн менен убакытты тандаңыз — болжолдуу баасын дароо көрсөтүп, жазып коёбуз.',
     book: 'Онлайн жазылуу',
-    pickTooth: 'Тиш тандоо',
     features: ['Клиникада дентал рентген', 'Баасы визитке чейин', 'WhatsApp аркылуу жазылуу'],
-  },
-  compare: {
-    title: 'Чейин / кийин',
-    cleaning: 'Тазалоо',
-    whitening: 'Агартуу',
-    before: 'Чейин',
-    after: 'Кийин',
-    hint: 'Сыдырманы жылдырыңыз',
-    caption: 'Натыйжанын иллюстрациясы',
-    sliderLabel: 'Чейин жана кийин салыштыруу',
   },
   booking: {
     eyebrow: 'Онлайн жазылуу',
     title: 'Калькулятор жана жазылуу',
     subtitle:
-      'Үч кадам: тиш же кызмат, күн жана убакыт, байланыш. Өтүнмө WhatsAppка даяр билдирүү болуп жөнөтүлөт.',
-    steps: ['Тиш же кызмат', 'Күн жана убакыт', 'Байланыш'],
-    modeChart: 'Тиш схемасы',
-    modeList: 'Кызматтар тизмеси',
-    upperJaw: 'Үстүңкү жаак',
-    lowerJaw: 'Астыңкы жаак',
-    chartHint: 'Көйгөйдү тандоо үчүн тишти басыңыз',
-    toothTitle: (n) => `№${n} тиш`,
-    toothKinds: { incisor: 'Кесүүчү тиш', canine: 'Ит азуу', premolar: 'Кичи азуу', molar: 'Азуу тиш' },
-    problemQuestion: 'Эмне тынчсыздандырат?',
-    removeTooth: 'Белгини алып салуу',
-    selected: 'Тандалды',
+      'Үч кадам: кызмат, күн жана убакыт, байланыш. Өтүнмө WhatsAppка даяр билдирүү болуп жөнөтүлөт.',
+    steps: ['Кызмат', 'Күн жана убакыт', 'Байланыш'],
     clear: 'Баарын өчүрүү',
-    empty: 'Схемадан тишти же тизмеден кызматты тандаңыз',
+    empty: 'Тизмеден кызматты тандаңыз',
+    visitTitle: 'Бизде биринчи жолубу?',
+    visitFirst: 'Биринчи жолу',
+    visitFirstHint: 'Бейтаптын картасын толтурабыз',
+    visitReturning: 'Мурда болгонмун',
+    visitReturningHint: 'Атыңыз жана номериңиз боюнча табабыз',
+    birthLabel: 'Туулган күнү',
+    birthError: 'Туулган күнүн жазыңыз',
+    parentTitle: 'Ата-эне же камкорчу',
+    parentNote: 'Бейтап 18ге толо элек — чоң кишинин маалыматы керек',
+    parentNameLabel: 'Ата-эненин аты-жөнү',
+    parentPhoneLabel: 'Ата-эненин телефону',
+    parentNameError: 'Ата-эненин аты-жөнүн жазыңыз',
+    parentPhoneError: 'Номердин 9 цифрасын жазыңыз',
     perTooth: 'бир тиш үчүн',
     perVisit: 'бир визит үчүн',
     dateTitle: 'Күндү тандаңыз',
@@ -375,14 +353,6 @@ const ky: Dictionary = {
     duration: 'Кабыл алуу убактысы',
     visitsNote: 'Дарылоо бир нече визитке созулушу мүмкүн',
     disclaimer: 'Баалар болжолдуу. Так баасы дарыгер карагандан кийин аныкталат.',
-  },
-  problems: {
-    therapy: 'Кариес',
-    pain: 'Катуу оору',
-    hygiene: 'Тазалоо',
-    prosthetics: 'Протездөө',
-    implant: 'Имплант',
-    xray: 'Рентген',
   },
   services: {
     therapy: { name: 'Терапия', description: 'Кариести дарылоо, пломба' },
@@ -425,12 +395,15 @@ const ky: Dictionary = {
   formatDate: (day, month) => `${day}-${month}`,
   message: {
     greeting: 'Саламатсызбы! PHOENIX клиникасына (Каракол) жазылгым келет.',
-    service: 'Кызмат / Тиш',
+    service: 'Кызмат',
     price: 'Болжолдуу баасы',
     dateTime: 'Күнү жана убактысы',
     patient: 'Бейтап',
+    visitFirst: 'Биринчи жолку бейтап',
+    visitReturning: 'Кайра келген бейтап',
+    birth: 'Туулган күнү',
+    parent: 'Ата-эне',
   },
-  toothLabel: (n) => `№${n}`,
   sos: {
     button: 'Катуу оору',
     title: 'ШАШЫЛЫШ: Катуу оору',
@@ -484,39 +457,31 @@ const en: Dictionary = {
     titleStart: 'Caring for your smile',
     titleAccent: 'in Karakol, pain-free',
     subtitle:
-      'Tap the tooth that bothers you on the interactive chart — we will instantly show an estimated price and visit time.',
+      'Pick a service and a time that suits you — we will show an estimated price and book you in.',
     book: 'Book online',
-    pickTooth: 'Pick a tooth',
     features: ['Dental X-ray on site', 'Estimate before the visit', 'Booking via WhatsApp'],
-  },
-  compare: {
-    title: 'Before / after',
-    cleaning: 'Cleaning',
-    whitening: 'Whitening',
-    before: 'Before',
-    after: 'After',
-    hint: 'Drag the slider',
-    caption: 'Illustration of the result',
-    sliderLabel: 'Before and after comparison',
   },
   booking: {
     eyebrow: 'Online booking',
     title: 'Calculator & booking',
     subtitle:
-      'Three steps: tooth or service, date and time, contacts. Your request goes to WhatsApp as a ready message.',
-    steps: ['Tooth or service', 'Date & time', 'Contacts'],
-    modeChart: 'Tooth chart',
-    modeList: 'Service list',
-    upperJaw: 'Upper jaw',
-    lowerJaw: 'Lower jaw',
-    chartHint: 'Tap a tooth to choose a problem',
-    toothTitle: (n) => `Tooth #${n}`,
-    toothKinds: { incisor: 'Incisor', canine: 'Canine', premolar: 'Premolar', molar: 'Molar' },
-    problemQuestion: 'What bothers you?',
-    removeTooth: 'Remove mark',
-    selected: 'Selected',
+      'Three steps: service, date and time, contacts. Your request goes to WhatsApp as a ready message.',
+    steps: ['Service', 'Date & time', 'Contacts'],
     clear: 'Reset',
-    empty: 'Pick a tooth on the chart or a service from the list',
+    empty: 'Pick a service from the list',
+    visitTitle: 'Is this your first visit?',
+    visitFirst: 'First time',
+    visitFirstHint: 'We will start a patient record',
+    visitReturning: 'I have been here',
+    visitReturningHint: 'We will find you by name and number',
+    birthLabel: 'Date of birth',
+    birthError: 'Enter the date of birth',
+    parentTitle: 'Parent or guardian',
+    parentNote: 'The patient is under 18, so an adult must be named',
+    parentNameLabel: 'Parent full name',
+    parentPhoneLabel: 'Parent phone',
+    parentNameError: 'Enter the parent name',
+    parentPhoneError: 'Enter all 9 digits',
     perTooth: 'per tooth',
     perVisit: 'per visit',
     dateTitle: 'Choose a date',
@@ -546,14 +511,6 @@ const en: Dictionary = {
     duration: 'Visit time',
     visitsNote: 'Treatment may take several visits',
     disclaimer: 'Prices are indicative. The exact cost is set after an examination.',
-  },
-  problems: {
-    therapy: 'Caries',
-    pain: 'Acute pain',
-    hygiene: 'Cleaning',
-    prosthetics: 'Prosthetics',
-    implant: 'Implant',
-    xray: 'X-ray',
   },
   services: {
     therapy: { name: 'Therapy', description: 'Caries treatment, fillings' },
@@ -596,12 +553,15 @@ const en: Dictionary = {
   formatDate: (day, month) => `${month} ${day}`,
   message: {
     greeting: 'Hello! I would like to book a visit at PHOENIX clinic (Karakol).',
-    service: 'Service / Tooth',
+    service: 'Service',
     price: 'Estimated price',
     dateTime: 'Date and time',
     patient: 'Patient',
+    visitFirst: 'New patient',
+    visitReturning: 'Returning patient',
+    birth: 'Date of birth',
+    parent: 'Parent',
   },
-  toothLabel: (n) => `#${n}`,
   sos: {
     button: 'Acute pain',
     title: 'URGENT: Acute pain',

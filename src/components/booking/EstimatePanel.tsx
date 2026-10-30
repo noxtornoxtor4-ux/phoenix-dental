@@ -32,14 +32,8 @@ export function EstimatePanel({ estimate, className = '' }: EstimatePanelProps) 
                   style={{ backgroundColor: services[line.serviceId].color }}
                 />
                 <span className="min-w-0">
-                  <span className="block font-semibold">
-                    {line.teeth.length > 0 ? t.problems[line.serviceId] : t.services[line.serviceId].name}
-                  </span>
-                  {line.teeth.length > 0 && (
-                    <span className="block text-xs text-white/50">
-                      {line.teeth.map((tooth) => t.toothLabel(tooth)).join(', ')}
-                    </span>
-                  )}
+                  <span className="block font-semibold">{t.services[line.serviceId].name}</span>
+                  <span className="block text-xs text-white/50">{t.services[line.serviceId].description}</span>
                 </span>
               </span>
               <span className="shrink-0 font-semibold tabular-nums">{formatNumber(line.price)}</span>

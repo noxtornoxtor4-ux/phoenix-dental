@@ -8,6 +8,10 @@ export interface BookingMessageLabels {
   price: string
   dateTime: string
   patient: string
+  visitFirst: string
+  visitReturning: string
+  birth: string
+  parent: string
 }
 
 export interface BookingMessageValues {
@@ -16,6 +20,11 @@ export interface BookingMessageValues {
   dateTime: string
   name: string
   phone: string
+  visitType: 'first' | 'returning'
+  /** First visit only. */
+  birthDate: string
+  /** Parent name and phone in one line; empty for adults. */
+  parent: string
 }
 
 export function buildBookingMessage(labels: BookingMessageLabels, values: BookingMessageValues): string {
@@ -25,7 +34,12 @@ export function buildBookingMessage(labels: BookingMessageLabels, values: Bookin
     `💰 ${labels.price}: ${values.price}`,
     `📅 ${labels.dateTime}: ${values.dateTime}`,
     `👤 ${labels.patient}: ${values.name}, ${values.phone}`,
-  ].join('\n')
+    `🆕 ${values.visitType === 'first' ? labels.visitFirst : labels.visitReturning}`,
+    values.birthDate && `🎂 ${labels.birth}: ${values.birthDate}`,
+    values.parent && `👪 ${labels.parent}: ${values.parent}`,
+  ]
+    .filter(Boolean)
+    .join('\n')
 }
 
 export interface SosMessageLabels {
