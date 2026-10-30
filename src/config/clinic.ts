@@ -1,13 +1,13 @@
 // Contact data, schedule and booking rules of the clinic.
-// Replace the placeholder phone numbers with the real ones before release.
+// The reception number also handles urgent SOS requests.
 export const clinic = {
   name: 'PHOENIX',
   /** WhatsApp number of the reception, digits only, international format. */
-  whatsapp: '996700000000',
+  whatsapp: '996504314134',
   /** WhatsApp number of the doctor on duty for urgent requests. */
-  sosWhatsapp: '996700000000',
-  phoneDisplay: '+996 700 000 000',
-  phoneHref: 'tel:+996700000000',
+  sosWhatsapp: '996504314134',
+  phoneDisplay: '+996 504 314 134',
+  phoneHref: 'tel:+996504314134',
   hasDentalXray: true,
   hours: {
     /** Days of week as returned by Date#getDay(): 0 — Sunday. */
