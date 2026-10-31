@@ -1,5 +1,4 @@
-import type { ServiceId } from '../data/services'
-import type { SlotStatus } from '../lib/slots'
+import type { ChoiceQuestionId, PathId } from '../data/questionnaire'
 
 export type Lang = 'ru' | 'ky' | 'en'
 
@@ -8,11 +7,6 @@ export const languages: { code: Lang; label: string }[] = [
   { code: 'ky', label: 'KG' },
   { code: 'en', label: 'EN' },
 ]
-
-interface ServiceText {
-  name: string
-  description: string
-}
 
 export interface Dictionary {
   header: { address: string; install: string; installShort: string; language: string }
@@ -36,49 +30,35 @@ export interface Dictionary {
   booking: {
     eyebrow: string
     title: string
-    subtitle: string
+    greeting: string
     steps: string[]
-    clear: string
-    empty: string
-    visitTitle: string
-    visitFirst: string
-    visitFirstHint: string
-    visitReturning: string
-    visitReturningHint: string
+    pathTitle: string
+    paths: Record<PathId, { label: string; hint: string }>
+    textLabels: Record<'complaint' | 'question', string>
+    textPlaceholders: Record<'complaint' | 'question', string>
+    questions: Record<ChoiceQuestionId, { label: string; options: Record<string, string> }>
+    messageNames: Record<ChoiceQuestionId | 'complaint' | 'question', string>
+    requiredChoice: string
+    requiredText: string
+    fullNameLabel: string
+    fullNamePlaceholder: string
+    fullNameError: string
     birthLabel: string
     birthError: string
+    phoneLabel: string
+    phoneError: string
     parentTitle: string
     parentNote: string
     parentNameLabel: string
     parentPhoneLabel: string
     parentNameError: string
     parentPhoneError: string
-    perTooth: string
-    perVisit: string
-    dateTitle: string
-    timeTitle: string
-    prevMonth: string
-    nextMonth: string
-    customTime: string
-    chosen: string
-    timeErrors: Record<Exclude<SlotStatus, 'available'>, (open: string, close: string) => string>
-    confirmNote: string
-    nameLabel: string
-    namePlaceholder: string
-    phoneLabel: string
-    nameError: string
-    phoneError: string
     summary: string
+    confirmNote: string
     back: string
     next: string
     submit: string
-    estimate: string
-    priceFrom: (price: string) => string
-    duration: string
-    visitsNote: string
-    disclaimer: string
   }
-  services: Record<ServiceId, ServiceText>
   units: { hour: string; minute: string }
   months: string[]
   /** Month names for calendar headers. */
@@ -86,15 +66,12 @@ export interface Dictionary {
   weekdaysShort: string[]
   formatDate: (day: number, month: string) => string
   message: {
-    greeting: string
-    service: string
-    price: string
-    dateTime: string
-    patient: string
-    visitFirst: string
-    visitReturning: string
+    title: string
+    patientType: string
+    fullName: string
     birth: string
-    parent: string
+    phone: string
+    answers: string
   }
   sos: { button: string; title: string; body: string; aria: string }
   location: {
@@ -141,68 +118,86 @@ const ru: Dictionary = {
     titleStart: 'Забота о вашей улыбке',
     titleAccent: 'в Караколе без боли',
     subtitle:
-      'Выберите услугу, удобные дату и время — мы сразу покажем ориентировочную стоимость и запишем вас.',
+      'Answer a few questions — we will pick a dentist and a time, and your request goes to WhatsApp as a ready message.',
     book: 'Записаться онлайн',
-    features: ['Дентальный рентген на месте', 'Смета до визита', 'Запись через WhatsApp'],
+    features: ['Dental X-ray on site', 'Reply within the day', 'Booking via WhatsApp'],
   },
   booking: {
     eyebrow: 'Онлайн-запись',
-    title: 'Калькулятор и запись',
-    subtitle:
-      'Три шага: услуга, дата и время, контакты. Заявка уйдёт в WhatsApp готовым сообщением.',
-    steps: ['Услуга', 'Дата и время', 'Контакты'],
-    clear: 'Сбросить',
-    empty: 'Выберите услугу из списка',
-    visitTitle: 'Вы у нас впервые?',
-    visitFirst: 'Я впервые',
-    visitFirstHint: 'Заполним карту пациента',
-    visitReturning: 'Я уже был(а)',
-    visitReturningHint: 'Найдём вас по имени и номеру',
+    title: 'Запись на приём',
+    greeting:
+      'Здравствуйте! Чтобы мы подобрали для вас идеальное время и врача, ответьте, пожалуйста, на несколько вопросов. Это займёт не более 1 минуты.',
+    steps: ['Кто вы', 'Вопросы', 'Контакты'],
+    pathTitle: 'Выберите, что вам подходит',
+    paths: {
+      first: { label: 'Я у вас впервые', hint: 'Первичный пациент' },
+      returning: { label: 'Я ваш постоянный клиент', hint: 'Повторный пациент' },
+      question: { label: 'У меня другой вопрос', hint: 'Хочу просто спросить' },
+    },
+    textLabels: {
+      complaint: 'Что вас беспокоит?',
+      question: 'Напишите ваш вопрос',
+    },
+    textPlaceholders: {
+      complaint: 'Напишите, что у вас болит, или укажите цель визита (например: болит зуб снизу, хочу налёт почистить, скололась пломба)',
+      question: 'Задайте любой вопрос по стоимости, услугам или работе клиники. Администратор ответит вам в WhatsApp',
+    },
+    questions: {
+      treatedBefore: {
+        label: 'Ранее этот зуб уже лечили?',
+        options: { treated: 'Да, он уже леченый / под пломбой / под коронкой', untreated: 'Нет, этот зуб ни разу не лечили', unknown: 'Не знаю / не помню' },
+      },
+      anesthesia: {
+        label: 'Делали ли вам раньше анестезию (заморозку)?',
+        options: { fine: 'Да, всё отлично, аллергии нет', reaction: 'Да, но бывали плохие реакции / аллергия', never: 'Никогда не делали / боюсь уколов' },
+      },
+      swelling: {
+        label: 'Есть ли припухлость (отёк) десны или щеки?',
+        options: { yes: 'Да, есть заметный отёк', no: 'Нет, внешне всё как обычно' },
+      },
+      biting: {
+        label: 'Болит ли зуб при накусывании или нажатии?',
+        options: { yes: 'Да, больно нажимать и жевать', no: 'Нет, при накусывании не болит' },
+      },
+      painType: {
+        label: 'Каков характер боли?',
+        options: { night: 'Зуб сильно болит по ночам (сам по себе)', sharp: 'Боли резкие, но быстро проходят (от холодного или сладкого)', cosmetic: 'Зуб не болит, беспокоит эстетика или дискомфорт' },
+      },
+      problem: {
+        label: 'Какая проблема возникла?',
+        options: { newTooth: 'Заболел НОВЫЙ зуб, который вы ещё не лечили', sameTooth: 'Беспокоит ТОТ зуб, который вы уже лечили', planned: 'Плановый осмотр, чистка или продолжение лечения' },
+      },
+    },
+    messageNames: {
+      complaint: 'Жалоба',
+      question: 'Вопрос',
+      treatedBefore: 'Лечили ранее',
+      anesthesia: 'Анестезия',
+      swelling: 'Отёк',
+      biting: 'Боль при накусывании',
+      painType: 'Характер боли',
+      problem: 'Проблема',
+    },
+    requiredChoice: 'Выберите один из вариантов',
+    requiredText: 'Заполните это поле',
+    fullNameLabel: 'Фамилия, имя, отчество полностью',
+    fullNamePlaceholder: 'Например, Иванова Мария Петровна',
+    fullNameError: 'Укажите ФИО',
     birthLabel: 'Дата рождения',
     birthError: 'Укажите дату рождения',
+    phoneLabel: 'Номер телефона',
+    phoneError: 'Введите 9 цифр номера',
     parentTitle: 'Родитель или опекун',
     parentNote: 'Пациенту меньше 18 лет — нужны данные взрослого',
     parentNameLabel: 'ФИО родителя',
     parentPhoneLabel: 'Телефон родителя',
     parentNameError: 'Укажите ФИО родителя',
     parentPhoneError: 'Введите 9 цифр номера',
-    perTooth: 'за зуб',
-    perVisit: 'за визит',
-    dateTitle: 'Выберите дату',
-    timeTitle: 'Свободное время',
-    prevMonth: 'Предыдущий месяц',
-    nextMonth: 'Следующий месяц',
-    customTime: 'Или укажите удобное время',
-    chosen: 'Вы выбрали',
-    timeErrors: {
-      dayOff: () => 'В этот день клиника не работает — выберите другую дату',
-      closed: (open, close) => `Клиника принимает с ${open} до ${close}`,
-      tooSoon: () => 'Это время уже недоступно — выберите позже',
-      tooLate: (_open, close) => `Приём не успеет завершиться до ${close} — выберите время раньше`,
-    },
-    confirmNote: 'Администратор подтвердит время в WhatsApp',
-    nameLabel: 'Ваше имя',
-    namePlaceholder: 'Например, Айгерим',
-    phoneLabel: 'Номер телефона',
-    nameError: 'Введите имя',
-    phoneError: 'Введите 9 цифр номера',
     summary: 'Ваша заявка',
+    confirmNote: 'Администратор подтвердит время в WhatsApp',
     back: 'Назад',
     next: 'Далее',
-    submit: 'Записаться в WhatsApp',
-    estimate: 'Предварительно',
-    priceFrom: (price) => `от ${price} сом`,
-    duration: 'Время приёма',
-    visitsNote: 'Лечение может занять несколько визитов',
-    disclaimer: 'Цены ориентировочные. Точная стоимость — после осмотра врача.',
-  },
-  services: {
-    therapy: { name: 'Терапия', description: 'Лечение кариеса, пломбы' },
-    pain: { name: 'Острая боль', description: 'Неотложная помощь' },
-    hygiene: { name: 'Профессиональная чистка', description: 'Удаление зубного камня и налёта' },
-    prosthetics: { name: 'Ортопедия', description: 'Коронки и протезы' },
-    implant: { name: 'Имплантация', description: 'Восстановление утраченного зуба' },
-    xray: { name: 'Дентальный рентген', description: 'Прицельный снимок зуба' },
+    submit: 'Отправить в WhatsApp',
   },
   units: { hour: 'ч', minute: 'мин' },
   months: [
@@ -236,15 +231,12 @@ const ru: Dictionary = {
   weekdaysShort: ['Вс', 'Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб'],
   formatDate: (day, month) => `${day} ${month}`,
   message: {
-    greeting: 'Здравствуйте! Хочу записаться в клинику PHOENIX (Каракол).',
-    service: 'Услуга',
-    price: 'Ориентир цены',
-    dateTime: 'Дата и время',
-    patient: 'Пациент',
-    visitFirst: 'Первичный пациент',
-    visitReturning: 'Повторный пациент',
+    title: 'Новая заявка с сайта!',
+    patientType: 'Тип пациента',
+    fullName: 'ФИО',
     birth: 'Дата рождения',
-    parent: 'Родитель',
+    phone: 'Телефон',
+    answers: 'Ответы на вопросы:',
   },
   sos: {
     button: 'Острая боль',
@@ -305,62 +297,80 @@ const ky: Dictionary = {
   },
   booking: {
     eyebrow: 'Онлайн жазылуу',
-    title: 'Калькулятор жана жазылуу',
-    subtitle:
-      'Үч кадам: кызмат, күн жана убакыт, байланыш. Өтүнмө WhatsAppка даяр билдирүү болуп жөнөтүлөт.',
-    steps: ['Кызмат', 'Күн жана убакыт', 'Байланыш'],
-    clear: 'Баарын өчүрүү',
-    empty: 'Тизмеден кызматты тандаңыз',
-    visitTitle: 'Бизде биринчи жолубу?',
-    visitFirst: 'Биринчи жолу',
-    visitFirstHint: 'Бейтаптын картасын толтурабыз',
-    visitReturning: 'Мурда болгонмун',
-    visitReturningHint: 'Атыңыз жана номериңиз боюнча табабыз',
+    title: 'Кабылдамага жазылуу',
+    greeting:
+      'Саламатсызбы! Сизге ыңгайлуу убакытты жана дарыгерди тандашыбыз үчүн бир нече суроого жооп бериңиз. Бул 1 мүнөттөн ашпайт.',
+    steps: ['Сиз кимсиз', 'Суроолор', 'Байланыш'],
+    pathTitle: 'Сизге ылайыктуусун тандаңыз',
+    paths: {
+      first: { label: 'Биринчи жолу келем', hint: 'Жаңы бейтап' },
+      returning: { label: 'Мен туруктуу бейтабыңызмын', hint: 'Кайра келген бейтап' },
+      question: { label: 'Менде башка суроо бар', hint: 'Жөн гана сурагым келет' },
+    },
+    textLabels: {
+      complaint: 'Эмне тынчсыздандырат?',
+      question: 'Сурооңузду жазыңыз',
+    },
+    textPlaceholders: {
+      complaint: 'Эмне ооруганын же келүү максатыңызды жазыңыз (мисалы: астыңкы тиш ооруйт, таш тазалагым келет, пломба сынды)',
+      question: 'Баа, кызматтар же клиниканын иши боюнча каалаган сурооңузду бериңиз. Администратор WhatsApp аркылуу жооп берет',
+    },
+    questions: {
+      treatedBefore: {
+        label: 'Бул тишти мурда дарылатканбысыз?',
+        options: { treated: 'Ооба, дарыланган / пломба же коронка бар', untreated: 'Жок, бул тиш эч качан дарыланган эмес', unknown: 'Билбейм / эстей албайм' },
+      },
+      anesthesia: {
+        label: 'Мурда анестезия (жансыздандыруу) жасалганбы?',
+        options: { fine: 'Ооба, баары жакшы, аллергия жок', reaction: 'Ооба, бирок жаман реакция / аллергия болгон', never: 'Эч качан жасалган эмес / ийнеден коркомун' },
+      },
+      swelling: {
+        label: 'Кызыл эт же бет шишип турабы?',
+        options: { yes: 'Ооба, шишик байкалат', no: 'Жок, сырттан баары кадимкидей' },
+      },
+      biting: {
+        label: 'Тиш басканда же чайнаганда ооруйбу?',
+        options: { yes: 'Ооба, басканда жана чайнаганда ооруйт', no: 'Жок, басканда оорубайт' },
+      },
+      painType: {
+        label: 'Оорунун мүнөзү кандай?',
+        options: { night: 'Тиш түнкүсүн өзүнөн өзү катуу ооруйт', sharp: 'Оору курч, бирок тез басылат (суук же таттуудан)', cosmetic: 'Тиш оорубайт, сырткы көрүнүшү же ыңгайсыздык тынчсыздандырат' },
+      },
+      problem: {
+        label: 'Кандай көйгөй пайда болду?',
+        options: { newTooth: 'Дарыланбаган ЖАҢЫ тиш ооруп жатат', sameTooth: 'Мурда дарылаган ОШОЛ тиш тынчсыздандырат', planned: 'Пландуу текшерүү, тазалоо же дарылоону улантуу' },
+      },
+    },
+    messageNames: {
+      complaint: 'Арыз',
+      question: 'Суроо',
+      treatedBefore: 'Мурда дарыланган',
+      anesthesia: 'Анестезия',
+      swelling: 'Шишик',
+      biting: 'Басканда ооруйбу',
+      painType: 'Оорунун мүнөзү',
+      problem: 'Көйгөй',
+    },
+    requiredChoice: 'Бир вариантты тандаңыз',
+    requiredText: 'Бул талааны толтуруңуз',
+    fullNameLabel: 'Аты-жөнү толук',
+    fullNamePlaceholder: 'Мисалы, Иванова Мария Петровна',
+    fullNameError: 'Аты-жөнүңүздү жазыңыз',
     birthLabel: 'Туулган күнү',
     birthError: 'Туулган күнүн жазыңыз',
+    phoneLabel: 'Телефон номери',
+    phoneError: 'Номердин 9 цифрасын жазыңыз',
     parentTitle: 'Ата-эне же камкорчу',
     parentNote: 'Бейтап 18ге толо элек — чоң кишинин маалыматы керек',
     parentNameLabel: 'Ата-эненин аты-жөнү',
     parentPhoneLabel: 'Ата-эненин телефону',
     parentNameError: 'Ата-эненин аты-жөнүн жазыңыз',
     parentPhoneError: 'Номердин 9 цифрасын жазыңыз',
-    perTooth: 'бир тиш үчүн',
-    perVisit: 'бир визит үчүн',
-    dateTitle: 'Күндү тандаңыз',
-    timeTitle: 'Бош убакыт',
-    prevMonth: 'Мурунку ай',
-    nextMonth: 'Кийинки ай',
-    customTime: 'Же өзүңүзгө ыңгайлуу убакытты жазыңыз',
-    chosen: 'Сиз тандадыңыз',
-    timeErrors: {
-      dayOff: () => 'Бул күнү клиника иштебейт — башка күндү тандаңыз',
-      closed: (open, close) => `Клиниканын иш убактысы: ${open}–${close}`,
-      tooSoon: () => 'Бул убакыт жеткиликсиз — кечирээк убакытты тандаңыз',
-      tooLate: (_open, close) => `Кабыл алуу саат ${close} чейин бүтпөй калат — эртерээк убакытты тандаңыз`,
-    },
-    confirmNote: 'Администратор убакытты WhatsApp аркылуу ырастайт',
-    nameLabel: 'Атыңыз',
-    namePlaceholder: 'Мисалы, Айгерим',
-    phoneLabel: 'Телефон номери',
-    nameError: 'Атыңызды жазыңыз',
-    phoneError: 'Номердин 9 цифрасын жазыңыз',
     summary: 'Сиздин өтүнмө',
+    confirmNote: 'Администратор убакытты WhatsApp аркылуу ырастайт',
     back: 'Артка',
     next: 'Кийинки',
-    submit: 'WhatsApp аркылуу жазылуу',
-    estimate: 'Болжолдуу',
-    priceFrom: (price) => `${price} сомдон`,
-    duration: 'Кабыл алуу убактысы',
-    visitsNote: 'Дарылоо бир нече визитке созулушу мүмкүн',
-    disclaimer: 'Баалар болжолдуу. Так баасы дарыгер карагандан кийин аныкталат.',
-  },
-  services: {
-    therapy: { name: 'Терапия', description: 'Кариести дарылоо, пломба' },
-    pain: { name: 'Катуу оору', description: 'Шашылыш жардам' },
-    hygiene: { name: 'Кесипкөй тазалоо', description: 'Тиш таштарын жана кирди тазалоо' },
-    prosthetics: { name: 'Ортопедия', description: 'Коронкалар жана протездер' },
-    implant: { name: 'Имплантация', description: 'Жоголгон тишти калыбына келтирүү' },
-    xray: { name: 'Дентал рентген', description: 'Тиштин максаттуу сүрөтү' },
+    submit: 'WhatsAppка жөнөтүү',
   },
   units: { hour: 'саат', minute: 'мүн' },
   months: [
@@ -394,15 +404,12 @@ const ky: Dictionary = {
   weekdaysShort: ['Жк', 'Дш', 'Шш', 'Шр', 'Бш', 'Жм', 'Иш'],
   formatDate: (day, month) => `${day}-${month}`,
   message: {
-    greeting: 'Саламатсызбы! PHOENIX клиникасына (Каракол) жазылгым келет.',
-    service: 'Кызмат',
-    price: 'Болжолдуу баасы',
-    dateTime: 'Күнү жана убактысы',
-    patient: 'Бейтап',
-    visitFirst: 'Биринчи жолку бейтап',
-    visitReturning: 'Кайра келген бейтап',
+    title: 'Сайттан жаңы өтүнмө!',
+    patientType: 'Бейтаптын түрү',
+    fullName: 'Аты-жөнү',
     birth: 'Туулган күнү',
-    parent: 'Ата-эне',
+    phone: 'Телефон',
+    answers: 'Суроолорго жооптор:',
   },
   sos: {
     button: 'Катуу оору',
@@ -463,62 +470,80 @@ const en: Dictionary = {
   },
   booking: {
     eyebrow: 'Online booking',
-    title: 'Calculator & booking',
-    subtitle:
-      'Three steps: service, date and time, contacts. Your request goes to WhatsApp as a ready message.',
-    steps: ['Service', 'Date & time', 'Contacts'],
-    clear: 'Reset',
-    empty: 'Pick a service from the list',
-    visitTitle: 'Is this your first visit?',
-    visitFirst: 'First time',
-    visitFirstHint: 'We will start a patient record',
-    visitReturning: 'I have been here',
-    visitReturningHint: 'We will find you by name and number',
+    title: 'Book a visit',
+    greeting:
+      'Hello! To find you the right time and dentist, please answer a few questions. It takes no more than a minute.',
+    steps: ['About you', 'Questions', 'Contacts'],
+    pathTitle: 'Choose what fits you',
+    paths: {
+      first: { label: 'This is my first visit', hint: 'New patient' },
+      returning: { label: 'I am a regular patient', hint: 'Returning patient' },
+      question: { label: 'I have another question', hint: 'I just want to ask' },
+    },
+    textLabels: {
+      complaint: 'What is bothering you?',
+      question: 'Write your question',
+    },
+    textPlaceholders: {
+      complaint: 'Describe the pain or the goal of your visit (for example: a lower tooth hurts, I want a cleaning, a filling chipped)',
+      question: 'Ask anything about prices, services or how the clinic works. The front desk will reply in WhatsApp',
+    },
+    questions: {
+      treatedBefore: {
+        label: 'Has this tooth been treated before?',
+        options: { treated: 'Yes, it is filled or crowned', untreated: 'No, this tooth has never been treated', unknown: 'I do not know / do not remember' },
+      },
+      anesthesia: {
+        label: 'Have you had anaesthesia before?',
+        options: { fine: 'Yes, all fine, no allergy', reaction: 'Yes, but there were bad reactions or an allergy', never: 'Never had it / afraid of injections' },
+      },
+      swelling: {
+        label: 'Is the gum or cheek swollen?',
+        options: { yes: 'Yes, there is noticeable swelling', no: 'No, everything looks as usual' },
+      },
+      biting: {
+        label: 'Does the tooth hurt when you bite or press on it?',
+        options: { yes: 'Yes, it hurts to press and chew', no: 'No, biting does not hurt' },
+      },
+      painType: {
+        label: 'What is the pain like?',
+        options: { night: 'The tooth aches badly at night on its own', sharp: 'Sharp but short pain (from cold or sweet)', cosmetic: 'No pain, it is about looks or discomfort' },
+      },
+      problem: {
+        label: 'What has happened?',
+        options: { newTooth: 'A NEW tooth hurts, one you have not treated', sameTooth: 'The tooth you treated before is bothering me', planned: 'A check-up, a cleaning or continuing treatment' },
+      },
+    },
+    messageNames: {
+      complaint: 'Complaint',
+      question: 'Question',
+      treatedBefore: 'Treated before',
+      anesthesia: 'Anaesthesia',
+      swelling: 'Swelling',
+      biting: 'Pain when biting',
+      painType: 'Pain type',
+      problem: 'Problem',
+    },
+    requiredChoice: 'Choose one option',
+    requiredText: 'Please fill this in',
+    fullNameLabel: 'Full name',
+    fullNamePlaceholder: 'For example, Maria Ivanova',
+    fullNameError: 'Enter your full name',
     birthLabel: 'Date of birth',
     birthError: 'Enter the date of birth',
+    phoneLabel: 'Phone number',
+    phoneError: 'Enter all 9 digits',
     parentTitle: 'Parent or guardian',
     parentNote: 'The patient is under 18, so an adult must be named',
     parentNameLabel: 'Parent full name',
     parentPhoneLabel: 'Parent phone',
     parentNameError: 'Enter the parent name',
     parentPhoneError: 'Enter all 9 digits',
-    perTooth: 'per tooth',
-    perVisit: 'per visit',
-    dateTitle: 'Choose a date',
-    timeTitle: 'Available time',
-    prevMonth: 'Previous month',
-    nextMonth: 'Next month',
-    customTime: 'Or enter a time that suits you',
-    chosen: 'Your choice',
-    timeErrors: {
-      dayOff: () => 'The clinic is closed on this day — pick another date',
-      closed: (open, close) => `Opening hours: ${open}–${close}`,
-      tooSoon: () => 'This time is no longer available — pick a later one',
-      tooLate: (_open, close) => `The visit would run past ${close} — pick an earlier time`,
-    },
-    confirmNote: 'The front desk will confirm the time in WhatsApp',
-    nameLabel: 'Your name',
-    namePlaceholder: 'e.g. Aigerim',
-    phoneLabel: 'Phone number',
-    nameError: 'Enter your name',
-    phoneError: 'Enter all 9 digits',
     summary: 'Your request',
+    confirmNote: 'The front desk will confirm the time in WhatsApp',
     back: 'Back',
     next: 'Next',
-    submit: 'Book via WhatsApp',
-    estimate: 'Estimate',
-    priceFrom: (price) => `from ${price} som`,
-    duration: 'Visit time',
-    visitsNote: 'Treatment may take several visits',
-    disclaimer: 'Prices are indicative. The exact cost is set after an examination.',
-  },
-  services: {
-    therapy: { name: 'Therapy', description: 'Caries treatment, fillings' },
-    pain: { name: 'Acute pain', description: 'Emergency care' },
-    hygiene: { name: 'Professional cleaning', description: 'Tartar and plaque removal' },
-    prosthetics: { name: 'Prosthodontics', description: 'Crowns and dentures' },
-    implant: { name: 'Implantation', description: 'Replacing a missing tooth' },
-    xray: { name: 'Dental X-ray', description: 'Targeted tooth image' },
+    submit: 'Send to WhatsApp',
   },
   units: { hour: 'h', minute: 'min' },
   months: [
@@ -552,15 +577,12 @@ const en: Dictionary = {
   weekdaysShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
   formatDate: (day, month) => `${month} ${day}`,
   message: {
-    greeting: 'Hello! I would like to book a visit at PHOENIX clinic (Karakol).',
-    service: 'Service',
-    price: 'Estimated price',
-    dateTime: 'Date and time',
-    patient: 'Patient',
-    visitFirst: 'New patient',
-    visitReturning: 'Returning patient',
+    title: 'New request from the website!',
+    patientType: 'Patient type',
+    fullName: 'Full name',
     birth: 'Date of birth',
-    parent: 'Parent',
+    phone: 'Phone',
+    answers: 'Answers:',
   },
   sos: {
     button: 'Acute pain',

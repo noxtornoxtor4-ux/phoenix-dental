@@ -1,78 +1,61 @@
-import { CalendarDays, Cake, Clock, Info, ListChecks, Phone, UserRound, Users, Wallet } from 'lucide-react'
+import { Cake, Info, Phone, UserRound, Users } from 'lucide-react'
+import type { RequestForm } from '../../data/questionnaire'
 import { useI18n } from '../../i18n/useI18n'
-import { isMinor, type PatientErrors, type PatientForm, type VisitType } from '../../lib/patient'
 import { formatLocalDigits, KG_COUNTRY_CODE, toLocalDigits } from '../../lib/phone'
+import { needsParent, type RequestErrors } from '../../lib/request'
 
-interface StepContactsProps {
-  value: PatientForm
-  errors: PatientErrors
-  onChange: (value: PatientForm) => void
-  summary: { service: string; dateTime: string; price: string; duration: string }
+interface ContactsStepProps {
+  value: RequestForm
+  errors: RequestErrors
+  onChange: (value: RequestForm) => void
+  summary: string[]
 }
 
 const inputClass =
   'h-14 w-full rounded-2xl border bg-white/5 pr-4 text-base outline-none transition [color-scheme:dark] placeholder:text-white/30 focus:border-accent focus:bg-white/10'
 
-export function StepContacts({ value, errors, onChange, summary }: StepContactsProps) {
+/** Step 3: who the request is from. */
+export function ContactsStep({ value, errors, onChange, summary }: ContactsStepProps) {
   const { t } = useI18n()
-  const set = <K extends keyof PatientForm>(key: K, next: PatientForm[K]) => onChange({ ...value, [key]: next })
-  const withParent = isMinor(value, new Date())
-
-  const summaryRows = [
-    { icon: ListChecks, value: summary.service },
-    { icon: CalendarDays, value: summary.dateTime },
-    { icon: Clock, value: summary.duration },
-    { icon: Wallet, value: summary.price },
-  ]
-
-  const visitOptions: { id: VisitType; label: string; hint: string }[] = [
-    { id: 'first', label: t.booking.visitFirst, hint: t.booking.visitFirstHint },
-    { id: 'returning', label: t.booking.visitReturning, hint: t.booking.visitReturningHint },
-  ]
-
+  const set = <K extends keyof RequestForm>(key: K, next: RequestForm[K]) => onChange({ ...value, [key]: next })
+  const withParent = needsParent(value, new Date())
   const border = (invalid: boolean | undefined) => (invalid ? 'border-sos' : 'border-white/10')
 
   return (
     <div className="grid gap-5 md:grid-cols-2">
       <div className="space-y-4">
-        <fieldset>
-          <legend className="mb-2 text-sm text-white/70">{t.booking.visitTitle}</legend>
-          <div className="grid gap-2 sm:grid-cols-2">
-            {visitOptions.map((option) => {
-              const active = value.visitType === option.id
-              return (
-                <button
-                  key={option.id}
-                  type="button"
-                  aria-pressed={active}
-                  onClick={() => set('visitType', option.id)}
-                  className={`rounded-2xl border px-4 py-3 text-left transition active:scale-[0.99] ${
-                    active ? 'border-accent bg-accent/10' : 'border-white/10 bg-white/5 hover:bg-white/10'
-                  }`}
-                >
-                  <span className={`block font-semibold ${active ? 'text-accent' : ''}`}>{option.label}</span>
-                  <span className="mt-0.5 block text-xs text-white/50">{option.hint}</span>
-                </button>
-              )
-            })}
-          </div>
-        </fieldset>
-
         <label className="block">
-          <span className="mb-1.5 block text-sm text-white/70">{t.booking.nameLabel}</span>
+          <span className="mb-1.5 block text-sm text-white/70">{t.booking.fullNameLabel}</span>
           <span className="relative block">
             <UserRound className="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-white/40" />
             <input
-              value={value.name}
-              onChange={(event) => set('name', event.target.value)}
+              value={value.fullName}
+              onChange={(event) => set('fullName', event.target.value)}
               autoComplete="name"
               enterKeyHint="next"
-              placeholder={t.booking.namePlaceholder}
-              aria-invalid={Boolean(errors.name)}
-              className={`${inputClass} pl-12 ${border(errors.name)}`}
+              maxLength={120}
+              placeholder={t.booking.fullNamePlaceholder}
+              aria-invalid={Boolean(errors.fullName)}
+              className={`${inputClass} pl-12 ${border(errors.fullName)}`}
             />
           </span>
-          {errors.name && <span className="mt-1 block text-xs text-sos">{t.booking.nameError}</span>}
+          {errors.fullName && <span className="mt-1 block text-xs text-sos">{t.booking.fullNameError}</span>}
+        </label>
+
+        <label className="block">
+          <span className="mb-1.5 block text-sm text-white/70">{t.booking.birthLabel}</span>
+          <span className="relative block">
+            <Cake className="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-white/40" />
+            <input
+              type="date"
+              value={value.birthDate}
+              max={new Date().toISOString().slice(0, 10)}
+              onChange={(event) => set('birthDate', event.target.value)}
+              aria-invalid={Boolean(errors.birthDate)}
+              className={`${inputClass} pl-12 ${border(errors.birthDate)}`}
+            />
+          </span>
+          {errors.birthDate && <span className="mt-1 block text-xs text-sos">{t.booking.birthError}</span>}
         </label>
 
         <label className="block">
@@ -85,7 +68,7 @@ export function StepContacts({ value, errors, onChange, summary }: StepContactsP
               type="tel"
               inputMode="tel"
               autoComplete="tel-national"
-              enterKeyHint={value.visitType === 'first' ? 'next' : 'done'}
+              enterKeyHint="done"
               value={formatLocalDigits(value.phoneDigits)}
               onChange={(event) => set('phoneDigits', toLocalDigits(event.target.value))}
               placeholder="700 123 456"
@@ -95,24 +78,6 @@ export function StepContacts({ value, errors, onChange, summary }: StepContactsP
           </span>
           {errors.phone && <span className="mt-1 block text-xs text-sos">{t.booking.phoneError}</span>}
         </label>
-
-        {value.visitType === 'first' && (
-          <label className="block animate-rise">
-            <span className="mb-1.5 block text-sm text-white/70">{t.booking.birthLabel}</span>
-            <span className="relative block">
-              <Cake className="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-white/40" />
-              <input
-                type="date"
-                value={value.birthDate}
-                max={new Date().toISOString().slice(0, 10)}
-                onChange={(event) => set('birthDate', event.target.value)}
-                aria-invalid={Boolean(errors.birthDate)}
-                className={`${inputClass} pl-12 ${border(errors.birthDate)}`}
-              />
-            </span>
-            {errors.birthDate && <span className="mt-1 block text-xs text-sos">{t.booking.birthError}</span>}
-          </label>
-        )}
 
         {withParent && (
           <fieldset className="animate-rise space-y-3 rounded-2xl border border-accent/25 bg-accent/5 p-4">
@@ -128,6 +93,7 @@ export function StepContacts({ value, errors, onChange, summary }: StepContactsP
                 value={value.parentName}
                 onChange={(event) => set('parentName', event.target.value)}
                 autoComplete="off"
+                maxLength={120}
                 aria-invalid={Boolean(errors.parentName)}
                 className={`${inputClass} pl-4 ${border(errors.parentName)}`}
               />
@@ -160,11 +126,11 @@ export function StepContacts({ value, errors, onChange, summary }: StepContactsP
 
       <div className="rounded-3xl border border-accent/20 bg-accent/5 p-4 md:self-start">
         <p className="mb-3 text-sm font-semibold text-accent">{t.booking.summary}</p>
-        <ul className="space-y-2.5 text-sm">
-          {summaryRows.map(({ icon: Icon, value: row }) => (
-            <li key={row} className="flex gap-3">
-              <Icon className="mt-0.5 size-4 shrink-0 text-white/40" />
-              <span className="text-white/85">{row}</span>
+        <ul className="space-y-2 text-sm text-white/85">
+          {summary.map((line) => (
+            <li key={line} className="flex gap-2">
+              <span className="mt-2 size-1.5 shrink-0 rounded-full bg-accent/60" />
+              <span className="min-w-0">{line}</span>
             </li>
           ))}
         </ul>
