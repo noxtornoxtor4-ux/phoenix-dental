@@ -71,7 +71,7 @@ export function BookingSection() {
     }
     setErrors({})
     setStep(next)
-    document.getElementById('booking')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
   const update = (next: RequestForm) => {
@@ -125,7 +125,7 @@ export function BookingSection() {
   }
 
   return (
-    <section id="booking" className="mx-auto max-w-3xl scroll-mt-24 px-4 py-14 md:py-20">
+    <section className="mx-auto max-w-3xl px-4 py-10 md:py-14">
       <SectionHeading eyebrow={t.booking.eyebrow} title={t.booking.title} />
 
       <div className="glass mt-8 rounded-[2rem] p-4 sm:p-6">
@@ -145,7 +145,7 @@ export function BookingSection() {
           {step === 2 && <ContactsStep value={form} errors={errors} onChange={update} summary={summaryLines()} />}
         </div>
 
-        <div className="sticky bottom-[calc(5.25rem+env(safe-area-inset-bottom))] z-10 mt-6 flex items-center gap-3 rounded-2xl border border-white/10 bg-ink-800/95 p-2.5 backdrop-blur-xl md:static md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none">
+        <div className="sticky bottom-[calc(0.75rem+env(safe-area-inset-bottom))] z-10 mt-6 flex items-center gap-3 rounded-2xl border border-white/10 bg-ink-800/95 p-2.5 backdrop-blur-xl md:static md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none">
           {step > 0 && (
             <button
               type="button"

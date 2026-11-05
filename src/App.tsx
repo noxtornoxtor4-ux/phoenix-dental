@@ -1,26 +1,34 @@
 import { Backdrop } from './components/Backdrop'
-import { BookingSection } from './components/booking/BookingSection'
+import { BookingDock } from './components/BookingDock'
+import { BookingPage } from './components/BookingPage'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
 import { Hero } from './components/hero/Hero'
 import { InstallGuide } from './components/InstallGuide'
 import { LocationSection } from './components/LocationSection'
-import { BookingDock } from './components/BookingDock'
+import { useRoute } from './lib/route'
 
 export default function App() {
+  const route = useRoute()
+
   return (
     <div className="relative isolate min-h-dvh overflow-x-clip">
       <Backdrop />
 
-      <Header />
-      <main>
-        <Hero />
-        <BookingSection />
-        <LocationSection />
-      </main>
-      <Footer />
+      {route === 'booking' ? (
+        <BookingPage />
+      ) : (
+        <>
+          <Header />
+          <main>
+            <Hero />
+            <LocationSection />
+          </main>
+          <Footer />
+          <BookingDock />
+        </>
+      )}
 
-      <BookingDock />
       <InstallGuide />
     </div>
   )
