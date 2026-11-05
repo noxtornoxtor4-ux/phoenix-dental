@@ -73,7 +73,6 @@ export interface Dictionary {
     phone: string
     answers: string
   }
-  sos: { button: string; title: string; body: string; aria: string }
   location: {
     eyebrow: string
     title: string
@@ -81,9 +80,7 @@ export interface Dictionary {
     hoursTitle: string
     dayOff: string
     xray: string
-    route: string
     call: string
-    mapTitle: string
   }
   footer: { rights: string; note: string }
   dock: { book: string }
@@ -118,9 +115,9 @@ const ru: Dictionary = {
     titleStart: 'Забота о вашей улыбке',
     titleAccent: 'в Караколе без боли',
     subtitle:
-      'Answer a few questions — we will pick a dentist and a time, and your request goes to WhatsApp as a ready message.',
+      'Ответьте на несколько вопросов — подберём врача и удобное время, а заявка уйдёт в WhatsApp готовым сообщением.',
     book: 'Записаться онлайн',
-    features: ['Dental X-ray on site', 'Reply within the day', 'Booking via WhatsApp'],
+    features: ['Дентальный рентген на месте', 'Ответ в течение дня', 'Запись через WhatsApp'],
   },
   booking: {
     eyebrow: 'Онлайн-запись',
@@ -238,22 +235,14 @@ const ru: Dictionary = {
     phone: 'Телефон',
     answers: 'Ответы на вопросы:',
   },
-  sos: {
-    button: 'Острая боль',
-    title: 'СРОЧНО: Острая боль',
-    body: 'Здравствуйте! У меня острая зубная боль, прошу принять как можно скорее. PHOENIX (Каракол).',
-    aria: 'Срочная заявка при острой боли в WhatsApp',
-  },
   location: {
     eyebrow: 'Как нас найти',
-    title: 'Локация и навигация',
+    title: 'Адрес и режим работы',
     address: 'г. Каракол, ул. Токтогула, 263',
     hoursTitle: 'Режим работы',
     dayOff: 'выходной',
     xray: 'Дентальный рентген в клинике',
-    route: 'Построить маршрут',
     call: 'Позвонить',
-    mapTitle: 'Карта проезда',
   },
   footer: {
     rights: 'Все права защищены',
@@ -291,9 +280,9 @@ const ky: Dictionary = {
     titleStart: 'Жылмаюуңузга кам көрүү',
     titleAccent: 'Караколдо, оорутпай',
     subtitle:
-      'Кызматты, ыңгайлуу күн менен убакытты тандаңыз — болжолдуу баасын дароо көрсөтүп, жазып коёбуз.',
+      'Бир нече суроого жооп бериңиз — дарыгерди жана ыңгайлуу убакытты тандайбыз, өтүнмө WhatsAppка даяр билдирүү болуп жөнөйт.',
     book: 'Онлайн жазылуу',
-    features: ['Клиникада дентал рентген', 'Баасы визитке чейин', 'WhatsApp аркылуу жазылуу'],
+    features: ['Клиникада дентал рентген', 'Күн ичинде жооп', 'WhatsApp аркылуу жазылуу'],
   },
   booking: {
     eyebrow: 'Онлайн жазылуу',
@@ -411,22 +400,14 @@ const ky: Dictionary = {
     phone: 'Телефон',
     answers: 'Суроолорго жооптор:',
   },
-  sos: {
-    button: 'Катуу оору',
-    title: 'ШАШЫЛЫШ: Катуу оору',
-    body: 'Саламатсызбы! Тишим катуу ооруп жатат, мүмкүн болушунча тезирээк кабыл алып коюңузчу. PHOENIX (Каракол).',
-    aria: 'Катуу ооруда WhatsApp аркылуу шашылыш өтүнмө',
-  },
   location: {
     eyebrow: 'Бизди кантип табасыз',
-    title: 'Дарек жана жол',
+    title: 'Дарек жана иш убактысы',
     address: 'Каракол ш., Токтогул көч., 263',
     hoursTitle: 'Иш убактысы',
     dayOff: 'дем алыш',
     xray: 'Клиникада дентал рентген бар',
-    route: 'Маршрут түзүү',
     call: 'Чалуу',
-    mapTitle: 'Жол картасы',
   },
   footer: {
     rights: 'Бардык укуктар корголгон',
@@ -464,9 +445,9 @@ const en: Dictionary = {
     titleStart: 'Caring for your smile',
     titleAccent: 'in Karakol, pain-free',
     subtitle:
-      'Pick a service and a time that suits you — we will show an estimated price and book you in.',
+      'Answer a few questions — we will pick a dentist and a time, and your request goes to WhatsApp as a ready message.',
     book: 'Book online',
-    features: ['Dental X-ray on site', 'Estimate before the visit', 'Booking via WhatsApp'],
+    features: ['Dental X-ray on site', 'Reply within the day', 'Booking via WhatsApp'],
   },
   booking: {
     eyebrow: 'Online booking',
@@ -584,22 +565,14 @@ const en: Dictionary = {
     phone: 'Phone',
     answers: 'Answers:',
   },
-  sos: {
-    button: 'Acute pain',
-    title: 'URGENT: Acute pain',
-    body: 'Hello! I have acute tooth pain and need to be seen as soon as possible. PHOENIX (Karakol).',
-    aria: 'Urgent acute pain request via WhatsApp',
-  },
   location: {
     eyebrow: 'How to find us',
-    title: 'Location & directions',
+    title: 'Address and hours',
     address: '263 Toktogul St., Karakol',
     hoursTitle: 'Opening hours',
     dayOff: 'closed',
     xray: 'Dental X-ray in the clinic',
-    route: 'Get directions',
     call: 'Call',
-    mapTitle: 'Map',
   },
   footer: {
     rights: 'All rights reserved',

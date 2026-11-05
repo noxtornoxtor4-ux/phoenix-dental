@@ -5,7 +5,7 @@ import { Header } from './components/Header'
 import { Hero } from './components/hero/Hero'
 import { InstallGuide } from './components/InstallGuide'
 import { LocationSection } from './components/LocationSection'
-import { SosDock } from './components/SosDock'
+import { BookingDock } from './components/BookingDock'
 
 export default function App() {
   return (
@@ -20,7 +20,7 @@ export default function App() {
       </main>
       <Footer />
 
-      <SosDock />
+      <BookingDock />
       <InstallGuide />
     </div>
   )

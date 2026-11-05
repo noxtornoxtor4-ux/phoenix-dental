@@ -1,7 +1,7 @@
 import { isSupabaseConfigured, supabaseConfig } from '../config/supabase'
 
 export interface LeadRequest {
-  kind: 'booking' | 'sos'
+  kind: 'booking'
   name?: string
   phone?: string
   summary?: string

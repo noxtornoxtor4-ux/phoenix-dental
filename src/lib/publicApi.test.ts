@@ -40,13 +40,13 @@ describe('submitLead', () => {
 
   test('does nothing without credentials and swallows network errors', async () => {
     let called = false
-    submitLead({ kind: 'sos', lang: 'ky' }, { url: '', anonKey: '' }, async () => {
+    submitLead({ kind: 'booking', lang: 'ky' }, { url: '', anonKey: '' }, async () => {
       called = true
     })
     expect(called).toBe(false)
 
     expect(() =>
-      submitLead({ kind: 'sos', lang: 'ky' }, config, () => Promise.reject(new Error('offline'))),
+      submitLead({ kind: 'booking', lang: 'ky' }, config, () => Promise.reject(new Error('offline'))),
     ).not.toThrow()
   })
 })

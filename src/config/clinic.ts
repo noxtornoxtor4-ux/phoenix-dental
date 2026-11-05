@@ -1,11 +1,8 @@
 // Contact data, schedule and booking rules of the clinic.
-// The reception number also handles urgent SOS requests.
 export const clinic = {
   name: 'PHOENIX',
   /** WhatsApp number of the reception, digits only, international format. */
   whatsapp: '996504314134',
-  /** WhatsApp number of the doctor on duty for urgent requests. */
-  sosWhatsapp: '996504314134',
   phoneDisplay: '+996 504 314 134',
   phoneHref: 'tel:+996504314134',
   hasDentalXray: true,
@@ -23,14 +20,5 @@ export const clinic = {
     maxVisitMinutes: 180,
     /** How many days ahead the calendar allows booking. */
     horizonDays: 60,
-  },
-  maps: {
-    query: 'Каракол, улица Токтогула, 263',
-    /** Geocoded from the address by Yandex Maps. */
-    lat: 42.493663,
-    lon: 78.396146,
-    yandexWidget: 'https://yandex.ru/map-widget/v1/',
-    yandexRoute: 'https://yandex.ru/maps/',
-    twoGisSearch: 'https://2gis.kg/karakol/search/',
   },
 } as const
