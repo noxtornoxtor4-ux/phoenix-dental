@@ -10,7 +10,7 @@ export function AuthScreen({ title, subtitle, children }: { title: string; subti
       <div className="w-full max-w-sm animate-rise">
         <div className="mb-8 flex flex-col items-center text-center">
           <img src="/favicon.svg" alt="" className="size-16 rounded-2xl shadow-glow" />
-          <p className="mt-4 font-display text-xl font-bold tracking-[0.18em]">PHOENIX</p>
+          <p className="mt-4 font-display text-2xl font-bold tracking-tight">Phoenix</p>
           <p className="text-xs font-semibold tracking-[0.3em] text-accent uppercase">CRM</p>
         </div>
         <div className="glass rounded-3xl bg-ink-800/60 p-6">

@@ -89,7 +89,7 @@ export interface Dictionary {
 
 const ru: Dictionary = {
   header: {
-    address: 'г. Каракол, ул. Токтогула, 263',
+    address: 'г. Каракол, ул. Московская, 125',
     install: 'Скачать приложение',
     installShort: 'Установить',
     language: 'Язык',
@@ -239,7 +239,7 @@ const ru: Dictionary = {
   location: {
     eyebrow: 'Как нас найти',
     title: 'Адрес и режим работы',
-    address: 'г. Каракол, ул. Токтогула, 263',
+    address: 'г. Каракол, ул. Московская, 125',
     hoursTitle: 'Режим работы',
     dayOff: 'выходной',
     xray: 'Дентальный рентген в клинике',
@@ -254,7 +254,7 @@ const ru: Dictionary = {
 
 const ky: Dictionary = {
   header: {
-    address: 'Каракол ш., Токтогул көч., 263',
+    address: 'Каракол ш., Московская көч., 125',
     install: 'Тиркемени жүктөө',
     installShort: 'Орнотуу',
     language: 'Тил',
@@ -404,7 +404,7 @@ const ky: Dictionary = {
   location: {
     eyebrow: 'Бизди кантип табасыз',
     title: 'Дарек жана иш убактысы',
-    address: 'Каракол ш., Токтогул көч., 263',
+    address: 'Каракол ш., Московская көч., 125',
     hoursTitle: 'Иш убактысы',
     dayOff: 'дем алыш',
     xray: 'Клиникада дентал рентген бар',
@@ -419,7 +419,7 @@ const ky: Dictionary = {
 
 const en: Dictionary = {
   header: {
-    address: '263 Toktogul St., Karakol',
+    address: '125 Moskovskaya St., Karakol',
     install: 'Get the app',
     installShort: 'Install',
     language: 'Language',
@@ -569,7 +569,7 @@ const en: Dictionary = {
   location: {
     eyebrow: 'How to find us',
     title: 'Address and hours',
-    address: '263 Toktogul St., Karakol',
+    address: '125 Moskovskaya St., Karakol',
     hoursTitle: 'Opening hours',
     dayOff: 'closed',
     xray: 'Dental X-ray in the clinic',

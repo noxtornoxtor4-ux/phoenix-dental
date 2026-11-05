@@ -1,27 +1,27 @@
 @import 'tailwindcss';
 
 @theme {
-  /* Warm near-black surfaces */
-  --color-ink-950: #050504;
-  --color-ink-900: #090909;
-  --color-ink-800: #11100f;
-  --color-ink-700: #171411;
-  --color-ink-600: #211d18;
-  --color-line: #3a3027;
+  /* Cool near-black surfaces, the black the logo sits on */
+  --color-ink-950: #04060b;
+  --color-ink-900: #080b12;
+  --color-ink-800: #0e131c;
+  --color-ink-700: #141a26;
+  --color-ink-600: #1c2432;
+  --color-line: #273243;
 
-  /* Gold accent */
-  --color-accent: #dca457;
-  --color-accent-300: #edc182;
-  --color-accent-600: #b98547;
+  /* The blue of the Phoenix mark */
+  --color-accent: #3e8afb;
+  --color-accent-300: #7fb2ff;
+  --color-accent-600: #2a6ad6;
   --color-sos: #e2503f;
 
-  --color-cream: #f7f3ed;
-  --color-muted: #bdb6aa;
+  --color-cream: #f1f5fc;
+  --color-muted: #9aa8bd;
 
   --font-sans: 'Manrope Variable', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Lora Variable', Georgia, 'Times New Roman', serif;
+  --font-display: 'Montserrat Variable', ui-sans-serif, system-ui, sans-serif;
 
-  --shadow-glow: 0 0 0 1px rgb(220 164 87 / 0.35), 0 12px 38px -8px rgb(220 164 87 / 0.45);
+  --shadow-glow: 0 0 0 1px rgb(62 138 251 / 0.35), 0 12px 38px -8px rgb(62 138 251 / 0.45);
   --shadow-sos: 0 12px 32px -8px rgb(226 80 63 / 0.6);
   --shadow-panel: 0 14px 42px rgb(0 0 0 / 0.35);
 
@@ -62,7 +62,7 @@
   }
 }
 
-/** Warm panel: a dark card with a thin brass line, used across the site and CRM. */
+/** Cool panel: a dark card with a thin steel line, used across the site and CRM. */
 @utility glass {
   background: linear-gradient(145deg, rgb(255 255 255 / 0.045), rgb(255 255 255 / 0.015));
   border: 1px solid var(--color-line);
@@ -87,7 +87,7 @@
   }
 
   ::selection {
-    background: rgb(220 164 87 / 0.35);
+    background: rgb(62 138 251 / 0.35);
   }
 
   :focus-visible {

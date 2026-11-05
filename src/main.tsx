@@ -1,5 +1,5 @@
 import '@fontsource-variable/manrope'
-import '@fontsource-variable/lora'
+import '@fontsource-variable/montserrat'
 import { lazy, StrictMode, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'

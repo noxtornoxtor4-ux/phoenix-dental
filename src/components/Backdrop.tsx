@@ -1,4 +1,4 @@
-/** Warm glow and a thin mountain line — the Karakol ridge behind the content. */
+/** Blue glow and a thin mountain line — the Karakol ridge behind the content. */
 export function Backdrop() {
   return (
     <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-ink-900">
@@ -13,19 +13,19 @@ export function Backdrop() {
         <path
           d="M-40 380 L170 212 L250 268 L395 120 L470 190 L560 118 L690 252 L775 196 L900 300 L1010 214 L1120 288 L1230 176 L1330 252 L1480 150"
           fill="none"
-          stroke="#DCA457"
+          stroke="#3E8AFB"
           strokeWidth="1.4"
         />
         <path
           d="M-40 404 L120 300 L235 352 L360 246 L480 330 L600 262 L700 330 L840 258 L960 344 L1080 282 L1200 350 L1320 290 L1480 356"
           fill="none"
-          stroke="#DCA457"
+          stroke="#3E8AFB"
           strokeOpacity="0.55"
           strokeWidth="1.2"
         />
       </svg>
 
-      <div className="absolute inset-0 bg-[radial-gradient(rgb(220_164_87/0.07)_1px,transparent_1px)] [background-size:30px_30px] [mask-image:linear-gradient(to_bottom,black,transparent_65%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(rgb(62_138_251/0.07)_1px,transparent_1px)] [background-size:30px_30px] [mask-image:linear-gradient(to_bottom,black,transparent_65%)]" />
     </div>
   )
 }

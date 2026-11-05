@@ -208,7 +208,7 @@ function ItemFormModal({ item, onClose }: { item?: InventoryItem; onClose: () =>
         )}
         {item && (
           <label className="flex items-center gap-3 text-sm sm:col-span-2">
-            <input type="checkbox" checked={active} onChange={(e) => setActive(e.target.checked)} className="size-5 accent-[#DCA457]" />
+            <input type="checkbox" checked={active} onChange={(e) => setActive(e.target.checked)} className="size-5 accent-[#3E8AFB]" />
             Используется (скрытые материалы не видны врачам)
           </label>
         )}

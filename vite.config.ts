@@ -16,15 +16,15 @@ export default defineConfig({
         name: 'PHOENIX — стоматология в Караколе',
         short_name: 'PHOENIX',
         description:
-          'Онлайн-запись, интерактивная карта зубов и расчёт стоимости лечения в стоматологии PHOENIX, г. Каракол.',
+          'Онлайн-запись в стоматологию PHOENIX, г. Каракол, ул. Московская, 125: анкета, ответ врача и запись в WhatsApp.',
         lang: 'ru',
         dir: 'ltr',
         start_url: '/',
         scope: '/',
         display: 'standalone',
         orientation: 'portrait',
-        background_color: '#090909',
-        theme_color: '#090909',
+        background_color: '#080b12',
+        theme_color: '#080b12',
         categories: ['medical', 'health'],
         icons: [
           { src: 'pwa-64x64.png', sizes: '64x64', type: 'image/png' },

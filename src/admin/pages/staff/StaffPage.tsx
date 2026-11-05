@@ -13,7 +13,7 @@ import { PhoneInput } from '../../ui/PhoneInput'
 import { Badge, cardClass, ErrorState, LoadingBlock, PageHeader } from '../../ui/primitives'
 import { useToast } from '../../ui/toastContext'
 
-const palette = ['#DCA457', '#A78BFA', '#34D399', '#FBBF24', '#F472B6', '#60A5FA', '#FB7185', '#2DD4BF']
+const palette = ['#3E8AFB', '#A78BFA', '#34D399', '#FBBF24', '#F472B6', '#60A5FA', '#FB7185', '#2DD4BF']
 
 function generatePassword() {
   const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789'
@@ -308,7 +308,7 @@ function EditStaffModal({ member, onClose }: { member: Staff; onClose: () => voi
             checked={profile.active}
             disabled={isSelf}
             onChange={(e) => setProfile({ ...profile, active: e.target.checked })}
-            className="size-5 accent-[#DCA457]"
+            className="size-5 accent-[#3E8AFB]"
           />
           Доступ к CRM {isSelf && <span className="text-white/40">(свой доступ отключить нельзя)</span>}
         </label>

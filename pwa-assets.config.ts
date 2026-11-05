@@ -1,6 +1,6 @@
 import { defineConfig, minimal2023Preset } from '@vite-pwa/assets-generator/config'
 
-const background = '#0B132B'
+const background = '#080B12'
 
 export default defineConfig({
   headLinkOptions: {
