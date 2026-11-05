@@ -14,7 +14,7 @@ const form = (patch: Partial<RequestForm>): RequestForm => ({ ...emptyRequestFor
 const labels: RequestLabels = {
   title: 'Новая заявка с сайта!',
   patientType: 'Тип пациента',
-  pathNames: { first: 'Первичный', returning: 'Повторный', question: 'Вопрос' },
+  pathNames: { first: 'Первичный', returning: 'Повторный' },
   fullName: 'ФИО',
   birth: 'Дата рождения',
   phone: 'Телефон',
@@ -59,10 +59,19 @@ describe('validateAnswers', () => {
     expect(hasErrors(validateAnswers(filled))).toBe(false)
   })
 
-  test('a returning patient answers one question, a free question needs text only', () => {
+  test('a returning patient answers one question', () => {
     expect(validateAnswers(form({ path: 'returning' }))).toEqual({ problem: true })
-    expect(validateAnswers(form({ path: 'question' }))).toEqual({ text: true })
-    expect(validateAnswers(form({ path: 'question', text: 'Сколько стоит чистка?' }))).toEqual({})
+    expect(validateAnswers(form({ path: 'returning', choices: { problem: 'newTooth' } }))).toEqual({})
+  })
+
+  test('the extra question is optional', () => {
+    const filled = form({
+      path: 'first',
+      text: 'Болит нижний зуб',
+      choices: { treatedBefore: 'treated', anesthesia: 'fine', swelling: 'no', biting: 'yes', painType: 'sharp' },
+    })
+    expect(hasErrors(validateAnswers(filled))).toBe(false)
+    expect(hasErrors(validateAnswers({ ...filled, extraQuestion: 'Работаете в воскресенье?' }))).toBe(false)
   })
 })
 
@@ -109,14 +118,17 @@ describe('buildRequestMessage', () => {
     )
   })
 
-  test('a free question keeps just one answer line', () => {
-    const message = buildRequestMessage(form({ path: 'question', text: 'Работаете в воскресенье?' }), labels, {
-      fullName: 'Пётр',
-      birthDate: '01.01.1990',
-      phone: '+996 504 314 134',
-      parent: '',
-    })
-    expect(message).toContain('Тип пациента: Вопрос')
-    expect(message.trim().endsWith('1. Вопрос: Работаете в воскресенье?')).toBe(true)
+  test('an optional question becomes the last answer', () => {
+    const message = buildRequestMessage(
+      form({
+        path: 'first',
+        text: 'Скололась пломба',
+        extraQuestion: 'Работаете в воскресенье?',
+        choices: { treatedBefore: 'treated', anesthesia: 'fine', swelling: 'no', biting: 'yes', painType: 'sharp' },
+      }),
+      labels,
+      { fullName: 'Пётр', birthDate: '01.01.1990', phone: '+996 504 314 134', parent: '' },
+    )
+    expect(message.trim().endsWith('7. Вопрос: Работаете в воскресенье?')).toBe(true)
   })
 })

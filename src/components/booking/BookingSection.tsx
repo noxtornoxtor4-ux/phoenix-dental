@@ -34,7 +34,6 @@ function requestLabels(dictionary: Dictionary): RequestLabels {
     pathNames: {
       first: booking.paths.first.label,
       returning: booking.paths.returning.label,
-      question: booking.paths.question.label,
     },
     fullName: message.fullName,
     birth: message.birth,

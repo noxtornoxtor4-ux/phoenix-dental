@@ -1,4 +1,5 @@
 import {
+  extraQuestionPaths,
   questionsFor,
   textQuestion,
   type ChoiceQuestionId,
@@ -85,6 +86,9 @@ export function buildRequestMessage(form: RequestForm, labels: RequestLabels, va
   for (const question of questionsFor(form.path)) {
     const option = form.choices[question]
     if (option) answers.push(`${labels.questionNames[question]}: ${labels.optionNames[question][option]}`)
+  }
+  if (extraQuestionPaths.includes(form.path) && form.extraQuestion.trim()) {
+    answers.push(`${labels.questionNames.question}: ${form.extraQuestion.trim()}`)
   }
 
   return [

@@ -1,11 +1,10 @@
-import { ChevronRight, MessageCircleQuestion, UserRound, UserRoundCheck } from 'lucide-react'
+import { ChevronRight, UserRound, UserRoundCheck } from 'lucide-react'
 import { paths, type PathId } from '../../data/questionnaire'
 import { useI18n } from '../../i18n/useI18n'
 
 const icons: Record<PathId, typeof UserRound> = {
   first: UserRound,
   returning: UserRoundCheck,
-  question: MessageCircleQuestion,
 }
 
 interface PathChoiceProps {

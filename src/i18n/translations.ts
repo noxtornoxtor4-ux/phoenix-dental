@@ -35,6 +35,7 @@ export interface Dictionary {
     pathTitle: string
     paths: Record<PathId, { label: string; hint: string }>
     textLabels: Record<'complaint' | 'question', string>
+    optionalHint: string
     textPlaceholders: Record<'complaint' | 'question', string>
     questions: Record<ChoiceQuestionId, { label: string; options: Record<string, string> }>
     messageNames: Record<ChoiceQuestionId | 'complaint' | 'question', string>
@@ -129,12 +130,12 @@ const ru: Dictionary = {
     paths: {
       first: { label: 'Я у вас впервые', hint: 'Первичный пациент' },
       returning: { label: 'Я ваш постоянный клиент', hint: 'Повторный пациент' },
-      question: { label: 'У меня другой вопрос', hint: 'Хочу просто спросить' },
     },
     textLabels: {
       complaint: 'Что вас беспокоит?',
       question: 'Напишите ваш вопрос',
     },
+    optionalHint: 'необязательно',
     textPlaceholders: {
       complaint: 'Напишите, что у вас болит, или укажите цель визита (например: болит зуб снизу, хочу налёт почистить, скололась пломба)',
       question: 'Задайте любой вопрос по стоимости, услугам или работе клиники. Администратор ответит вам в WhatsApp',
@@ -294,12 +295,12 @@ const ky: Dictionary = {
     paths: {
       first: { label: 'Биринчи жолу келем', hint: 'Жаңы бейтап' },
       returning: { label: 'Мен туруктуу бейтабыңызмын', hint: 'Кайра келген бейтап' },
-      question: { label: 'Менде башка суроо бар', hint: 'Жөн гана сурагым келет' },
     },
     textLabels: {
       complaint: 'Эмне тынчсыздандырат?',
       question: 'Сурооңузду жазыңыз',
     },
+    optionalHint: 'милдеттүү эмес',
     textPlaceholders: {
       complaint: 'Эмне ооруганын же келүү максатыңызды жазыңыз (мисалы: астыңкы тиш ооруйт, таш тазалагым келет, пломба сынды)',
       question: 'Баа, кызматтар же клиниканын иши боюнча каалаган сурооңузду бериңиз. Администратор WhatsApp аркылуу жооп берет',
@@ -459,12 +460,12 @@ const en: Dictionary = {
     paths: {
       first: { label: 'This is my first visit', hint: 'New patient' },
       returning: { label: 'I am a regular patient', hint: 'Returning patient' },
-      question: { label: 'I have another question', hint: 'I just want to ask' },
     },
     textLabels: {
       complaint: 'What is bothering you?',
       question: 'Write your question',
     },
+    optionalHint: 'optional',
     textPlaceholders: {
       complaint: 'Describe the pain or the goal of your visit (for example: a lower tooth hurts, I want a cleaning, a filling chipped)',
       question: 'Ask anything about prices, services or how the clinic works. The front desk will reply in WhatsApp',

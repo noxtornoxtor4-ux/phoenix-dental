@@ -1,5 +1,12 @@
 import { Check } from 'lucide-react'
-import { questionOptions, questionsFor, textQuestion, type ChoiceQuestionId, type RequestForm } from '../../data/questionnaire'
+import {
+  extraQuestionPaths,
+  questionOptions,
+  questionsFor,
+  textQuestion,
+  type ChoiceQuestionId,
+  type RequestForm,
+} from '../../data/questionnaire'
 import { useI18n } from '../../i18n/useI18n'
 import type { RequestErrors } from '../../lib/request'
 
@@ -9,33 +16,35 @@ interface QuestionsStepProps {
   onChange: (value: RequestForm) => void
 }
 
+const textareaClass =
+  'w-full rounded-2xl border bg-white/5 p-4 text-base outline-none transition placeholder:text-white/30 focus:border-accent focus:bg-white/10'
+
 /** Step 2: the questions of the chosen branch, numbered the way the clinic reads them. */
 export function QuestionsStep({ value, errors, onChange }: QuestionsStepProps) {
   const { t } = useI18n()
   if (!value.path) return null
 
-  const freeText = textQuestion[value.path]
+  const complaint = textQuestion[value.path]
   const questions = questionsFor(value.path)
+  const withExtraQuestion = extraQuestionPaths.includes(value.path)
   let number = 0
 
   return (
     <div className="space-y-5">
-      {freeText && (
+      {complaint && (
         <label className="block">
           <span className="mb-2 flex gap-2 text-sm font-semibold">
             <QuestionNumber value={++number} />
-            {t.booking.textLabels[freeText]}
+            {t.booking.textLabels.complaint}
           </span>
           <textarea
             value={value.text}
             onChange={(event) => onChange({ ...value, text: event.target.value })}
-            placeholder={t.booking.textPlaceholders[freeText]}
-            rows={freeText === 'question' ? 5 : 3}
+            placeholder={t.booking.textPlaceholders.complaint}
+            rows={3}
             maxLength={1000}
             aria-invalid={Boolean(errors.text)}
-            className={`w-full rounded-2xl border bg-white/5 p-4 text-base outline-none transition placeholder:text-white/30 focus:border-accent focus:bg-white/10 ${
-              errors.text ? 'border-sos' : 'border-white/10'
-            }`}
+            className={`${textareaClass} ${errors.text ? 'border-sos' : 'border-white/10'}`}
           />
           {errors.text && <span className="mt-1 block text-xs text-sos">{t.booking.requiredText}</span>}
         </label>
@@ -51,6 +60,25 @@ export function QuestionsStep({ value, errors, onChange }: QuestionsStepProps) {
           onPick={(option) => onChange({ ...value, choices: { ...value.choices, [question]: option } })}
         />
       ))}
+
+      {withExtraQuestion && (
+        <label className="block border-t border-white/10 pt-5">
+          <span className="mb-2 flex flex-wrap items-center gap-2 text-sm font-semibold">
+            {t.booking.textLabels.question}
+            <span className="rounded-full bg-white/10 px-2 py-0.5 text-[11px] font-medium text-white/50">
+              {t.booking.optionalHint}
+            </span>
+          </span>
+          <textarea
+            value={value.extraQuestion}
+            onChange={(event) => onChange({ ...value, extraQuestion: event.target.value })}
+            placeholder={t.booking.textPlaceholders.question}
+            rows={3}
+            maxLength={1000}
+            className={`${textareaClass} border-white/10`}
+          />
+        </label>
+      )}
     </div>
   )
 }
