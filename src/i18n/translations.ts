@@ -84,7 +84,6 @@ export interface Dictionary {
     call: string
   }
   footer: { rights: string; note: string }
-  dock: { book: string }
 }
 
 const ru: Dictionary = {
@@ -249,7 +248,6 @@ const ru: Dictionary = {
     rights: 'Все права защищены',
     note: 'Имеются противопоказания. Необходима консультация специалиста.',
   },
-  dock: { book: 'Записаться' },
 }
 
 const ky: Dictionary = {
@@ -414,7 +412,6 @@ const ky: Dictionary = {
     rights: 'Бардык укуктар корголгон',
     note: 'Каршы көрсөтмөлөр бар. Адистин кеңеши зарыл.',
   },
-  dock: { book: 'Жазылуу' },
 }
 
 const en: Dictionary = {
@@ -579,7 +576,6 @@ const en: Dictionary = {
     rights: 'All rights reserved',
     note: 'Contraindications apply. Consult a specialist.',
   },
-  dock: { book: 'Book' },
 }
 
 export const dictionaries: Record<Lang, Dictionary> = { ru, ky, en }

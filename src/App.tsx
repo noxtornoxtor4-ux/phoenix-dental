@@ -1,5 +1,4 @@
 import { Backdrop } from './components/Backdrop'
-import { BookingDock } from './components/BookingDock'
 import { BookingPage } from './components/BookingPage'
 import { Footer } from './components/Footer'
 import { Header } from './components/Header'
@@ -25,7 +24,6 @@ export default function App() {
             <LocationSection />
           </main>
           <Footer />
-          <BookingDock />
         </>
       )}
 
