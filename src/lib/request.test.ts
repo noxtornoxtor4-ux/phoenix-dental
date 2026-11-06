@@ -79,9 +79,12 @@ describe('validateContacts', () => {
   test('asks for a full name, a real date of birth and a phone', () => {
     expect(validateContacts(form({}), today)).toEqual({ fullName: true, birthDate: true, phone: true })
     expect(
-      validateContacts(form({ fullName: 'Иванова Мария', birthDate: '1993-05-15', phoneDigits: '504314134' }), today),
+      validateContacts(form({ fullName: 'Иванова Мария', birthDate: '15.05.1993', phoneDigits: '504314134' }), today),
     ).toEqual({})
-    expect(validateContacts(form({ fullName: 'A', birthDate: '15.05.1993', phoneDigits: '504314134' }), today).birthDate).toBe(
+    expect(
+      validateContacts(form({ fullName: 'A', birthDate: '1993-05-15', phoneDigits: '504314134' }), today).birthDate,
+    ).toBe(true)
+    expect(validateContacts(form({ fullName: 'A', birthDate: '15.05', phoneDigits: '504314134' }), today).birthDate).toBe(
       true,
     )
   })

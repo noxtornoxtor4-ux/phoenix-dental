@@ -45,6 +45,7 @@ export interface Dictionary {
     fullNamePlaceholder: string
     fullNameError: string
     birthLabel: string
+    birthPlaceholder: string
     birthError: string
     phoneLabel: string
     phoneError: string
@@ -181,7 +182,8 @@ const ru: Dictionary = {
     fullNamePlaceholder: 'Например, Иванова Мария Петровна',
     fullNameError: 'Укажите ФИО',
     birthLabel: 'Дата рождения',
-    birthError: 'Укажите дату рождения',
+    birthPlaceholder: 'дд.мм.гггг',
+    birthError: 'Введите дату в формате дд.мм.гггг',
     phoneLabel: 'Номер телефона',
     phoneError: 'Введите 9 цифр номера',
     parentTitle: 'Родитель или опекун',
@@ -345,7 +347,8 @@ const ky: Dictionary = {
     fullNamePlaceholder: 'Мисалы, Иванова Мария Петровна',
     fullNameError: 'Аты-жөнүңүздү жазыңыз',
     birthLabel: 'Туулган күнү',
-    birthError: 'Туулган күнүн жазыңыз',
+    birthPlaceholder: 'кк.аа.жжжж',
+    birthError: 'Күндү кк.аа.жжжж түрүндө жазыңыз',
     phoneLabel: 'Телефон номери',
     phoneError: 'Номердин 9 цифрасын жазыңыз',
     parentTitle: 'Ата-эне же камкорчу',
@@ -509,7 +512,8 @@ const en: Dictionary = {
     fullNamePlaceholder: 'For example, Maria Ivanova',
     fullNameError: 'Enter your full name',
     birthLabel: 'Date of birth',
-    birthError: 'Enter the date of birth',
+    birthPlaceholder: 'dd.mm.yyyy',
+    birthError: 'Enter the date as dd.mm.yyyy',
     phoneLabel: 'Phone number',
     phoneError: 'Enter all 9 digits',
     parentTitle: 'Parent or guardian',

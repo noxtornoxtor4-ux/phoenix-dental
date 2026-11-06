@@ -4,7 +4,6 @@ import { clinic } from '../../config/clinic'
 import { emptyRequestForm, questionsFor, textQuestion, type RequestForm } from '../../data/questionnaire'
 import { dictionaries, type Dictionary } from '../../i18n/translations'
 import { useI18n } from '../../i18n/useI18n'
-import { formatBirthDate } from '../../lib/patient'
 import { toE164, toInternational } from '../../lib/phone'
 import { submitLead } from '../../lib/publicApi'
 import {
@@ -103,7 +102,7 @@ export function BookingSection() {
       : ''
     const values = {
       fullName: form.fullName.trim(),
-      birthDate: formatBirthDate(form.birthDate),
+      birthDate: form.birthDate,
       phone: toInternational(form.phoneDigits),
       parent,
     }

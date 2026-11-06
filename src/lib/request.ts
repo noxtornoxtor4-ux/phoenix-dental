@@ -6,7 +6,7 @@ import {
   type PathId,
   type RequestForm,
 } from '../data/questionnaire'
-import { ADULT_AGE, ageOn, formatBirthDate } from './patient'
+import { ADULT_AGE, ageOn, isValidBirthDate } from './patient'
 import { isValidLocalDigits } from './phone'
 
 export type RequestField =
@@ -34,7 +34,7 @@ export function validateAnswers(form: RequestForm): RequestErrors {
 export function validateContacts(form: RequestForm, today: Date): RequestErrors {
   const errors: RequestErrors = {}
   if (form.fullName.trim() === '') errors.fullName = true
-  if (formatBirthDate(form.birthDate) === form.birthDate) errors.birthDate = true
+  if (!isValidBirthDate(form.birthDate, today)) errors.birthDate = true
   if (!isValidLocalDigits(form.phoneDigits)) errors.phone = true
 
   if (needsParent(form, today)) {

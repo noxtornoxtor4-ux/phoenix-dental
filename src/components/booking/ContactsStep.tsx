@@ -1,6 +1,7 @@
 import { Cake, Info, Phone, UserRound, Users } from 'lucide-react'
 import type { RequestForm } from '../../data/questionnaire'
 import { useI18n } from '../../i18n/useI18n'
+import { formatBirthInput } from '../../lib/patient'
 import { formatLocalDigits, KG_COUNTRY_CODE, toLocalDigits } from '../../lib/phone'
 import { needsParent, type RequestErrors } from '../../lib/request'
 
@@ -47,12 +48,16 @@ export function ContactsStep({ value, errors, onChange, summary }: ContactsStepP
           <span className="relative block">
             <Cake className="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-white/40" />
             <input
-              type="date"
+              type="text"
+              inputMode="numeric"
+              autoComplete="bday"
+              enterKeyHint="next"
               value={value.birthDate}
-              max={new Date().toISOString().slice(0, 10)}
-              onChange={(event) => set('birthDate', event.target.value)}
+              onChange={(event) => set('birthDate', formatBirthInput(event.target.value))}
+              placeholder={t.booking.birthPlaceholder}
+              maxLength={10}
               aria-invalid={Boolean(errors.birthDate)}
-              className={`${inputClass} pl-12 ${border(errors.birthDate)}`}
+              className={`${inputClass} pl-12 tracking-wide tabular-nums ${border(errors.birthDate)}`}
             />
           </span>
           {errors.birthDate && <span className="mt-1 block text-xs text-sos">{t.booking.birthError}</span>}
