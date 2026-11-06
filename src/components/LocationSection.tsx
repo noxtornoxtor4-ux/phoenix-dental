@@ -36,20 +36,20 @@ export function LocationSection() {
               </span>
               <span className="min-w-0 self-center">
                 <span className="block font-semibold">{title}</span>
-                {text && <span className="block text-sm text-white/55">{text}</span>}
+                {text && <span className="block text-sm text-muted">{text}</span>}
               </span>
             </li>
           ))}
         </ul>
 
-        <p className="mt-6 text-xs font-bold tracking-[0.2em] text-white/40 uppercase">{t.location.hoursTitle}</p>
+        <p className="mt-6 text-xs font-bold tracking-[0.2em] text-muted uppercase">{t.location.hoursTitle}</p>
         <p className="mt-1 font-display text-2xl font-bold">
           {open}–{close}
         </p>
 
         <a
           href={clinic.phoneHref}
-          className="mt-6 flex items-center justify-center gap-2 rounded-full bg-accent px-5 py-4 font-bold text-ink-900 shadow-glow transition hover:bg-accent-300 active:scale-[0.98]"
+          className="mt-6 flex items-center justify-center gap-2 rounded-full bg-accent px-5 py-4 font-bold text-white shadow-glow transition hover:bg-accent-600 active:scale-[0.98]"
         >
           <Phone className="size-5" />
           {t.location.call}

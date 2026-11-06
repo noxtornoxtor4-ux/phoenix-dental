@@ -1,29 +1,36 @@
 @import 'tailwindcss';
 
 @theme {
-  /* Cool near-black surfaces, the black the logo sits on */
+  /* Light surfaces: a blue-tinted page with white panels on top of it */
+  --color-page: #eef4fc;
+  --color-card: #ffffff;
+  --color-field: #f3f7fd;
+  --color-line: #d5e2f2;
+
+  /* Text */
+  --color-ink: #0c1a2b;
+  --color-muted: #566b83;
+
+  /* The blue of the Phoenix mark, darkened where it has to carry white text */
+  --color-accent: #1b6fd4;
+  --color-accent-300: #3e8afb;
+  --color-accent-600: #14559f;
+  --color-sos: #c62828;
+
+  /* Dark surfaces, kept for the CRM at /admin */
   --color-ink-950: #04060b;
   --color-ink-900: #080b12;
   --color-ink-800: #0e131c;
   --color-ink-700: #141a26;
   --color-ink-600: #1c2432;
-  --color-line: #273243;
-
-  /* The blue of the Phoenix mark */
-  --color-accent: #3e8afb;
-  --color-accent-300: #7fb2ff;
-  --color-accent-600: #2a6ad6;
-  --color-sos: #e2503f;
-
   --color-cream: #f1f5fc;
-  --color-muted: #9aa8bd;
 
   --font-sans: 'Manrope Variable', ui-sans-serif, system-ui, sans-serif;
   --font-display: 'Montserrat Variable', ui-sans-serif, system-ui, sans-serif;
 
-  --shadow-glow: 0 0 0 1px rgb(62 138 251 / 0.35), 0 12px 38px -8px rgb(62 138 251 / 0.45);
-  --shadow-sos: 0 12px 32px -8px rgb(226 80 63 / 0.6);
-  --shadow-panel: 0 14px 42px rgb(0 0 0 / 0.35);
+  --shadow-glow: 0 10px 26px -10px rgb(27 111 212 / 0.55);
+  --shadow-sos: 0 12px 32px -8px rgb(198 40 40 / 0.45);
+  --shadow-panel: 0 14px 42px rgb(12 26 43 / 0.08);
 
   --animate-sos-pulse: sos-pulse 2.2s ease-out infinite;
   --animate-rise: rise 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
@@ -31,13 +38,13 @@
 
   @keyframes sos-pulse {
     0% {
-      box-shadow: 0 0 0 0 rgb(226 80 63 / 0.55);
+      box-shadow: 0 0 0 0 rgb(198 40 40 / 0.5);
     }
     70% {
-      box-shadow: 0 0 0 18px rgb(226 80 63 / 0);
+      box-shadow: 0 0 0 18px rgb(198 40 40 / 0);
     }
     100% {
-      box-shadow: 0 0 0 0 rgb(226 80 63 / 0);
+      box-shadow: 0 0 0 0 rgb(198 40 40 / 0);
     }
   }
 
@@ -62,17 +69,43 @@
   }
 }
 
-/** Cool panel: a dark card with a thin steel line, used across the site and CRM. */
+:root {
+  --panel-bg: rgb(255 255 255 / 0.94);
+  --panel-shadow: 0 18px 46px -24px rgb(12 26 43 / 0.45);
+}
+
+/**
+ * The CRM keeps the dark theme: it redefines the same tokens for its own subtree,
+ * so every shared component follows along without a second set of classes.
+ */
+.admin-surface {
+  --color-page: #080b12;
+  --color-card: #0e131c;
+  --color-field: #141a26;
+  --color-line: #273243;
+  --color-ink: #f1f5fc;
+  --color-muted: #9aa8bd;
+  --color-accent: #3e8afb;
+  --color-accent-300: #7fb2ff;
+  --color-accent-600: #2a6ad6;
+  --color-sos: #e2503f;
+  --panel-bg: linear-gradient(145deg, rgb(255 255 255 / 0.045), rgb(255 255 255 / 0.015));
+  --panel-shadow: none;
+  --shadow-glow: 0 0 0 1px rgb(62 138 251 / 0.35), 0 12px 38px -8px rgb(62 138 251 / 0.45);
+}
+
+/** The panel used across the site and the CRM; its colours come from the tokens above. */
 @utility glass {
-  background: linear-gradient(145deg, rgb(255 255 255 / 0.045), rgb(255 255 255 / 0.015));
+  background: var(--panel-bg);
   border: 1px solid var(--color-line);
+  box-shadow: var(--panel-shadow);
   backdrop-filter: blur(18px) saturate(120%);
   -webkit-backdrop-filter: blur(18px) saturate(120%);
 }
 
 @layer base {
   html {
-    color-scheme: dark;
+    color-scheme: light;
     scroll-behavior: smooth;
     scroll-padding-top: 5.5rem;
     -webkit-tap-highlight-color: transparent;
@@ -80,14 +113,14 @@
 
   body {
     min-height: 100dvh;
-    background-color: var(--color-ink-900);
-    color: var(--color-cream);
+    background-color: var(--color-page);
+    color: var(--color-ink);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
 
   ::selection {
-    background: rgb(62 138 251 / 0.35);
+    background: rgb(62 138 251 / 0.25);
   }
 
   :focus-visible {

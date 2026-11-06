@@ -18,8 +18,8 @@ export function PathChoice({ value, onChange }: PathChoiceProps) {
 
   return (
     <div>
-      <p className="text-sm text-pretty text-white/70 sm:text-base">{t.booking.greeting}</p>
-      <p className="mt-5 mb-3 text-sm font-semibold text-white/70">{t.booking.pathTitle}</p>
+      <p className="text-sm text-pretty text-muted sm:text-base">{t.booking.greeting}</p>
+      <p className="mt-5 mb-3 text-sm font-semibold text-muted">{t.booking.pathTitle}</p>
 
       <div className="grid gap-2">
         {paths.map((path) => {
@@ -32,21 +32,21 @@ export function PathChoice({ value, onChange }: PathChoiceProps) {
               aria-pressed={active}
               onClick={() => onChange(path)}
               className={`flex items-center gap-4 rounded-2xl border px-4 py-4 text-left transition active:scale-[0.99] ${
-                active ? 'border-accent bg-accent/10' : 'border-white/10 bg-white/5 hover:bg-white/10'
+                active ? 'border-accent bg-accent/10' : 'border-line bg-field hover:border-accent/40 hover:bg-card'
               }`}
             >
               <span
                 className={`grid size-11 shrink-0 place-items-center rounded-full ${
-                  active ? 'bg-accent text-ink-900' : 'bg-accent/10 text-accent'
+                  active ? 'bg-accent text-white' : 'bg-accent/10 text-accent'
                 }`}
               >
                 <Icon className="size-5" />
               </span>
               <span className="min-w-0 flex-1">
                 <span className={`block font-semibold ${active ? 'text-accent' : ''}`}>{t.booking.paths[path].label}</span>
-                <span className="block text-xs text-white/50">{t.booking.paths[path].hint}</span>
+                <span className="block text-xs text-muted">{t.booking.paths[path].hint}</span>
               </span>
-              <ChevronRight className="size-5 shrink-0 text-white/30" />
+              <ChevronRight className="size-5 shrink-0 text-muted/60" />
             </button>
           )
         })}

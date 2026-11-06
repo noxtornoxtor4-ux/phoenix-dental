@@ -14,11 +14,11 @@ export function InstallGuide() {
 
   return (
     <Sheet open={guideOpen} onClose={closeInstallGuide} title={t.install.guideTitle} closeLabel={t.install.dismiss}>
-      <div className="mb-5 flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-3">
+      <div className="mb-5 flex items-center gap-3 rounded-2xl border border-line bg-field p-3">
         <img src="/favicon.svg" alt="" className="size-12 rounded-2xl shadow-glow" />
         <div className="min-w-0">
           <p className="font-display text-lg font-bold tracking-tight">Phoenix</p>
-          <p className="text-xs text-white/60">{t.install.banner}</p>
+          <p className="text-xs text-muted">{t.install.banner}</p>
         </div>
       </div>
 
@@ -30,7 +30,7 @@ export function InstallGuide() {
               <span className="grid size-10 shrink-0 place-items-center rounded-full bg-accent/15 text-accent">
                 <Icon className="size-5" />
               </span>
-              <span className="text-sm text-white/85">
+              <span className="text-sm text-ink">
                 <b className="mr-1 text-accent">{index + 1}.</b>
                 {step}
               </span>
@@ -42,7 +42,7 @@ export function InstallGuide() {
       <button
         type="button"
         onClick={closeInstallGuide}
-        className="mt-6 w-full rounded-full bg-accent py-3.5 font-bold text-ink-900 transition active:scale-[0.98]"
+        className="mt-6 w-full rounded-full bg-accent py-3.5 font-bold text-white transition active:scale-[0.98]"
       >
         {t.install.gotIt}
       </button>

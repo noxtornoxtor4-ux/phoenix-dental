@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { useEffect } from 'react'
+import { useEffect, type ReactNode } from 'react'
 import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router'
 import { AuthProvider } from './auth/AuthProvider'
 import { LoginPage } from './auth/LoginPage'
@@ -72,20 +72,32 @@ function useNoIndex() {
   }, [])
 }
 
+/** The CRM keeps the dark theme; `admin-surface` rebinds the colour tokens for its subtree. */
+function AdminSurface({ children }: { children: ReactNode }) {
+  return <div className="admin-surface min-h-dvh bg-page text-ink">{children}</div>
+}
+
 export default function AdminApp() {
   useNoIndex()
 
-  if (!isSupabaseConfigured) return <ConfigMissingPage />
+  if (!isSupabaseConfigured)
+    return (
+      <AdminSurface>
+        <ConfigMissingPage />
+      </AdminSurface>
+    )
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ToastProvider>
-        <AuthProvider>
-          <BrowserRouter basename="/admin">
-            <Gate />
-          </BrowserRouter>
-        </AuthProvider>
-      </ToastProvider>
-    </QueryClientProvider>
+    <AdminSurface>
+      <QueryClientProvider client={queryClient}>
+        <ToastProvider>
+          <AuthProvider>
+            <BrowserRouter basename="/admin">
+              <Gate />
+            </BrowserRouter>
+          </AuthProvider>
+        </ToastProvider>
+      </QueryClientProvider>
+    </AdminSurface>
   )
 }

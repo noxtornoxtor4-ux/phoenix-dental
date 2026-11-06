@@ -20,21 +20,21 @@ export function Stepper({ steps, current }: StepperProps) {
             <span
               className={`grid size-8 shrink-0 place-items-center rounded-full text-sm font-bold transition ${
                 done
-                  ? 'bg-accent text-ink-900'
+                  ? 'bg-accent text-white'
                   : active
-                    ? 'bg-white text-ink-900 shadow-glow'
-                    : 'bg-white/10 text-white/50'
+                    ? 'bg-accent text-white shadow-glow'
+                    : 'border border-line bg-card text-muted'
               }`}
             >
               {done ? <Check className="size-4" /> : index + 1}
             </span>
             <span
-              className={`truncate text-xs font-semibold ${active ? 'text-white' : 'hidden text-white/45 sm:inline'}`}
+              className={`truncate text-xs font-semibold ${active ? 'text-ink' : 'hidden text-muted sm:inline'}`}
             >
               {label}
             </span>
             {index < steps.length - 1 && (
-              <span className={`h-px min-w-4 flex-1 transition ${done ? 'bg-accent' : 'bg-white/10'}`} />
+              <span className={`h-px min-w-4 flex-1 transition ${done ? 'bg-accent' : 'bg-line'}`} />
             )}
           </li>
         )

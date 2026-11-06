@@ -26,19 +26,19 @@ export function Hero() {
           </span>
         </h1>
 
-        <p className="mt-5 max-w-xl text-base text-pretty text-white/70 sm:text-lg">{t.hero.subtitle}</p>
+        <p className="mt-5 max-w-xl text-base text-pretty text-muted sm:text-lg">{t.hero.subtitle}</p>
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <a
             href="#booking"
-            className="flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-4 font-bold text-ink-900 shadow-glow transition hover:bg-accent-300 active:scale-[0.98]"
+            className="flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-4 font-bold text-white shadow-glow transition hover:bg-accent-600 active:scale-[0.98]"
           >
             {t.hero.book}
             <ArrowRight className="size-5" />
           </a>
           <a
             href={clinic.phoneHref}
-            className="glass flex items-center justify-center gap-2 rounded-full px-6 py-4 font-semibold transition hover:bg-white/10 active:scale-[0.98]"
+            className="glass flex items-center justify-center gap-2 rounded-full px-6 py-4 font-semibold transition hover:bg-field active:scale-[0.98]"
           >
             <Phone className="size-5 text-accent" />
             {clinic.phoneDisplay}
@@ -51,7 +51,7 @@ export function Hero() {
             return (
               <li
                 key={feature}
-                className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/75"
+                className="flex items-center gap-2 rounded-full border border-line bg-card px-3 py-1.5 text-xs text-muted"
               >
                 <Icon className="size-3.5 text-accent" />
                 {feature}
@@ -74,7 +74,7 @@ export function Hero() {
             <Clock className="mt-0.5 size-5 shrink-0 text-accent" />
             <span>
               {open}–{close}
-              <span className="block text-white/50">{t.location.hoursTitle}</span>
+              <span className="block text-muted">{t.location.hoursTitle}</span>
             </span>
           </li>
           <li className="flex gap-3">

@@ -32,16 +32,16 @@ export function InstallBanner() {
   }
 
   return (
-    <div className="animate-rise border-t border-white/5 bg-gradient-to-r from-accent/10 via-transparent to-accent/10 md:hidden">
+    <div className="animate-rise border-t border-line bg-gradient-to-r from-accent/10 via-transparent to-accent/10 md:hidden">
       <div className="mx-auto flex max-w-6xl items-center gap-3 px-4 py-2">
         <span className="grid size-9 shrink-0 place-items-center rounded-full bg-accent/15 text-accent">
           <Smartphone className="size-5" />
         </span>
-        <p className="flex-1 text-xs leading-snug text-white/80">{t.install.banner}</p>
+        <p className="flex-1 text-xs leading-snug text-ink">{t.install.banner}</p>
         <button
           type="button"
           onClick={requestInstall}
-          className="shrink-0 rounded-full bg-accent px-3.5 py-2 text-xs font-bold text-ink-900 active:scale-95"
+          className="shrink-0 rounded-full bg-accent px-3.5 py-2 text-xs font-bold text-white active:scale-95"
         >
           {t.install.action}
         </button>
@@ -49,7 +49,7 @@ export function InstallBanner() {
           type="button"
           onClick={dismiss}
           aria-label={t.install.dismiss}
-          className="-mr-2 grid size-9 shrink-0 place-items-center rounded-full text-white/50 hover:text-white"
+          className="-mr-2 grid size-9 shrink-0 place-items-center rounded-full text-muted hover:text-ink"
         >
           <X className="size-4" />
         </button>

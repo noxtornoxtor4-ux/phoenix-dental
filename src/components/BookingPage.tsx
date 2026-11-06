@@ -16,13 +16,13 @@ export function BookingPage() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 border-b border-white/5 bg-ink-900/80 pt-[env(safe-area-inset-top)] backdrop-blur-xl">
+      <header className="sticky top-0 z-40 border-b border-line bg-card/80 pt-[env(safe-area-inset-top)] backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-3xl items-center gap-3 px-4">
           <button
             type="button"
             onClick={goHome}
             aria-label={t.booking.back}
-            className="grid size-10 shrink-0 place-items-center rounded-full border border-white/10 transition hover:bg-white/10"
+            className="grid size-10 shrink-0 place-items-center rounded-full border border-line transition hover:bg-field"
           >
             <ArrowLeft className="size-5" />
           </button>

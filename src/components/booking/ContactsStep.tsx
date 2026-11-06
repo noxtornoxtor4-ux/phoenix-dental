@@ -13,22 +13,22 @@ interface ContactsStepProps {
 }
 
 const inputClass =
-  'h-14 w-full rounded-2xl border bg-white/5 pr-4 text-base outline-none transition [color-scheme:dark] placeholder:text-white/30 focus:border-accent focus:bg-white/10'
+  'h-14 w-full rounded-2xl border bg-field pr-4 text-base outline-none transition placeholder:text-muted focus:border-accent focus:bg-card'
 
 /** Step 3: who the request is from. */
 export function ContactsStep({ value, errors, onChange, summary }: ContactsStepProps) {
   const { t } = useI18n()
   const set = <K extends keyof RequestForm>(key: K, next: RequestForm[K]) => onChange({ ...value, [key]: next })
   const withParent = needsParent(value, new Date())
-  const border = (invalid: boolean | undefined) => (invalid ? 'border-sos' : 'border-white/10')
+  const border = (invalid: boolean | undefined) => (invalid ? 'border-sos' : 'border-line')
 
   return (
     <div className="grid gap-5 md:grid-cols-2">
       <div className="space-y-4">
         <label className="block">
-          <span className="mb-1.5 block text-sm text-white/70">{t.booking.fullNameLabel}</span>
+          <span className="mb-1.5 block text-sm text-muted">{t.booking.fullNameLabel}</span>
           <span className="relative block">
-            <UserRound className="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-white/40" />
+            <UserRound className="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-muted" />
             <input
               value={value.fullName}
               onChange={(event) => set('fullName', event.target.value)}
@@ -44,9 +44,9 @@ export function ContactsStep({ value, errors, onChange, summary }: ContactsStepP
         </label>
 
         <label className="block">
-          <span className="mb-1.5 block text-sm text-white/70">{t.booking.birthLabel}</span>
+          <span className="mb-1.5 block text-sm text-muted">{t.booking.birthLabel}</span>
           <span className="relative block">
-            <Cake className="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-white/40" />
+            <Cake className="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-muted" />
             <input
               type="text"
               inputMode="numeric"
@@ -64,10 +64,10 @@ export function ContactsStep({ value, errors, onChange, summary }: ContactsStepP
         </label>
 
         <label className="block">
-          <span className="mb-1.5 block text-sm text-white/70">{t.booking.phoneLabel}</span>
+          <span className="mb-1.5 block text-sm text-muted">{t.booking.phoneLabel}</span>
           <span className="relative block">
-            <span className="pointer-events-none absolute top-1/2 left-4 flex -translate-y-1/2 items-center gap-2 text-white/60">
-              <Phone className="size-5 text-white/40" />+{KG_COUNTRY_CODE}
+            <span className="pointer-events-none absolute top-1/2 left-4 flex -translate-y-1/2 items-center gap-2 text-muted">
+              <Phone className="size-5 text-muted" />+{KG_COUNTRY_CODE}
             </span>
             <input
               type="tel"
@@ -90,10 +90,10 @@ export function ContactsStep({ value, errors, onChange, summary }: ContactsStepP
               <Users className="size-4" />
               {t.booking.parentTitle}
             </legend>
-            <p className="text-xs text-white/55">{t.booking.parentNote}</p>
+            <p className="text-xs text-muted">{t.booking.parentNote}</p>
 
             <label className="block">
-              <span className="mb-1.5 block text-sm text-white/70">{t.booking.parentNameLabel}</span>
+              <span className="mb-1.5 block text-sm text-muted">{t.booking.parentNameLabel}</span>
               <input
                 value={value.parentName}
                 onChange={(event) => set('parentName', event.target.value)}
@@ -106,10 +106,10 @@ export function ContactsStep({ value, errors, onChange, summary }: ContactsStepP
             </label>
 
             <label className="block">
-              <span className="mb-1.5 block text-sm text-white/70">{t.booking.parentPhoneLabel}</span>
+              <span className="mb-1.5 block text-sm text-muted">{t.booking.parentPhoneLabel}</span>
               <span className="relative block">
-                <span className="pointer-events-none absolute top-1/2 left-4 flex -translate-y-1/2 items-center gap-2 text-white/60">
-                  <Phone className="size-5 text-white/40" />+{KG_COUNTRY_CODE}
+                <span className="pointer-events-none absolute top-1/2 left-4 flex -translate-y-1/2 items-center gap-2 text-muted">
+                  <Phone className="size-5 text-muted" />+{KG_COUNTRY_CODE}
                 </span>
                 <input
                   type="tel"
@@ -131,7 +131,7 @@ export function ContactsStep({ value, errors, onChange, summary }: ContactsStepP
 
       <div className="rounded-3xl border border-accent/20 bg-accent/5 p-4 md:self-start">
         <p className="mb-3 text-sm font-semibold text-accent">{t.booking.summary}</p>
-        <ul className="space-y-2 text-sm text-white/85">
+        <ul className="space-y-2 text-sm text-ink">
           {summary.map((line) => (
             <li key={line} className="flex gap-2">
               <span className="mt-2 size-1.5 shrink-0 rounded-full bg-accent/60" />
@@ -139,7 +139,7 @@ export function ContactsStep({ value, errors, onChange, summary }: ContactsStepP
             </li>
           ))}
         </ul>
-        <p className="mt-4 flex gap-2 text-xs text-white/50">
+        <p className="mt-4 flex gap-2 text-xs text-muted">
           <Info className="size-4 shrink-0" />
           {t.booking.confirmNote}
         </p>
