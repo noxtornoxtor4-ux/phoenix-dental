@@ -24,23 +24,25 @@ export function QuestionsStep({ value, errors, onChange }: QuestionsStepProps) {
   const { t } = useI18n()
   if (!value.path) return null
 
-  const complaint = textQuestion[value.path]
+  const freeText = textQuestion[value.path]
   const questions = questionsFor(value.path)
   const withExtraQuestion = extraQuestionPaths.includes(value.path)
+  // A branch of a single question reads better without a number in front of it.
+  const numbered = (freeText ? 1 : 0) + questions.length > 1
   let number = 0
 
   return (
     <div className="space-y-5">
-      {complaint && (
+      {freeText && (
         <label className="block">
           <span className="mb-2 flex gap-2 text-sm font-semibold">
-            <QuestionNumber value={++number} />
-            {t.booking.textLabels.complaint}
+            {numbered && <QuestionNumber value={++number} />}
+            {t.booking.textLabels[freeText]}
           </span>
           <textarea
             value={value.text}
             onChange={(event) => onChange({ ...value, text: event.target.value })}
-            placeholder={t.booking.textPlaceholders.complaint}
+            placeholder={t.booking.textPlaceholders[freeText]}
             rows={3}
             maxLength={1000}
             aria-invalid={Boolean(errors.text)}
@@ -54,7 +56,7 @@ export function QuestionsStep({ value, errors, onChange }: QuestionsStepProps) {
         <ChoiceQuestion
           key={question}
           question={question}
-          number={++number}
+          number={numbered ? ++number : undefined}
           value={value.choices[question]}
           invalid={Boolean(errors[question])}
           onPick={(option) => onChange({ ...value, choices: { ...value.choices, [question]: option } })}
@@ -93,7 +95,8 @@ function QuestionNumber({ value }: { value: number }) {
 
 interface ChoiceQuestionProps {
   question: ChoiceQuestionId
-  number: number
+  /** Left out when the branch asks a single question. */
+  number: number | undefined
   value: string | undefined
   invalid: boolean
   onPick: (option: string) => void
@@ -106,7 +109,7 @@ function ChoiceQuestion({ question, number, value, invalid, onPick }: ChoiceQues
   return (
     <fieldset>
       <legend className="mb-2 flex gap-2 text-sm font-semibold">
-        <QuestionNumber value={number} />
+        {number !== undefined && <QuestionNumber value={number} />}
         {label}
       </legend>
       <div className="grid gap-2">

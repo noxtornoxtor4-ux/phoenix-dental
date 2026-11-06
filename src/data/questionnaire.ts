@@ -1,11 +1,15 @@
 /** Which branch of the form a visitor takes after the greeting. */
-export type PathId = 'first' | 'returning'
+export type PathId = 'booking' | 'ask' | 'returning'
 
-export const paths: PathId[] = ['first', 'returning']
+export const paths: PathId[] = ['booking', 'ask', 'returning']
+
+/** A first-time visitor picks one of these two; a returning patient takes the third. */
+export const firstVisitPaths: PathId[] = ['booking', 'ask']
 
 /** Single-choice questions, asked in this order inside their branch. */
 export const choiceQuestions = {
-  first: ['treatedBefore', 'anesthesia', 'swelling', 'biting', 'painType'],
+  booking: ['treatedBefore', 'anesthesia', 'swelling', 'biting', 'painType'],
+  ask: [],
   returning: ['problem'],
 } as const
 
@@ -20,18 +24,29 @@ export const questionOptions = {
   problem: ['newTooth', 'sameTooth', 'planned'],
 } as const satisfies Record<ChoiceQuestionId, readonly string[]>
 
-/** The complaint is required on a first visit; a returning patient goes straight to the choices. */
-export const textQuestion: Record<PathId, 'complaint' | null> = {
-  first: 'complaint',
+/** The free-text field of each branch; a returning patient only picks an option. */
+export const textQuestion: Record<PathId, 'complaint' | 'question' | null> = {
+  booking: 'complaint',
+  ask: 'question',
   returning: null,
 }
 
-/** Anything else the patient wants to ask, asked at the end of a first visit. */
-export const extraQuestionPaths: PathId[] = ['first']
+/** Anything else the patient wants to ask, asked at the end of a booking. */
+export const extraQuestionPaths: PathId[] = ['booking']
+
+/**
+ * Only a first visit needs the patient card. A returning patient is already in the
+ * clinic's records and a question is answered in the chat the request opens.
+ */
+export const contactPaths: PathId[] = ['booking']
+
+export function needsContacts(path: PathId | null): boolean {
+  return path !== null && contactPaths.includes(path)
+}
 
 export interface RequestForm {
   path: PathId | null
-  /** The complaint on a first visit. */
+  /** The complaint on a first visit, or the question itself. */
   text: string
   /** Optional free question. */
   extraQuestion: string

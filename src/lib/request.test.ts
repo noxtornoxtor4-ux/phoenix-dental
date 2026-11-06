@@ -14,7 +14,7 @@ const form = (patch: Partial<RequestForm>): RequestForm => ({ ...emptyRequestFor
 const labels: RequestLabels = {
   title: 'Новая заявка с сайта!',
   patientType: 'Тип пациента',
-  pathNames: { first: 'Первичный', returning: 'Повторный' },
+  pathNames: { booking: 'Первичный, запись', ask: 'Первичный, вопрос', returning: 'Повторный' },
   fullName: 'ФИО',
   birth: 'Дата рождения',
   phone: 'Телефон',
@@ -42,7 +42,7 @@ const labels: RequestLabels = {
 
 describe('validateAnswers', () => {
   test('a first visit needs the complaint and every choice', () => {
-    expect(validateAnswers(form({ path: 'first' }))).toEqual({
+    expect(validateAnswers(form({ path: 'booking' }))).toEqual({
       text: true,
       treatedBefore: true,
       anesthesia: true,
@@ -52,7 +52,7 @@ describe('validateAnswers', () => {
     })
 
     const filled = form({
-      path: 'first',
+      path: 'booking',
       text: 'Болит нижний зуб',
       choices: { treatedBefore: 'treated', anesthesia: 'fine', swelling: 'no', biting: 'yes', painType: 'sharp' },
     })
@@ -64,9 +64,14 @@ describe('validateAnswers', () => {
     expect(validateAnswers(form({ path: 'returning', choices: { problem: 'newTooth' } }))).toEqual({})
   })
 
+  test('a plain question needs the question itself and nothing else', () => {
+    expect(validateAnswers(form({ path: 'ask' }))).toEqual({ text: true })
+    expect(validateAnswers(form({ path: 'ask', text: 'Сколько стоит чистка?' }))).toEqual({})
+  })
+
   test('the extra question is optional', () => {
     const filled = form({
-      path: 'first',
+      path: 'booking',
       text: 'Болит нижний зуб',
       choices: { treatedBefore: 'treated', anesthesia: 'fine', swelling: 'no', biting: 'yes', painType: 'sharp' },
     })
@@ -94,7 +99,7 @@ describe('buildRequestMessage', () => {
   test('numbers the answers the way the clinic reads them', () => {
     const message = buildRequestMessage(
       form({
-        path: 'first',
+        path: 'booking',
         text: 'Скололась пломба',
         choices: { treatedBefore: 'treated', anesthesia: 'fine', swelling: 'no', biting: 'yes', painType: 'sharp' },
       }),
@@ -105,7 +110,7 @@ describe('buildRequestMessage', () => {
     expect(message).toBe(
       [
         'Новая заявка с сайта!',
-        'Тип пациента: Первичный',
+        'Тип пациента: Первичный, запись',
         'ФИО: Иванова Мария Петровна',
         'Дата рождения: 15.05.1993',
         'Телефон: +996 504 314 134',
@@ -124,7 +129,7 @@ describe('buildRequestMessage', () => {
   test('an optional question becomes the last answer', () => {
     const message = buildRequestMessage(
       form({
-        path: 'first',
+        path: 'booking',
         text: 'Скололась пломба',
         extraQuestion: 'Работаете в воскресенье?',
         choices: { treatedBefore: 'treated', anesthesia: 'fine', swelling: 'no', biting: 'yes', painType: 'sharp' },
@@ -133,5 +138,45 @@ describe('buildRequestMessage', () => {
       { fullName: 'Пётр', birthDate: '01.01.1990', phone: '+996 504 314 134', parent: '' },
     )
     expect(message.trim().endsWith('7. Вопрос: Работаете в воскресенье?')).toBe(true)
+  })
+})
+
+describe('a request without a patient card', () => {
+  test('a returning patient sends the chosen problem only', () => {
+    const message = buildRequestMessage(form({ path: 'returning', choices: { problem: 'planned' } }), labels, {
+      fullName: '',
+      birthDate: '',
+      phone: '',
+      parent: '',
+    })
+
+    expect(message).toBe(
+      [
+        'Новая заявка с сайта!',
+        'Тип пациента: Повторный',
+        '',
+        'Ответы на вопросы:',
+        '1. Проблема: Плановый осмотр',
+      ].join('\n'),
+    )
+  })
+
+  test('a question carries no contact lines either', () => {
+    const message = buildRequestMessage(form({ path: 'ask', text: 'Работаете в воскресенье?' }), labels, {
+      fullName: 'Иванова Мария',
+      birthDate: '15.05.1993',
+      phone: '+996 504 314 134',
+      parent: '',
+    })
+
+    expect(message).toBe(
+      [
+        'Новая заявка с сайта!',
+        'Тип пациента: Первичный, вопрос',
+        '',
+        'Ответы на вопросы:',
+        '1. Вопрос: Работаете в воскресенье?',
+      ].join('\n'),
+    )
   })
 })

@@ -1,7 +1,7 @@
 import { ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react'
 import { useState, type MouseEvent } from 'react'
 import { clinic } from '../../config/clinic'
-import { emptyRequestForm, questionsFor, textQuestion, type RequestForm } from '../../data/questionnaire'
+import { emptyRequestForm, needsContacts, questionsFor, textQuestion, type RequestForm } from '../../data/questionnaire'
 import { dictionaries, type Dictionary } from '../../i18n/translations'
 import { useI18n } from '../../i18n/useI18n'
 import { toE164, toInternational } from '../../lib/phone'
@@ -22,18 +22,13 @@ import { PathChoice } from './PathChoice'
 import { QuestionsStep } from './QuestionsStep'
 import { Stepper } from './Stepper'
 
-const LAST_STEP = 2
-
 /** Message labels for a given language; the clinic always reads Russian. */
 function requestLabels(dictionary: Dictionary): RequestLabels {
   const { booking, message } = dictionary
   return {
     title: message.title,
     patientType: message.patientType,
-    pathNames: {
-      first: booking.paths.first.label,
-      returning: booking.paths.returning.label,
-    },
+    pathNames: booking.messagePathNames,
     fullName: message.fullName,
     birth: message.birth,
     phone: message.phone,
@@ -57,6 +52,10 @@ export function BookingSection() {
   const [form, setForm] = useState<RequestForm>(emptyRequestForm)
   const [errors, setErrors] = useState<RequestErrors>({})
 
+  const withContacts = needsContacts(form.path)
+  // Only a first-visit booking asks for the patient card, so the route is two steps without it.
+  const steps = form.path === null || withContacts ? t.booking.steps : t.booking.steps.slice(0, 2)
+  const lastStep = steps.length - 1
   const canContinue = step === 0 ? form.path !== null : true
 
   const goTo = (next: number) => {
@@ -103,7 +102,8 @@ export function BookingSection() {
   const whatsappUrl = createWhatsappUrl(clinic.whatsapp, buildRequestMessage(form, requestLabels(t), values))
 
   const submit = (event: MouseEvent<HTMLAnchorElement>) => {
-    const found = validateContacts(form, new Date())
+    // Without the contacts step the answers are what still has to be checked here.
+    const found = withContacts ? validateContacts(form, new Date()) : validateAnswers(form)
     if (hasErrors(found) || !form.path) {
       event.preventDefault()
       setErrors(found)
@@ -125,7 +125,7 @@ export function BookingSection() {
       <SectionHeading eyebrow={t.booking.eyebrow} title={t.booking.title} />
 
       <div className="glass mt-8 rounded-[2rem] p-4 sm:p-6">
-        <Stepper steps={t.booking.steps} current={step} />
+        <Stepper steps={steps} current={step} />
 
         <div key={step} className="mt-6 animate-rise">
           {step === 0 && (
@@ -138,7 +138,9 @@ export function BookingSection() {
             />
           )}
           {step === 1 && <QuestionsStep value={form} errors={errors} onChange={update} />}
-          {step === 2 && <ContactsStep value={form} errors={errors} onChange={update} summary={summaryLines()} />}
+          {step === 2 && withContacts && (
+            <ContactsStep value={form} errors={errors} onChange={update} summary={summaryLines()} />
+          )}
         </div>
 
         <div className="sticky bottom-[calc(0.75rem+env(safe-area-inset-bottom))] z-10 mt-6 flex items-center gap-3 rounded-2xl border border-line bg-card/95 p-2.5 backdrop-blur-xl md:static md:border-0 md:bg-transparent md:p-0 md:backdrop-blur-none">
@@ -153,7 +155,7 @@ export function BookingSection() {
             </button>
           )}
 
-          {step < LAST_STEP ? (
+          {step < lastStep ? (
             <button
               type="button"
               onClick={() => goTo(step + 1)}

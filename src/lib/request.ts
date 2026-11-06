@@ -1,5 +1,6 @@
 import {
   extraQuestionPaths,
+  needsContacts,
   questionsFor,
   textQuestion,
   type ChoiceQuestionId,
@@ -91,13 +92,20 @@ export function buildRequestMessage(form: RequestForm, labels: RequestLabels, va
     answers.push(`${labels.questionNames.question}: ${form.extraQuestion.trim()}`)
   }
 
+  // A returning patient and a plain question carry no patient card.
+  const contacts = needsContacts(form.path)
+    ? [
+        `${labels.fullName}: ${values.fullName}`,
+        `${labels.birth}: ${values.birthDate}`,
+        `${labels.phone}: ${values.phone}`,
+        ...(values.parent ? [`${labels.parent}: ${values.parent}`] : []),
+      ]
+    : []
+
   return [
     labels.title,
     `${labels.patientType}: ${labels.pathNames[form.path]}`,
-    `${labels.fullName}: ${values.fullName}`,
-    `${labels.birth}: ${values.birthDate}`,
-    `${labels.phone}: ${values.phone}`,
-    ...(values.parent ? [`${labels.parent}: ${values.parent}`] : []),
+    ...contacts,
     '',
     labels.answers,
     ...answers.map((answer, index) => `${index + 1}. ${answer}`),

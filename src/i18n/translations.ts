@@ -33,7 +33,12 @@ export interface Dictionary {
     greeting: string
     steps: string[]
     pathTitle: string
+    /** The card a first-time visitor taps before choosing between the branches below. */
+    firstVisit: { label: string; hint: string }
+    intentTitle: string
     paths: Record<PathId, { label: string; hint: string }>
+    /** How the branch is named in the message the clinic receives. */
+    messagePathNames: Record<PathId, string>
     textLabels: Record<'complaint' | 'question', string>
     optionalHint: string
     textPlaceholders: Record<'complaint' | 'question', string>
@@ -127,9 +132,17 @@ const ru: Dictionary = {
       'Здравствуйте! Чтобы мы подобрали для вас идеальное время и врача, ответьте, пожалуйста, на несколько вопросов. Это займёт не более 1 минуты.',
     steps: ['Кто вы', 'Вопросы', 'Контакты'],
     pathTitle: 'Выберите, что вам подходит',
+    firstVisit: { label: 'Я у вас впервые', hint: 'Первичный пациент' },
+    intentTitle: 'Что вы хотите сделать?',
     paths: {
-      first: { label: 'Я у вас впервые', hint: 'Первичный пациент' },
+      booking: { label: 'Хочу записаться на приём', hint: 'Подберём врача и удобное время' },
+      ask: { label: 'Хочу задать вопрос', hint: 'Ответим в WhatsApp, без записи' },
       returning: { label: 'Я ваш постоянный клиент', hint: 'Повторный пациент' },
+    },
+    messagePathNames: {
+      booking: 'Первичный, запись на приём',
+      ask: 'Первичный, вопрос',
+      returning: 'Повторный пациент',
     },
     textLabels: {
       complaint: 'Что вас беспокоит?',
@@ -292,9 +305,17 @@ const ky: Dictionary = {
       'Саламатсызбы! Сизге ыңгайлуу убакытты жана дарыгерди тандашыбыз үчүн бир нече суроого жооп бериңиз. Бул 1 мүнөттөн ашпайт.',
     steps: ['Сиз кимсиз', 'Суроолор', 'Байланыш'],
     pathTitle: 'Сизге ылайыктуусун тандаңыз',
+    firstVisit: { label: 'Биринчи жолу келем', hint: 'Жаңы бейтап' },
+    intentTitle: 'Эмне кылгыңыз келет?',
     paths: {
-      first: { label: 'Биринчи жолу келем', hint: 'Жаңы бейтап' },
+      booking: { label: 'Кабылдамага жазылгым келет', hint: 'Дарыгерди жана ыңгайлуу убакытты тандайбыз' },
+      ask: { label: 'Суроо бергим келет', hint: 'WhatsApp аркылуу жооп беребиз' },
       returning: { label: 'Мен туруктуу бейтабыңызмын', hint: 'Кайра келген бейтап' },
+    },
+    messagePathNames: {
+      booking: 'Жаңы бейтап, жазылуу',
+      ask: 'Жаңы бейтап, суроо',
+      returning: 'Кайра келген бейтап',
     },
     textLabels: {
       complaint: 'Эмне тынчсыздандырат?',
@@ -457,9 +478,17 @@ const en: Dictionary = {
       'Hello! To find you the right time and dentist, please answer a few questions. It takes no more than a minute.',
     steps: ['About you', 'Questions', 'Contacts'],
     pathTitle: 'Choose what fits you',
+    firstVisit: { label: 'This is my first visit', hint: 'New patient' },
+    intentTitle: 'What would you like to do?',
     paths: {
-      first: { label: 'This is my first visit', hint: 'New patient' },
+      booking: { label: 'I want to book a visit', hint: 'We will pick a dentist and a time' },
+      ask: { label: 'I want to ask a question', hint: 'We will reply in WhatsApp' },
       returning: { label: 'I am a regular patient', hint: 'Returning patient' },
+    },
+    messagePathNames: {
+      booking: 'New patient, booking',
+      ask: 'New patient, question',
+      returning: 'Returning patient',
     },
     textLabels: {
       complaint: 'What is bothering you?',
