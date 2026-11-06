@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight, MessageCircle } from 'lucide-react'
-import { useState } from 'react'
+import { useState, type MouseEvent } from 'react'
 import { clinic } from '../../config/clinic'
 import { emptyRequestForm, questionsFor, textQuestion, type RequestForm } from '../../data/questionnaire'
 import { dictionaries, type Dictionary } from '../../i18n/translations'
@@ -90,21 +90,24 @@ export function BookingSection() {
     return lines
   }
 
-  const submit = () => {
+  const values = {
+    fullName: form.fullName.trim(),
+    birthDate: form.birthDate,
+    phone: toInternational(form.phoneDigits),
+    parent: needsParent(form, new Date())
+      ? `${form.parentName.trim()}, ${toInternational(form.parentPhoneDigits)}`
+      : '',
+  }
+
+  // A real link, not window.open: a desktop browser blocks the popup that would open.
+  const whatsappUrl = createWhatsappUrl(clinic.whatsapp, buildRequestMessage(form, requestLabels(t), values))
+
+  const submit = (event: MouseEvent<HTMLAnchorElement>) => {
     const found = validateContacts(form, new Date())
     if (hasErrors(found) || !form.path) {
+      event.preventDefault()
       setErrors(found)
       return
-    }
-
-    const parent = needsParent(form, new Date())
-      ? `${form.parentName.trim()}, ${toInternational(form.parentPhoneDigits)}`
-      : ''
-    const values = {
-      fullName: form.fullName.trim(),
-      birthDate: form.birthDate,
-      phone: toInternational(form.phoneDigits),
-      parent,
     }
 
     submitLead({
@@ -115,11 +118,6 @@ export function BookingSection() {
       summary: buildRequestMessage(form, requestLabels(dictionaries.ru), values),
       lang,
     })
-    window.open(
-      createWhatsappUrl(clinic.whatsapp, buildRequestMessage(form, requestLabels(t), values)),
-      '_blank',
-      'noopener,noreferrer',
-    )
   }
 
   return (
@@ -166,14 +164,16 @@ export function BookingSection() {
               <ChevronRight className="size-5" />
             </button>
           ) : (
-            <button
-              type="button"
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
               onClick={submit}
               className="flex h-12 min-w-0 flex-1 items-center justify-center gap-2 rounded-full bg-[#25D366] px-3 text-sm font-bold whitespace-nowrap text-ink-950 shadow-[0_10px_30px_-8px_rgb(37_211_102/0.7)] transition active:scale-[0.98] sm:px-5 sm:text-base md:ml-auto md:flex-none"
             >
               <MessageCircle className="size-5" />
               {t.booking.submit}
-            </button>
+            </a>
           )}
         </div>
       </div>
