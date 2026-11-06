@@ -62,7 +62,7 @@ export function Hero() {
       </div>
 
       <aside className="glass animate-rise rounded-[2rem] p-6 [animation-delay:120ms] sm:p-8">
-        <p className="font-display text-xs font-bold tracking-[0.3em] text-accent uppercase">Phoenix Dental Studio</p>
+        <p className="font-display text-xs font-bold tracking-[0.3em] text-accent uppercase">The Phoenix Dental Studio</p>
         <p className="mt-2 font-display text-2xl font-bold">{t.location.title}</p>
 
         <ul className="mt-6 space-y-4 text-sm">

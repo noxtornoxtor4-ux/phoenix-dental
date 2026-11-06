@@ -13,10 +13,10 @@ export default defineConfig({
       includeAssets: ['favicon.svg', 'favicon.ico', 'apple-touch-icon-180x180.png'],
       manifest: {
         id: '/',
-        name: 'PHOENIX — стоматология в Караколе',
-        short_name: 'PHOENIX',
+        name: 'The Phoenix — стоматология в Караколе',
+        short_name: 'The Phoenix',
         description:
-          'Онлайн-запись в стоматологию PHOENIX, г. Каракол, ул. Московская, 125: анкета, ответ врача и запись в WhatsApp.',
+          'Онлайн-запись в стоматологию The Phoenix, г. Каракол, ул. Московская, 125: анкета, ответ врача и запись в WhatsApp.',
         lang: 'ru',
         dir: 'ltr',
         start_url: '/',

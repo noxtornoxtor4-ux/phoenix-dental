@@ -102,7 +102,7 @@ export function AdminLayout() {
         <NavLink to="/" className="flex h-16 items-center gap-3 px-5">
           <img src="/favicon.svg" alt="" className="size-9 rounded-xl shadow-glow" />
           <span className="font-display text-sm font-bold tracking-[0.18em]">
-            PHOENIX <span className="text-accent">CRM</span>
+            The Phoenix <span className="text-accent">CRM</span>
           </span>
         </NavLink>
         <nav className="flex-1 space-y-1 overflow-y-auto px-3 py-3">
@@ -118,7 +118,7 @@ export function AdminLayout() {
       <header className="sticky top-0 z-30 flex h-14 items-center gap-3 border-b border-white/5 bg-ink-900/80 px-4 pt-[env(safe-area-inset-top)] backdrop-blur-xl lg:hidden">
         <img src="/favicon.svg" alt="" className="size-8 rounded-lg" />
         <span className="flex-1 font-display text-sm font-bold tracking-[0.18em]">
-          PHOENIX <span className="text-accent">CRM</span>
+          The Phoenix <span className="text-accent">CRM</span>
         </span>
         {signOutButton}
       </header>

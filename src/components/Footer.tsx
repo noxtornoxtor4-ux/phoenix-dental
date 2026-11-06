@@ -10,7 +10,7 @@ export function Footer() {
         <Logo subtitle={t.header.address} />
         <div className="text-xs text-muted sm:text-right">
           <p>
-            © {new Date().getFullYear()} PHOENIX. {t.footer.rights}
+            © {new Date().getFullYear()} The Phoenix. {t.footer.rights}
           </p>
           <p className="mt-1">{t.footer.note}</p>
         </div>

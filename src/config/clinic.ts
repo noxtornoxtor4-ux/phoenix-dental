@@ -1,6 +1,6 @@
 // Contact data, schedule and booking rules of the clinic.
 export const clinic = {
-  name: 'PHOENIX',
+  name: 'The Phoenix',
   /** WhatsApp number of the reception, digits only, international format. */
   whatsapp: '996504314134',
   phoneDisplay: '+996 504 314 134',

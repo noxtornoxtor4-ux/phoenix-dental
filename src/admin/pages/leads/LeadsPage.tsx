@@ -28,7 +28,7 @@ function timeAgo(value: string, now: Date) {
 
 function replyText(lead: Lead) {
   const firstName = lead.name?.split(/\s+/)[0]
-  return `Здравствуйте${firstName ? `, ${firstName}` : ''}! Это стоматология PHOENIX. Получили вашу заявку с сайта.`
+  return `Здравствуйте${firstName ? `, ${firstName}` : ''}! Это стоматология The Phoenix. Получили вашу заявку с сайта.`
 }
 
 export function LeadsPage() {

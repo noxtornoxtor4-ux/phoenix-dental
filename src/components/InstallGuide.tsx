@@ -17,7 +17,7 @@ export function InstallGuide() {
       <div className="mb-5 flex items-center gap-3 rounded-2xl border border-line bg-field p-3">
         <img src="/favicon.svg" alt="" className="size-12 rounded-2xl shadow-glow" />
         <div className="min-w-0">
-          <p className="font-display text-lg font-bold tracking-tight">Phoenix</p>
+          <p className="font-display text-lg font-bold tracking-tight">The Phoenix</p>
           <p className="text-xs text-muted">{t.install.banner}</p>
         </div>
       </div>

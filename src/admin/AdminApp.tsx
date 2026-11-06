@@ -67,7 +67,7 @@ function useNoIndex() {
     meta.name = 'robots'
     meta.content = 'noindex, nofollow'
     document.head.append(meta)
-    document.title = 'PHOENIX CRM'
+    document.title = 'The Phoenix CRM'
     return () => meta.remove()
   }, [])
 }

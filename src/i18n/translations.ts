@@ -100,14 +100,14 @@ const ru: Dictionary = {
     language: 'Язык',
   },
   install: {
-    banner: 'Установите приложение PHOENIX для быстрой записи и скидки',
+    banner: 'Установите приложение The Phoenix для быстрой записи и скидки',
     action: 'Установить',
     dismiss: 'Закрыть',
     guideTitle: 'Установка приложения',
     iosSteps: [
       'Нажмите кнопку «Поделиться» в панели Safari',
       'Выберите пункт «На экран „Домой“»',
-      'Нажмите «Добавить» — иконка PHOENIX появится на главном экране',
+      'Нажмите «Добавить» — иконка The Phoenix появится на главном экране',
     ],
     otherSteps: [
       'Откройте меню браузера (⋮)',
@@ -273,14 +273,14 @@ const ky: Dictionary = {
     language: 'Тил',
   },
   install: {
-    banner: 'Тез жазылуу жана арзандатуу үчүн PHOENIX тиркемесин орнотуңуз',
+    banner: 'Тез жазылуу жана арзандатуу үчүн The Phoenix тиркемесин орнотуңуз',
     action: 'Орнотуу',
     dismiss: 'Жабуу',
     guideTitle: 'Тиркемени орнотуу',
     iosSteps: [
       'Safari панелиндеги «Бөлүшүү» баскычын басыңыз',
       '«Башкы экранга» пунктун тандаңыз',
-      '«Кошуу» баскычын басыңыз — PHOENIX сүрөтчөсү башкы экранда пайда болот',
+      '«Кошуу» баскычын басыңыз — The Phoenix сүрөтчөсү башкы экранда пайда болот',
     ],
     otherSteps: [
       'Браузердин менюсун ачыңыз (⋮)',
@@ -446,14 +446,14 @@ const en: Dictionary = {
     language: 'Language',
   },
   install: {
-    banner: 'Install the PHOENIX app for faster booking and a discount',
+    banner: 'Install The Phoenix app for faster booking and a discount',
     action: 'Install',
     dismiss: 'Close',
     guideTitle: 'Install the app',
     iosSteps: [
       'Tap the “Share” button in the Safari toolbar',
       'Choose “Add to Home Screen”',
-      'Tap “Add” — the PHOENIX icon will appear on your home screen',
+      'Tap “Add” — The Phoenix icon will appear on your home screen',
     ],
     otherSteps: [
       'Open the browser menu (⋮)',
