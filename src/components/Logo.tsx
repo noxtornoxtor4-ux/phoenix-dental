@@ -8,11 +8,7 @@ export function Logo({ subtitle }: LogoProps) {
     <span className="flex min-w-0 items-center gap-2.5">
       <img src="/logo-mark.svg" alt="" width={38} height={38} className="size-9 shrink-0" />
       <span className="flex min-w-0 flex-col leading-tight">
-        <span className="font-display text-lg leading-none tracking-tight text-ink">
-          {/* "The" stays small in front of the name, the way the logo sets it. */}
-          <span className="text-[0.58em] font-semibold tracking-[0.18em] uppercase">The</span>{" "}
-          <span className="font-bold">Phoenix</span>
-        </span>
+        <span className="font-display text-lg leading-none font-bold tracking-tight text-ink">The Phoenix</span>
         {subtitle ? (
           <span className="mt-1 truncate text-[11px] text-muted">{subtitle}</span>
         ) : (
