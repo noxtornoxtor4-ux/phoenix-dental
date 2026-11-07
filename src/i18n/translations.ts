@@ -20,7 +20,6 @@ export interface Dictionary {
     gotIt: string
   }
   hero: {
-    badge: string
     titleStart: string
     titleAccent: string
     subtitle: string
@@ -117,7 +116,6 @@ const ru: Dictionary = {
     gotIt: 'Понятно',
   },
   hero: {
-    badge: 'Стоматология в Караколе',
     titleStart: 'Забота о вашей улыбке',
     titleAccent: 'в Караколе без боли',
     subtitle:
@@ -290,7 +288,6 @@ const ky: Dictionary = {
     gotIt: 'Түшүндүм',
   },
   hero: {
-    badge: 'Караколдогу стоматология',
     titleStart: 'Жылмаюуңузга кам көрүү',
     titleAccent: 'Караколдо, оорутпай',
     subtitle:
@@ -463,7 +460,6 @@ const en: Dictionary = {
     gotIt: 'Got it',
   },
   hero: {
-    badge: 'Dental clinic in Karakol',
     titleStart: 'Caring for your smile',
     titleAccent: 'in Karakol, pain-free',
     subtitle:

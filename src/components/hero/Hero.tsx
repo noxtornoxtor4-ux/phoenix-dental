@@ -1,4 +1,4 @@
-import { ArrowRight, Clock, MapPin, MessageCircle, Phone, ScanLine, Sparkles, Wallet } from 'lucide-react'
+import { ArrowRight, Clock, MapPin, MessageCircle, Phone, ScanLine, Wallet } from 'lucide-react'
 import { clinic } from '../../config/clinic'
 import { useI18n } from '../../i18n/useI18n'
 
@@ -14,12 +14,7 @@ export function Hero() {
       className="mx-auto grid max-w-6xl items-center gap-10 px-4 pt-8 pb-14 md:grid-cols-[1.1fr_0.9fr] md:gap-12 md:pt-16 md:pb-24"
     >
       <div className="animate-rise">
-        <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-3 py-1 text-xs font-semibold text-accent">
-          <Sparkles className="size-3.5" />
-          {t.hero.badge}
-        </span>
-
-        <h1 className="mt-5 font-display text-[2rem] leading-[1.12] font-bold tracking-tight text-balance sm:text-5xl lg:text-[3.6rem]">
+        <h1 className="font-display text-[2rem] leading-[1.12] font-bold tracking-tight text-balance sm:text-5xl lg:text-[3.6rem]">
           {t.hero.titleStart}{' '}
           <span className="bg-linear-to-r from-accent to-accent-300 bg-clip-text text-transparent">
             {t.hero.titleAccent}
