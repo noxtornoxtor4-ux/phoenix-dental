@@ -282,7 +282,7 @@ const ky: Dictionary = {
     gotIt: 'Түшүндүм',
   },
   hero: {
-    titleStart: 'Жылмаюуңузга кам көрүү',
+    titleStart: 'Тиштериңиздин кайра жаралуу жайы',
     titleAccent: 'Караколдо, оорутпай',
     subtitle:
       'Бир нече суроого жооп бериңиз — дарыгерди жана ыңгайлуу убакытты тандайбыз, өтүнмө WhatsAppка даяр билдирүү болуп жөнөйт.',
@@ -451,7 +451,7 @@ const en: Dictionary = {
     gotIt: 'Got it',
   },
   hero: {
-    titleStart: 'Caring for your smile',
+    titleStart: 'Where your teeth are reborn',
     titleAccent: 'in Karakol, pain-free',
     subtitle:
       'Answer a few questions — we will pick a dentist and a time, and your request goes to WhatsApp as a ready message.',
