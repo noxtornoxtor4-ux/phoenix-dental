@@ -1,4 +1,4 @@
-import { Clock, MapPin, Phone, ScanLine } from 'lucide-react'
+import { ArrowRight, Clock, MapPin, Phone } from 'lucide-react'
 import { clinic } from '../config/clinic'
 import { useI18n } from '../i18n/useI18n'
 import { SectionHeading } from './ui/SectionHeading'
@@ -20,7 +20,6 @@ export function LocationSection() {
       title: `${workDays}: ${open}–${close}`,
       text: daysOff.length > 0 ? `${daysOff.map((day) => t.weekdaysShort[day]).join(', ')}: ${t.location.dayOff}` : '',
     },
-    ...(clinic.hasDentalXray ? [{ icon: ScanLine, title: t.location.xray, text: '' }] : []),
   ]
 
   return (
@@ -47,13 +46,22 @@ export function LocationSection() {
           {open}–{close}
         </p>
 
-        <a
-          href={clinic.phoneHref}
-          className="mt-6 flex items-center justify-center gap-2 rounded-full bg-accent px-5 py-4 font-bold text-white shadow-glow transition hover:bg-accent-600 active:scale-[0.98]"
-        >
-          <Phone className="size-5" />
-          {t.location.call}
-        </a>
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <a
+            href="#booking"
+            className="flex flex-1 items-center justify-center gap-2 rounded-full bg-accent px-5 py-4 font-bold text-white shadow-glow transition hover:bg-accent-600 active:scale-[0.98]"
+          >
+            {t.hero.book}
+            <ArrowRight className="size-5" />
+          </a>
+          <a
+            href={clinic.phoneHref}
+            className="flex flex-1 items-center justify-center gap-2 rounded-full border border-line bg-card px-5 py-4 font-semibold transition hover:bg-field active:scale-[0.98]"
+          >
+            <Phone className="size-5 text-accent" />
+            {t.location.call}
+          </a>
+        </div>
       </div>
     </section>
   )

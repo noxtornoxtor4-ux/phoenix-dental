@@ -22,7 +22,6 @@ export interface Dictionary {
   hero: {
     titleStart: string
     titleAccent: string
-    subtitle: string
     book: string
     features: string[]
   }
@@ -85,7 +84,6 @@ export interface Dictionary {
     address: string
     hoursTitle: string
     dayOff: string
-    xray: string
     call: string
   }
   footer: { rights: string; note: string }
@@ -118,8 +116,6 @@ const ru: Dictionary = {
   hero: {
     titleStart: 'Забота о вашей улыбке',
     titleAccent: 'в Караколе без боли',
-    subtitle:
-      'Ответьте на несколько вопросов — подберём врача и удобное время, а заявка уйдёт в WhatsApp готовым сообщением.',
     book: 'Записаться онлайн',
     features: ['Дентальный рентген на месте', 'Ответ в течение дня', 'Запись через WhatsApp'],
   },
@@ -254,7 +250,6 @@ const ru: Dictionary = {
     address: 'г. Каракол, ул. Московская, 125',
     hoursTitle: 'Режим работы',
     dayOff: 'выходной',
-    xray: 'Дентальный рентген в клинике',
     call: 'Позвонить',
   },
   footer: {
@@ -290,8 +285,6 @@ const ky: Dictionary = {
   hero: {
     titleStart: 'Жылмаюуңузга кам көрүү',
     titleAccent: 'Караколдо, оорутпай',
-    subtitle:
-      'Бир нече суроого жооп бериңиз — дарыгерди жана ыңгайлуу убакытты тандайбыз, өтүнмө WhatsAppка даяр билдирүү болуп жөнөйт.',
     book: 'Онлайн жазылуу',
     features: ['Клиникада дентал рентген', 'Күн ичинде жооп', 'WhatsApp аркылуу жазылуу'],
   },
@@ -426,7 +419,6 @@ const ky: Dictionary = {
     address: 'Каракол ш., Московская көч., 125',
     hoursTitle: 'Иш убактысы',
     dayOff: 'дем алыш',
-    xray: 'Клиникада дентал рентген бар',
     call: 'Чалуу',
   },
   footer: {
@@ -462,8 +454,6 @@ const en: Dictionary = {
   hero: {
     titleStart: 'Caring for your smile',
     titleAccent: 'in Karakol, pain-free',
-    subtitle:
-      'Answer a few questions — we will pick a dentist and a time, and your request goes to WhatsApp as a ready message.',
     book: 'Book online',
     features: ['Dental X-ray on site', 'Reply within the day', 'Booking via WhatsApp'],
   },
@@ -598,7 +588,6 @@ const en: Dictionary = {
     address: '125 Moskovskaya St., Karakol',
     hoursTitle: 'Opening hours',
     dayOff: 'closed',
-    xray: 'Dental X-ray in the clinic',
     call: 'Call',
   },
   footer: {

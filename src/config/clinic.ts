@@ -5,7 +5,6 @@ export const clinic = {
   whatsapp: '996504314134',
   phoneDisplay: '+996 504 314 134',
   phoneHref: 'tel:+996504314134',
-  hasDentalXray: true,
   hours: {
     /** Days of week as returned by Date#getDay(): 0 — Sunday. */
     weekdays: [1, 2, 3, 4, 5, 6],

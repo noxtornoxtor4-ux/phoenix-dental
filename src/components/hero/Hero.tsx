@@ -1,4 +1,4 @@
-import { ArrowRight, Clock, MapPin, MessageCircle, Phone, ScanLine, Wallet } from 'lucide-react'
+import { ArrowRight, MessageCircle, Phone, ScanLine, Wallet } from 'lucide-react'
 import { clinic } from '../../config/clinic'
 import { useI18n } from '../../i18n/useI18n'
 
@@ -6,13 +6,9 @@ const featureIcons = [ScanLine, Wallet, MessageCircle]
 
 export function Hero() {
   const { t } = useI18n()
-  const { open, close } = clinic.hours
 
   return (
-    <section
-      id="top"
-      className="mx-auto grid max-w-6xl items-center gap-10 px-4 pt-8 pb-14 md:grid-cols-[1.1fr_0.9fr] md:gap-12 md:pt-16 md:pb-24"
-    >
+    <section id="top" className="mx-auto max-w-3xl px-4 pt-8 pb-14 md:pt-16 md:pb-20">
       <div className="animate-rise">
         <h1 className="font-display text-[2rem] leading-[1.12] font-bold tracking-tight text-balance sm:text-5xl lg:text-[3.6rem]">
           {t.hero.titleStart}{' '}
@@ -20,8 +16,6 @@ export function Hero() {
             {t.hero.titleAccent}
           </span>
         </h1>
-
-        <p className="mt-5 max-w-xl text-base text-pretty text-muted sm:text-lg">{t.hero.subtitle}</p>
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <a
@@ -55,30 +49,6 @@ export function Hero() {
           })}
         </ul>
       </div>
-
-      <aside className="glass animate-rise rounded-[2rem] p-6 [animation-delay:120ms] sm:p-8">
-        <p className="font-display text-xs font-bold tracking-[0.3em] text-accent uppercase">The Phoenix Dental Studio</p>
-        <p className="mt-2 font-display text-2xl font-bold">{t.location.title}</p>
-
-        <ul className="mt-6 space-y-4 text-sm">
-          <li className="flex gap-3">
-            <MapPin className="mt-0.5 size-5 shrink-0 text-accent" />
-            <span>{t.location.address}</span>
-          </li>
-          <li className="flex gap-3">
-            <Clock className="mt-0.5 size-5 shrink-0 text-accent" />
-            <span>
-              {open}–{close}
-              <span className="block text-muted">{t.location.hoursTitle}</span>
-            </span>
-          </li>
-          <li className="flex gap-3">
-            <ScanLine className="mt-0.5 size-5 shrink-0 text-accent" />
-            <span>{t.location.xray}</span>
-          </li>
-        </ul>
-
-      </aside>
     </section>
   )
 }
