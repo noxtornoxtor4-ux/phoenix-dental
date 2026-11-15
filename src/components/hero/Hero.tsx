@@ -1,8 +1,8 @@
-import { ArrowRight, MessageCircle, Phone, ScanLine, Sparkles } from 'lucide-react'
+import { ArrowRight, MessageCircle, Phone, ScanLine, Toothbrush } from 'lucide-react'
 import { clinic } from '../../config/clinic'
 import { useI18n } from '../../i18n/useI18n'
 
-const featureIcons = [ScanLine, Sparkles, MessageCircle]
+const featureIcons = [ScanLine, Toothbrush, MessageCircle]
 
 export function Hero() {
   const { t } = useI18n()
