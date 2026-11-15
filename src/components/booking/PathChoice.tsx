@@ -48,8 +48,9 @@ export function PathChoice({ value, onChange }: PathChoiceProps) {
       </div>
 
       {firstVisit && (
-        <div className="mt-6 animate-rise">
-          <p className="mb-3 text-sm font-semibold text-muted">{t.booking.intentTitle}</p>
+        /* The follow-up question gets its own panel, so it reads as a step of its own. */
+        <div className="mt-5 animate-rise rounded-[1.75rem] border border-accent/25 bg-accent/5 p-3 sm:p-4">
+          <p className="mb-3 px-1 text-sm font-semibold text-accent">{t.booking.intentTitle}</p>
           <div className="grid gap-2">
             {firstVisitPaths.map((path) => (
               <PathCard
@@ -58,6 +59,7 @@ export function PathChoice({ value, onChange }: PathChoiceProps) {
                 label={t.booking.paths[path].label}
                 hint={t.booking.paths[path].hint}
                 active={value === path}
+                nested
                 onClick={() => onChange(path)}
               />
             ))}
@@ -73,17 +75,23 @@ interface PathCardProps {
   label: string
   hint: string
   active: boolean
+  /** Inside the tinted panel the card turns white so it keeps standing out. */
+  nested?: boolean
   onClick: () => void
 }
 
-function PathCard({ icon: Icon, label, hint, active, onClick }: PathCardProps) {
+function PathCard({ icon: Icon, label, hint, active, nested = false, onClick }: PathCardProps) {
+  const inactive = nested
+    ? 'border-line bg-card hover:border-accent/50'
+    : 'border-line bg-field hover:border-accent/40 hover:bg-card'
+
   return (
     <button
       type="button"
       aria-pressed={active}
       onClick={onClick}
       className={`flex items-center gap-4 rounded-2xl border px-4 py-4 text-left transition active:scale-[0.99] ${
-        active ? 'border-accent bg-accent/10' : 'border-line bg-field hover:border-accent/40 hover:bg-card'
+        active ? 'border-accent bg-accent/10' : inactive
       }`}
     >
       <span
