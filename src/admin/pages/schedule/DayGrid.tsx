@@ -1,5 +1,5 @@
 import type { MouseEvent } from 'react'
-import { clinic } from '../../../config/clinic'
+import { hoursOn, hoursSpan } from '../../../config/clinic'
 import type { AppointmentWithPatient } from '../../api/appointments'
 import { isSameDay } from '../../../lib/format'
 import { useNow } from '../../lib/useNow'
@@ -27,9 +27,11 @@ export function DayGrid({ day, doctors, appointments, onSlotClick, onAppointment
     // Visits past midnight are clipped to the end of the day.
     end: isSameDay(new Date(appointment.ends_at), day) ? minutesSinceMidnight(new Date(appointment.ends_at)) : 24 * 60,
   }))
+  // A day the clinic is closed still gets a grid, drawn over the widest day of the week.
+  const dayHours = hoursOn(day.getDay()) ?? hoursSpan
   const bounds = gridBounds(
-    parseClock(clinic.hours.open),
-    parseClock(clinic.hours.close),
+    parseClock(dayHours.open),
+    parseClock(dayHours.close),
     items.map(({ appointment, start, end }) => ({ id: appointment.id, start, end })),
   )
   const hours = Array.from({ length: (bounds.end - bounds.start) / 60 }, (_, index) => bounds.start + index * 60)
