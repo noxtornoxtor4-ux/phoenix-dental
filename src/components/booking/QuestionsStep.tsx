@@ -17,7 +17,11 @@ interface QuestionsStepProps {
 }
 
 const textareaClass =
-  'w-full rounded-2xl border bg-field p-4 text-base outline-none transition placeholder:text-muted focus:border-accent focus:bg-card'
+  'w-full rounded-2xl border p-4 text-base outline-none transition placeholder:text-muted focus:border-accent focus:bg-card'
+
+/** The complaint is the one thing a visitor has to write, so it carries the brand blue. */
+const mainField = 'border-accent/60 bg-accent/[0.07] ring-4 ring-accent/15'
+const mainFieldInvalid = 'border-sos bg-sos/5 ring-4 ring-sos/10'
 
 /** Step 2: the questions of the chosen branch, numbered the way the clinic reads them. */
 export function QuestionsStep({ value, errors, onChange }: QuestionsStepProps) {
@@ -46,7 +50,7 @@ export function QuestionsStep({ value, errors, onChange }: QuestionsStepProps) {
             rows={3}
             maxLength={1000}
             aria-invalid={Boolean(errors.text)}
-            className={`${textareaClass} ${errors.text ? 'border-sos' : 'border-line'}`}
+            className={`${textareaClass} ${errors.text ? mainFieldInvalid : mainField}`}
           />
           {errors.text && <span className="mt-1 block text-xs text-sos">{t.booking.requiredText}</span>}
         </label>
@@ -77,7 +81,7 @@ export function QuestionsStep({ value, errors, onChange }: QuestionsStepProps) {
             placeholder={t.booking.textPlaceholders.question}
             rows={3}
             maxLength={1000}
-            className={`${textareaClass} border-line`}
+            className={`${textareaClass} border-line bg-field`}
           />
         </label>
       )}
