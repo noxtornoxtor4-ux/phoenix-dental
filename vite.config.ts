@@ -40,9 +40,11 @@ export default defineConfig({
       },
       workbox: {
         // Fonts are split by unicode subset; cache only the subsets a browser actually requests.
-        globPatterns: ['**/*.{js,css,html,svg,png,ico}'],
-        // Without this the precached index.html answers every page load before the
-        // NetworkFirst rule below is reached, so a visitor keeps an old build.
+        // The page itself is not precached: a precached index.html answers every load
+        // of / and keeps its copy until the file changes, so a visitor sees an old build
+        // (and on a preview, the toolbar Vercel injected into that copy). Pages go through
+        // the NetworkFirst rule below instead, with the cached copy as the offline fallback.
+        globPatterns: ['**/*.{js,css,svg,png,ico}'],
         navigateFallback: null,
         cleanupOutdatedCaches: true,
         runtimeCaching: [
