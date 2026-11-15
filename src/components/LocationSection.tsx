@@ -10,7 +10,7 @@ export function LocationSection() {
 
   return (
     <section id="location" className="mx-auto max-w-3xl px-4 py-14 md:py-20">
-      <SectionHeading eyebrow={t.location.eyebrow} title={t.location.title} />
+      <SectionHeading title={t.location.title} />
 
       <div className="glass mt-8 rounded-[2rem] p-5 sm:p-8">
         <ul className="space-y-4">

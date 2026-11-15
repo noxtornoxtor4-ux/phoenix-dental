@@ -80,7 +80,6 @@ export interface Dictionary {
     answers: string
   }
   location: {
-    eyebrow: string
     title: string
     address: string
     dayOff: string
@@ -247,7 +246,6 @@ const ru: Dictionary = {
     answers: 'Ответы на вопросы:',
   },
   location: {
-    eyebrow: 'Как нас найти',
     title: 'Адрес и режим работы',
     address: 'г. Каракол, ул. Московская, 125',
     dayOff: 'выходной',
@@ -417,7 +415,6 @@ const ky: Dictionary = {
     answers: 'Суроолорго жооптор:',
   },
   location: {
-    eyebrow: 'Бизди кантип табасыз',
     title: 'Дарек жана иш убактысы',
     address: 'Каракол ш., Московская көч., 125',
     dayOff: 'дем алыш',
@@ -587,7 +584,6 @@ const en: Dictionary = {
     answers: 'Answers:',
   },
   location: {
-    eyebrow: 'How to find us',
     title: 'Address and hours',
     address: '125 Moskovskaya St., Karakol',
     dayOff: 'closed',
