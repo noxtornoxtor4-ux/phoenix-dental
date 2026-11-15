@@ -17,6 +17,8 @@ export function Hero() {
           </span>
         </h1>
 
+        <p className="mt-5 max-w-xl text-base text-pretty text-muted sm:text-lg">{t.hero.subtitle}</p>
+
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <a
             href="#booking"

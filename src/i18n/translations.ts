@@ -22,6 +22,7 @@ export interface Dictionary {
   hero: {
     titleStart: string
     titleAccent: string
+    subtitle: string
     book: string
     features: string[]
   }
@@ -116,6 +117,8 @@ const ru: Dictionary = {
   hero: {
     titleStart: 'Забота о вашей улыбке',
     titleAccent: 'в Караколе без боли',
+    subtitle:
+      'Ответьте на несколько вопросов — подберём врача и удобное время, а заявка уйдёт в WhatsApp готовым сообщением.',
     book: 'Записаться онлайн',
     features: ['Дентальный рентген на месте', 'Ответ в течение дня', 'Запись через WhatsApp'],
   },
@@ -285,6 +288,8 @@ const ky: Dictionary = {
   hero: {
     titleStart: 'Жылмаюуңузга кам көрүү',
     titleAccent: 'Караколдо, оорутпай',
+    subtitle:
+      'Бир нече суроого жооп бериңиз — дарыгерди жана ыңгайлуу убакытты тандайбыз, өтүнмө WhatsAppка даяр билдирүү болуп жөнөйт.',
     book: 'Онлайн жазылуу',
     features: ['Клиникада дентал рентген', 'Күн ичинде жооп', 'WhatsApp аркылуу жазылуу'],
   },
@@ -454,6 +459,8 @@ const en: Dictionary = {
   hero: {
     titleStart: 'Caring for your smile',
     titleAccent: 'in Karakol, pain-free',
+    subtitle:
+      'Answer a few questions — we will pick a dentist and a time, and your request goes to WhatsApp as a ready message.',
     book: 'Book online',
     features: ['Dental X-ray on site', 'Reply within the day', 'Booking via WhatsApp'],
   },
