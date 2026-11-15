@@ -1,9 +1,9 @@
-import { Cake, Info, Phone, UserRound, Users } from 'lucide-react'
+import { Cake, Info, UserRound, Users } from 'lucide-react'
 import type { RequestForm } from '../../data/questionnaire'
 import { useI18n } from '../../i18n/useI18n'
 import { formatBirthInput } from '../../lib/patient'
-import { formatLocalDigits, KG_COUNTRY_CODE, toLocalDigits } from '../../lib/phone'
 import { needsParent, type RequestErrors } from '../../lib/request'
+import { PhoneField } from './PhoneField'
 
 interface ContactsStepProps {
   value: RequestForm
@@ -63,26 +63,13 @@ export function ContactsStep({ value, errors, onChange, summary }: ContactsStepP
           {errors.birthDate && <span className="mt-1 block text-xs text-sos">{t.booking.birthError}</span>}
         </label>
 
-        <label className="block">
-          <span className="mb-1.5 block text-sm text-muted">{t.booking.phoneLabel}</span>
-          <span className="relative block">
-            <span className="pointer-events-none absolute top-1/2 left-4 flex -translate-y-1/2 items-center gap-2 text-muted">
-              <Phone className="size-5 text-muted" />+{KG_COUNTRY_CODE}
-            </span>
-            <input
-              type="tel"
-              inputMode="tel"
-              autoComplete="tel-national"
-              enterKeyHint="done"
-              value={formatLocalDigits(value.phoneDigits)}
-              onChange={(event) => set('phoneDigits', toLocalDigits(event.target.value))}
-              placeholder="700 123 456"
-              aria-invalid={Boolean(errors.phone)}
-              className={`${inputClass} pl-[5.75rem] tracking-wide tabular-nums ${border(errors.phone)}`}
-            />
-          </span>
-          {errors.phone && <span className="mt-1 block text-xs text-sos">{t.booking.phoneError}</span>}
-        </label>
+        <PhoneField
+          label={t.booking.phoneLabel}
+          value={{ country: value.phoneCountry, digits: value.phoneDigits }}
+          error={errors.phone ? t.booking.phoneError : undefined}
+          autoComplete="tel-national"
+          onChange={(phone) => onChange({ ...value, phoneCountry: phone.country, phoneDigits: phone.digits })}
+        />
 
         {withParent && (
           <fieldset className="animate-rise space-y-3 rounded-2xl border border-accent/25 bg-accent/5 p-4">
@@ -105,26 +92,15 @@ export function ContactsStep({ value, errors, onChange, summary }: ContactsStepP
               {errors.parentName && <span className="mt-1 block text-xs text-sos">{t.booking.parentNameError}</span>}
             </label>
 
-            <label className="block">
-              <span className="mb-1.5 block text-sm text-muted">{t.booking.parentPhoneLabel}</span>
-              <span className="relative block">
-                <span className="pointer-events-none absolute top-1/2 left-4 flex -translate-y-1/2 items-center gap-2 text-muted">
-                  <Phone className="size-5 text-muted" />+{KG_COUNTRY_CODE}
-                </span>
-                <input
-                  type="tel"
-                  inputMode="tel"
-                  autoComplete="off"
-                  enterKeyHint="done"
-                  value={formatLocalDigits(value.parentPhoneDigits)}
-                  onChange={(event) => set('parentPhoneDigits', toLocalDigits(event.target.value))}
-                  placeholder="700 123 456"
-                  aria-invalid={Boolean(errors.parentPhone)}
-                  className={`${inputClass} pl-[5.75rem] tracking-wide tabular-nums ${border(errors.parentPhone)}`}
-                />
-              </span>
-              {errors.parentPhone && <span className="mt-1 block text-xs text-sos">{t.booking.parentPhoneError}</span>}
-            </label>
+            <PhoneField
+              label={t.booking.parentPhoneLabel}
+              value={{ country: value.parentPhoneCountry, digits: value.parentPhoneDigits }}
+              error={errors.parentPhone ? t.booking.parentPhoneError : undefined}
+              autoComplete="off"
+              onChange={(phone) =>
+                onChange({ ...value, parentPhoneCountry: phone.country, parentPhoneDigits: phone.digits })
+              }
+            />
           </fieldset>
         )}
       </div>

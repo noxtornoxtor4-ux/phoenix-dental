@@ -1,4 +1,5 @@
 import type { ChoiceQuestionId, PathId } from '../data/questionnaire'
+import type { PhoneCountryId } from '../lib/phone'
 
 export type Lang = 'ru' | 'ky' | 'en'
 
@@ -52,6 +53,11 @@ export interface Dictionary {
     birthPlaceholder: string
     birthError: string
     phoneLabel: string
+    /** Read out for the country code list. */
+    phoneCountryLabel: string
+    phoneCountries: Record<PhoneCountryId, string>
+    /** Placeholder when the country is not listed and its code is typed with the number. */
+    otherPhonePlaceholder: string
     phoneError: string
     parentTitle: string
     parentNote: string
@@ -193,13 +199,29 @@ const ru: Dictionary = {
     birthPlaceholder: 'дд.мм.гггг',
     birthError: 'Введите дату в формате дд.мм.гггг',
     phoneLabel: 'Номер телефона',
-    phoneError: 'Введите 9 цифр номера',
+    phoneCountryLabel: 'Код страны',
+    phoneCountries: {
+      KG: 'Кыргызстан',
+      KZ: 'Казахстан',
+      RU: 'Россия',
+      UZ: 'Узбекистан',
+      TJ: 'Таджикистан',
+      CN: 'Китай',
+      KR: 'Южная Корея',
+      TR: 'Турция',
+      DE: 'Германия',
+      GB: 'Великобритания',
+      US: 'США',
+      OTHER: 'Другая страна',
+    },
+    otherPhonePlaceholder: 'Код страны и номер',
+    phoneError: 'Введите номер полностью',
     parentTitle: 'Родитель или опекун',
     parentNote: 'Пациенту меньше 18 лет — нужны данные взрослого',
     parentNameLabel: 'ФИО родителя',
     parentPhoneLabel: 'Телефон родителя',
     parentNameError: 'Укажите ФИО родителя',
-    parentPhoneError: 'Введите 9 цифр номера',
+    parentPhoneError: 'Введите номер полностью',
     summary: 'Ваша заявка',
     confirmNote: 'Администратор подтвердит время в WhatsApp',
     back: 'Назад',
@@ -362,13 +384,29 @@ const ky: Dictionary = {
     birthPlaceholder: 'кк.аа.жжжж',
     birthError: 'Күндү кк.аа.жжжж түрүндө жазыңыз',
     phoneLabel: 'Телефон номери',
-    phoneError: 'Номердин 9 цифрасын жазыңыз',
+    phoneCountryLabel: 'Өлкөнүн коду',
+    phoneCountries: {
+      KG: 'Кыргызстан',
+      KZ: 'Казакстан',
+      RU: 'Россия',
+      UZ: 'Өзбекстан',
+      TJ: 'Тажикстан',
+      CN: 'Кытай',
+      KR: 'Түштүк Корея',
+      TR: 'Түркия',
+      DE: 'Германия',
+      GB: 'Улуу Британия',
+      US: 'АКШ',
+      OTHER: 'Башка өлкө',
+    },
+    otherPhonePlaceholder: 'Өлкөнүн коду жана номер',
+    phoneError: 'Номерди толук жазыңыз',
     parentTitle: 'Ата-эне же камкорчу',
     parentNote: 'Бейтап 18ге толо элек — чоң кишинин маалыматы керек',
     parentNameLabel: 'Ата-эненин аты-жөнү',
     parentPhoneLabel: 'Ата-эненин телефону',
     parentNameError: 'Ата-эненин аты-жөнүн жазыңыз',
-    parentPhoneError: 'Номердин 9 цифрасын жазыңыз',
+    parentPhoneError: 'Номерди толук жазыңыз',
     summary: 'Сиздин өтүнмө',
     confirmNote: 'Администратор убакытты WhatsApp аркылуу ырастайт',
     back: 'Артка',
@@ -531,13 +569,29 @@ const en: Dictionary = {
     birthPlaceholder: 'dd.mm.yyyy',
     birthError: 'Enter the date as dd.mm.yyyy',
     phoneLabel: 'Phone number',
-    phoneError: 'Enter all 9 digits',
+    phoneCountryLabel: 'Country code',
+    phoneCountries: {
+      KG: 'Kyrgyzstan',
+      KZ: 'Kazakhstan',
+      RU: 'Russia',
+      UZ: 'Uzbekistan',
+      TJ: 'Tajikistan',
+      CN: 'China',
+      KR: 'South Korea',
+      TR: 'Türkiye',
+      DE: 'Germany',
+      GB: 'United Kingdom',
+      US: 'United States',
+      OTHER: 'Other country',
+    },
+    otherPhonePlaceholder: 'Country code and number',
+    phoneError: 'Enter the full number',
     parentTitle: 'Parent or guardian',
     parentNote: 'The patient is under 18, so an adult must be named',
     parentNameLabel: 'Parent full name',
     parentPhoneLabel: 'Parent phone',
     parentNameError: 'Enter the parent name',
-    parentPhoneError: 'Enter all 9 digits',
+    parentPhoneError: 'Enter the full number',
     summary: 'Your request',
     confirmNote: 'The front desk will confirm the time in WhatsApp',
     back: 'Back',

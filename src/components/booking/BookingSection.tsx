@@ -4,7 +4,7 @@ import { clinic } from '../../config/clinic'
 import { emptyRequestForm, needsContacts, questionsFor, textQuestion, type RequestForm } from '../../data/questionnaire'
 import { dictionaries, type Dictionary } from '../../i18n/translations'
 import { useI18n } from '../../i18n/useI18n'
-import { toE164, toInternational } from '../../lib/phone'
+import { phoneCountry, toE164, toInternational } from '../../lib/phone'
 import { submitLead } from '../../lib/publicApi'
 import {
   buildRequestMessage,
@@ -92,9 +92,9 @@ export function BookingSection() {
   const values = {
     fullName: form.fullName.trim(),
     birthDate: form.birthDate,
-    phone: toInternational(form.phoneDigits),
+    phone: toInternational(form.phoneDigits, phoneCountry(form.phoneCountry)),
     parent: needsParent(form, new Date())
-      ? `${form.parentName.trim()}, ${toInternational(form.parentPhoneDigits)}`
+      ? `${form.parentName.trim()}, ${toInternational(form.parentPhoneDigits, phoneCountry(form.parentPhoneCountry))}`
       : '',
   }
 
@@ -113,7 +113,7 @@ export function BookingSection() {
     submitLead({
       kind: 'booking',
       name: values.fullName,
-      phone: toE164(form.phoneDigits),
+      phone: toE164(form.phoneDigits, phoneCountry(form.phoneCountry)),
       // Staff read requests in Russian regardless of the visitor's language.
       summary: buildRequestMessage(form, requestLabels(dictionaries.ru), values),
       lang,

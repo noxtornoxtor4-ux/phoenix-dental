@@ -1,3 +1,5 @@
+import type { PhoneCountryId } from '../lib/phone'
+
 /** Which branch of the form a visitor takes after the greeting. */
 export type PathId = 'booking' | 'ask' | 'returning'
 
@@ -53,9 +55,12 @@ export interface RequestForm {
   choices: Partial<Record<ChoiceQuestionId, string>>
   fullName: string
   birthDate: string
+  phoneCountry: PhoneCountryId
+  /** The number after the country code. */
   phoneDigits: string
   /** Filled in only when the patient is under 18. */
   parentName: string
+  parentPhoneCountry: PhoneCountryId
   parentPhoneDigits: string
 }
 
@@ -66,8 +71,10 @@ export const emptyRequestForm: RequestForm = {
   choices: {},
   fullName: '',
   birthDate: '',
+  phoneCountry: 'KG',
   phoneDigits: '',
   parentName: '',
+  parentPhoneCountry: 'KG',
   parentPhoneDigits: '',
 }
 

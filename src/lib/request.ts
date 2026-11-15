@@ -8,7 +8,7 @@ import {
   type RequestForm,
 } from '../data/questionnaire'
 import { ADULT_AGE, ageOn, isValidBirthDate } from './patient'
-import { isValidLocalDigits } from './phone'
+import { isValidLocalDigits, phoneCountry } from './phone'
 
 export type RequestField =
   | 'text'
@@ -36,11 +36,11 @@ export function validateContacts(form: RequestForm, today: Date): RequestErrors 
   const errors: RequestErrors = {}
   if (form.fullName.trim() === '') errors.fullName = true
   if (!isValidBirthDate(form.birthDate, today)) errors.birthDate = true
-  if (!isValidLocalDigits(form.phoneDigits)) errors.phone = true
+  if (!isValidLocalDigits(form.phoneDigits, phoneCountry(form.phoneCountry))) errors.phone = true
 
   if (needsParent(form, today)) {
     if (form.parentName.trim() === '') errors.parentName = true
-    if (!isValidLocalDigits(form.parentPhoneDigits)) errors.parentPhone = true
+    if (!isValidLocalDigits(form.parentPhoneDigits, phoneCountry(form.parentPhoneCountry))) errors.parentPhone = true
   }
   return errors
 }

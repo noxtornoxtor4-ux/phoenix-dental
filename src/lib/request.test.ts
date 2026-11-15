@@ -93,6 +93,13 @@ describe('validateContacts', () => {
       true,
     )
   })
+
+  test('checks a foreign number by the length its country allows', () => {
+    const adult = { fullName: 'John Smith', birthDate: '15.05.1993' }
+    expect(validateContacts(form({ ...adult, phoneCountry: 'RU', phoneDigits: '9123456789' }), today)).toEqual({})
+    expect(validateContacts(form({ ...adult, phoneCountry: 'RU', phoneDigits: '912345678' }), today).phone).toBe(true)
+    expect(validateContacts(form({ ...adult, phoneCountry: 'OTHER', phoneDigits: '351912345678' }), today)).toEqual({})
+  })
 })
 
 describe('buildRequestMessage', () => {
