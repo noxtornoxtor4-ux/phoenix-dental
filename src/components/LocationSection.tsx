@@ -9,7 +9,7 @@ export function LocationSection() {
   const schedule = openingSchedule({ weekdaysShort: t.weekdaysShort, dayOff: t.location.dayOff })
 
   return (
-    <section id="location" className="mx-auto max-w-3xl px-4 py-14 md:py-20">
+    <section id="location" className="mx-auto max-w-3xl px-4 pt-4 pb-14 md:pt-6 md:pb-20">
       <SectionHeading title={t.location.title} />
 
       <div className="glass mt-8 rounded-[2rem] p-5 sm:p-8">
