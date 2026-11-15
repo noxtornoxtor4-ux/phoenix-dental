@@ -41,6 +41,9 @@ export default defineConfig({
       workbox: {
         // Fonts are split by unicode subset; cache only the subsets a browser actually requests.
         globPatterns: ['**/*.{js,css,html,svg,png,ico}'],
+        // Without this the precached index.html answers every page load before the
+        // NetworkFirst rule below is reached, so a visitor keeps an old build.
+        navigateFallback: null,
         cleanupOutdatedCaches: true,
         runtimeCaching: [
           {
